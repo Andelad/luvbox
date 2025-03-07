@@ -1,8 +1,7 @@
-// src/App.tsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/landing/LandingPage';
-import CubeComponent from './components/cube/CubeComponent';
+import CubeComponent from './components/cube'; // This imports the default export from index.ts in the cube folder
 
 function App() {
   return (

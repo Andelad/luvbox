@@ -5,6 +5,7 @@ import IsometricFace from './IsometricFace';
 import TopFace from './TopFace';
 
 export {
+  CubeComponent,
   EqualizerFace,
   GraphFace,
   IsometricFace,

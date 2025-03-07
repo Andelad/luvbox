@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './CubeComponent.css';
 import EqualizerFace from './EqualizerFace';
 import GraphFace from './GraphFace';
@@ -36,16 +36,16 @@ const CubeComponent: React.FC = () => {
     <div className="cube-container">
       <div className="cube-navigation">
         <button onClick={() => navigateTo(0)} className={currentFace === 0 ? 'active' : ''}>
-          Equalizer
+          Emotional Intelligence
         </button>
         <button onClick={() => navigateTo(1)} className={currentFace === 1 ? 'active' : ''}>
-          Graph
+          Relationship Patterns
         </button>
         <button onClick={() => navigateTo(2)} className={currentFace === 2 ? 'active' : ''}>
-          Isometric
+          Relationship Structure
         </button>
         <button onClick={() => navigateTo(4)} className={currentFace === 4 ? 'active' : ''}>
-          Top
+          Love Languages
         </button>
       </div>
 
@@ -81,5 +81,3 @@ const CubeComponent: React.FC = () => {
 };
 
 export default CubeComponent;
-
-export {};
