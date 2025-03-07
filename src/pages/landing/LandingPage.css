@@ -112,12 +112,10 @@ p {
 
 .cube {
   width: 100px;
-  height: auto;
   top: 10%;
   left: 50%;
   transform: translateX(-50%);
   animation: float-cube 6s ease-in-out infinite;
-  object-fit: contain;
 }
 
 .book {

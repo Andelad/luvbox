@@ -1,7 +1,8 @@
+// src/App.tsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/landing/LandingPage';
-import CubeComponent from './components/cube'; // Updated import path
+import CubeComponent from './components/cube/CubeComponent';
 
 function App() {
   return (

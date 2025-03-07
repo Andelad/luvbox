@@ -1,14 +1,15 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import App from './App';
-import './styles/global.css';
+import CubeComponent from '../CubeComponent';
+import EqualizerFace from './EqualizerFace';
+import GraphFace from './GraphFace';
+import IsometricFace from './IsometricFace';
+import TopFace from './TopFace';
 
-const container = document.getElementById('root');
-if (!container) throw new Error('Failed to find the root element');
-const root = createRoot(container);
+export {
+  CubeComponent,
+  EqualizerFace,
+  GraphFace,
+  IsometricFace,
+  TopFace
+};
 
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+export default CubeComponent;
