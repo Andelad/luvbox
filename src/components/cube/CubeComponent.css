@@ -13,6 +13,7 @@
   justify-content: center;
   padding: 2rem 1rem;
   overflow: hidden;
+  position: relative;
 }
 
 .cube-navigation {
@@ -41,11 +42,25 @@
   background-color: #a25a3c;
 }
 
+/* 3D Scene styling */
 .scene {
   width: 400px;
   height: 400px;
   perspective: 1000px;
   margin: 0 auto;
+  position: relative;
+}
+
+.cube-shadow {
+  position: absolute;
+  width: 80%;
+  height: 20px;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 70%);
+  bottom: -40px;
+  left: 10%;
+  border-radius: 50%;
+  z-index: -1;
+  transform: rotateX(90deg);
 }
 
 .cube {
@@ -53,8 +68,18 @@
   height: 100%;
   position: relative;
   transform-style: preserve-3d;
-  transform: rotateX(0deg) rotateY(0deg);
-  transition: transform 1s ease;
+  transform: translateZ(-200px) rotateX(0deg) rotateY(0deg);
+  transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: initial-rotation 2s ease-out forwards;
+}
+
+@keyframes initial-rotation {
+  0% {
+    transform: translateZ(-200px) rotateX(15deg) rotateY(15deg);
+  }
+  100% {
+    transform: translateZ(-200px) rotateX(0deg) rotateY(0deg);
+  }
 }
 
 .cube-face {
@@ -69,14 +94,38 @@
   border: 1px solid #ddd;
   backface-visibility: visible;
   overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1) inset;
+  transition: opacity 0.5s ease;
 }
 
-.front  { transform: rotateY(0deg) translateZ(200px); }
-.right  { transform: rotateY(90deg) translateZ(200px); }
-.back   { transform: rotateY(180deg) translateZ(200px); }
-.left   { transform: rotateY(-90deg) translateZ(200px); }
-.top    { transform: rotateX(90deg) translateZ(200px); }
-.bottom { transform: rotateX(-90deg) translateZ(200px); }
+.front  { 
+  transform: rotateY(0deg) translateZ(200px);
+  border-color: #d7967b;
+}
+.right  { 
+  transform: rotateY(90deg) translateZ(200px);
+  border-color: #c27b5d;
+}
+.back   { 
+  transform: rotateY(180deg) translateZ(200px);
+  border-color: #a25a3c;
+}
+.left   { 
+  transform: rotateY(-90deg) translateZ(200px);
+  border-color: #b46b4d;
+}
+.top    { 
+  transform: rotateX(90deg) translateZ(200px);
+  border-color: #d7967b;
+}
+.bottom { 
+  transform: rotateX(-90deg) translateZ(200px);
+  border-color: #915132;
+}
+
+.cube-face.inactive {
+  opacity: 0.8;
+}
 
 .placeholder-face {
   color: #999;
@@ -84,6 +133,33 @@
   font-style: italic;
 }
 
+/* Controls for manual rotation */
+.cube-rotation-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+.rotation-control {
+  background-color: #eee;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.rotation-control:hover {
+  background-color: #d7967b;
+  color: white;
+}
+
+/* Responsive styles */
 @media (max-width: 768px) {
   .scene {
     width: 300px;

@@ -22,21 +22,24 @@ const LandingPage: React.FC = () => {
         <div className="text-content">
           <h1>Your <em>SatNav</em> for dating and love</h1>
           <p>Love is rich and complex. But today, everyone is trying to make a really simple story theirs. What if your story could be different?</p>
-          <Link to="/form/dealbreakers" className="cta-button">Start Your Journey</Link>
+          <div className="button-group">
+            <Link to="/form/dealbreakers" className="cta-button primary-button">Start Your Journey</Link>
+            <Link to="/cube" className="cta-button secondary-button"></Link>
+          </div>
         </div>
         
         <div className="visual-content">
           <div className="diagram">
-            {/* Cube element */}
-            <img src={cube} className="diagram-element cube" alt="Cube" />
+            {/* Cube element at top of triangle */}
+            <img src={cube} className="diagram-element diagram-cube" alt="Cube" />
             
-            {/* Book element */}
+            {/* Book element at bottom left */}
             <img src={book} className="diagram-element book" alt="Book" />
             
-            {/* Person element */}
+            {/* Person element at bottom right */}
             <img src={person} className="diagram-element person" alt="Person" />
             
-            {/* Connection lines and arrows */}
+            {/* Connection lines with arrows - forming a triangle */}
             <div className="connector connector-cube-book"></div>
             <div className="arrow arrow-cube-book"></div>
             

@@ -16,12 +16,12 @@ const Header: React.FC<HeaderProps> = ({ showHomeLink = true }) => {
         {showHomeLink ? (
           <Link to="/" className="logo-link">
             <img src={logo} alt="LuvNav Logo" className="header-logo" />
-            <span className="logo-text">LuvNav</span>
+            <span className="logo-text">LuvBox</span>
           </Link>
         ) : (
           <div className="logo">
             <img src={logo} alt="LuvNav Logo" className="header-logo" />
-            <span className="logo-text">LuvNav</span>
+            <span className="logo-text">LuvBox</span>
           </div>
         )}
       </div>

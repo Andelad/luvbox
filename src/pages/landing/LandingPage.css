@@ -77,22 +77,42 @@ p {
   color: #555;
 }
 
+/* Button group for primary and secondary buttons */
+.button-group {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
 .cta-button {
   display: inline-block;
-  background-color: #d7967b;
-  color: white;
   font-size: 1.2rem;
   font-weight: 600;
-  padding: 0.8rem 3rem;
+  padding: 0.8rem 2rem;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   text-decoration: none;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
-.cta-button:hover {
+.primary-button {
+  background-color: #d7967b;
+  color: white;
+}
+
+.primary-button:hover {
   background-color: #c27b5d;
+}
+
+.secondary-button {
+  background-color: transparent;
+  border: 1px solid #d7967b;
+  color: #d7967b;
+}
+
+.secondary-button:hover {
+  background-color: rgba(215, 150, 123, 0.1);
 }
 
 .visual-content {
@@ -112,8 +132,9 @@ p {
   transition: transform 2s ease-in-out;
 }
 
-.cube {
-  width: 100px;
+/* Triangle layout positioning */
+.diagram-cube {
+  width: 80px; /* Smaller size, similar to person image */
   top: 10%;
   left: 50%;
   transform: translateX(-50%);
@@ -121,23 +142,23 @@ p {
 }
 
 .book {
-  width: 120px;
-  bottom: 10%;
+  width: 100px;
+  bottom: 20%;
   left: 25%;
   animation: float-element 6s ease-in-out infinite 1.5s;
 }
 
 .person {
-  width: 100px;
-  bottom: 10%;
+  width: 80px;
+  bottom: 20%;
   right: 25%;
   animation: float-element 6s ease-in-out infinite 3s;
 }
 
+/* Connector lines - forming a triangle */
 .connector {
   position: absolute;
   border-top: 2px dashed #2d2d2d;
-  width: 80px;
 }
 
 .arrow {
@@ -148,48 +169,50 @@ p {
   border-right: 2px solid #2d2d2d;
 }
 
-/* Connector lines with arrows */
+/* Line from Cube to Book (top to bottom left) */
 .connector-cube-book {
-  top: 35%;
-  left: 30%;
+  top: 25%;
+  left: 35%;
   width: 120px;
   transform: rotate(135deg);
 }
 
 .arrow-cube-book {
-  top: 42%;
-  left: 25%;
+  top: 35%;
+  left: 27%;
   transform: rotate(-45deg);
 }
 
+/* Line from Cube to Person (top to bottom right) */
 .connector-cube-person {
-  top: 35%;
-  right: 30%;
+  top: 25%;
+  right: 35%;
   width: 120px;
   transform: rotate(-135deg);
 }
 
 .arrow-cube-person {
-  top: 42%;
-  right: 25%;
+  top: 35%;
+  right: 27%;
   transform: rotate(45deg);
 }
 
+/* Line from Book to Person (bottom left to bottom right) */
 .connector-book-person {
-  bottom: 20%;
+  bottom: 25%;
   left: 35%;
-  width: 150px;
+  width: 160px;
 }
 
 .arrow-book-person {
-  bottom: 20%;
-  right: 35%;
+  bottom: 25%;
+  right: 33%;
   transform: rotate(45deg);
 }
 
 .arrow-person-book {
-  bottom: 20%;
-  left: 35%;
+  bottom: 25%;
+  left: 33%;
   transform: rotate(-135deg);
 }
 
@@ -229,5 +252,16 @@ p {
   
   h1 {
     font-size: 2.5rem;
+  }
+  
+  .button-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+  
+  .cta-button {
+    width: 100%;
+    text-align: center;
   }
 }
