@@ -1,27 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './LandingPage.css';
+import Header from '../../components/common/Header';
 
 // Import images
-import logo from '../../assets/images/logo.png';
 import cube from '../../assets/images/cube.png';
 import book from '../../assets/images/book.png';
 import person from '../../assets/images/person.png';
 
 const LandingPage: React.FC = () => {
   return (
-    <div className="container">
-      <header>
-        <div className="logo">
-          <img src={logo} alt="LuvNav Logo" height="40" />
-          <span>LuvBox</span>
-        </div>
-      </header>
+    <div className="landing-container">
+      <Header />
       
       <main className="content">
         <div className="text-content">
-          <h1>Your <em>SatNav</em> for dating and love</h1>
-          <p>Love is rich and complex. But today, everyone is trying to make a really simple story theirs. What if your story could be different?</p>
+          <h1>Your <em>diagnostic tool</em> for love and dating</h1>
+          <p>Love is great when its effortless. But, what happens when things go wrong? LuvBox is your tool to assess the issue before deciding a solution</p>
           <div className="button-group">
             <Link to="/form/dealbreakers" className="cta-button primary-button">Start Your Journey</Link>
             <Link to="/cube" className="cta-button secondary-button">Enter</Link>

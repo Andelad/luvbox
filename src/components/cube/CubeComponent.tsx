@@ -80,6 +80,14 @@ const CubeComponent: React.FC = () => {
       <Header />
       <div className="cube-container">
         <div className="graph-plane">
+          {/* Additional Axes */}
+          <div className="x-axis-top">
+            <div className="axis-line"></div>
+          </div>
+          <div className="y-axis-right">
+            <div className="axis-line"></div>
+          </div>
+
           {/* Y Axis */}
           <div className="y-axis">
             <div className="axis-title">{axisLabels.yAxisTitle}</div>
@@ -148,7 +156,7 @@ const CubeComponent: React.FC = () => {
             <div 
               className="cube" 
               style={{
-                transform: `translateZ(-250px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`
+                transform: `translateZ(-230px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`
               }}
             >
               <div className={`cube-face front ${currentFace !== 'qualities' ? 'inactive' : ''}`}>
@@ -170,7 +178,6 @@ const CubeComponent: React.FC = () => {
                 <div className="placeholder-face">Future Face</div>
               </div>
             </div>
-            <div className="cube-shadow"></div>
           </div>
         </div>
 

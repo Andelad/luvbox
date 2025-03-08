@@ -14,35 +14,10 @@ body {
   min-height: 100vh;
 }
 
-.container {
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 0;
+.landing-container {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-}
-
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 3rem;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  font-family: 'EB Garamond', serif;
-  font-style: italic;
-  font-weight: 600;
-  font-size: 1.5rem;
-}
-
-.logo img {
-  height: 40px;
-  margin-right: 10px;
 }
 
 .content {
@@ -51,6 +26,10 @@ header {
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 0;
 }
 
 .text-content {
@@ -193,6 +172,7 @@ p {
 @media (max-width: 768px) {
   .content {
     flex-direction: column;
+    padding: 1rem;
   }
   
   .visual-content {
