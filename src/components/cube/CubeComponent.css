@@ -16,70 +16,133 @@
   position: relative;
 }
 
-.cube-navigation {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  z-index: 10;
+/* Graph Plane Styling */
+.graph-plane {
+  position: relative;
+  width: min(80%, 600px);
+  height: min(80vw, 600px);
+  aspect-ratio: 1/1;
+  margin: 0 auto 2rem;
 }
 
-.cube-navigation button {
-  background-color: #d7967b;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: 'Source Sans Pro', sans-serif;
-  transition: background-color 0.3s ease;
+/* Axis Styling */
+.x-axis, .y-axis {
+  position: absolute;
+  color: #666;
+  transition: opacity 0.5s ease;
 }
 
-.cube-navigation button:hover {
-  background-color: #c27b5d;
+.x-axis {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
 }
 
-.cube-navigation button.active {
-  background-color: #a25a3c;
+.y-axis {
+  left: 0;
+  bottom: 40px;
+  width: 40px;
+  height: calc(100% - 40px);
+}
+
+.axis-line {
+  position: absolute;
+  background-color: #666;
+}
+
+.x-axis .axis-line {
+  top: 0;
+  left: 40px;
+  height: 1px;
+  width: calc(100% - 40px);
+}
+
+.y-axis .axis-line {
+  bottom: 0;
+  right: 0;
+  width: 1px;
+  height: 100%;
+}
+
+.axis-title {
+  position: absolute;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.x-axis .axis-title {
+  right: 0;
+  bottom: -25px;
+}
+
+.y-axis .axis-title {
+  left: -30px;
+  top: 50%;
+  transform: rotate(-90deg) translateX(50%);
+  transform-origin: left center;
+}
+
+.axis-labels {
+  position: absolute;
+  font-size: 0.8rem;
+}
+
+.x-axis .axis-labels {
+  top: 5px;
+  left: 40px;
+  width: calc(100% - 40px);
+  height: 20px;
+}
+
+.y-axis .axis-labels {
+  right: 5px;
+  bottom: 0;
+  width: 30px;
+  height: 100%;
+}
+
+.axis-label {
+  position: absolute;
+  white-space: nowrap;
+}
+
+.group-labels {
+  position: absolute;
+  top: -30px;
+  left: 40px;
+  width: calc(100% - 40px);
+  height: 20px;
+}
+
+.group-label {
+  position: absolute;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+  color: #a25a3c;
 }
 
 /* 3D Scene styling */
 .scene {
-  width: 400px;
-  height: 400px;
-  perspective: 1000px;
-  margin: 0 auto;
-  position: relative;
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+  perspective: 1200px;
+  position: absolute;
+  top: 0;
+  left: 40px;
+  transform-style: preserve-3d;
 }
 
-.cube-shadow {
-  position: absolute;
-  width: 80%;
-  height: 20px;
-  background: radial-gradient(ellipse at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 70%);
-  bottom: -40px;
-  left: 10%;
-  border-radius: 50%;
-  z-index: -1;
-  transform: rotateX(90deg);
-}
+/* Shadow removed */
 
 .cube {
   width: 100%;
   height: 100%;
   position: relative;
   transform-style: preserve-3d;
-  transform: translateZ(-200px) rotateX(0deg) rotateY(0deg);
+  transform: translateZ(-250px) rotateX(0deg) rotateY(0deg);
   transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  animation: initial-rotation 2s ease-out forwards;
-}
-
-@keyframes initial-rotation {
-  0% {
-    transform: translateZ(-200px) rotateX(15deg) rotateY(15deg);
-  }
-  100% {
-    transform: translateZ(-200px) rotateX(0deg) rotateY(0deg);
-  }
 }
 
 .cube-face {
@@ -96,35 +159,36 @@
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1) inset;
   transition: opacity 0.5s ease;
+  box-sizing: border-box;
 }
 
 .front  { 
-  transform: rotateY(0deg) translateZ(200px);
+  transform: rotateY(0deg) translateZ(250px);
   border-color: #d7967b;
 }
 .right  { 
-  transform: rotateY(90deg) translateZ(200px);
+  transform: rotateY(90deg) translateZ(250px);
   border-color: #c27b5d;
 }
 .back   { 
-  transform: rotateY(180deg) translateZ(200px);
+  transform: rotateY(180deg) translateZ(250px);
   border-color: #a25a3c;
 }
 .left   { 
-  transform: rotateY(-90deg) translateZ(200px);
+  transform: rotateY(-90deg) translateZ(250px);
   border-color: #b46b4d;
 }
 .top    { 
-  transform: rotateX(90deg) translateZ(200px);
+  transform: rotateX(90deg) translateZ(250px);
   border-color: #d7967b;
 }
 .bottom { 
-  transform: rotateX(-90deg) translateZ(200px);
+  transform: rotateX(-90deg) translateZ(250px);
   border-color: #915132;
 }
 
 .cube-face.inactive {
-  opacity: 0.8;
+  opacity: 0.3;
 }
 
 .placeholder-face {
@@ -133,48 +197,64 @@
   font-style: italic;
 }
 
-/* Controls for manual rotation */
-.cube-rotation-controls {
+/* Navigation buttons - now below the cube */
+.cube-navigation {
   display: flex;
   justify-content: center;
-  margin-top: 2rem;
-  gap: 1rem;
+  gap: 1.5rem;
+  margin-top: 1rem;
 }
 
-.rotation-control {
-  background-color: #eee;
-  border: 1px solid #ddd;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.cube-navigation button {
+  background-color: #d7967b;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
   cursor: pointer;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
   transition: background-color 0.3s ease;
 }
 
-.rotation-control:hover {
-  background-color: #d7967b;
-  color: white;
+.cube-navigation button:hover {
+  background-color: #c27b5d;
+}
+
+.cube-navigation button.active {
+  background-color: #a25a3c;
 }
 
 /* Responsive styles */
-@media (max-width: 768px) {
-  .scene {
-    width: 300px;
-    height: 300px;
+@media (max-width: 1024px) {
+  .graph-plane {
+    width: 90%;
   }
-  
-  .front  { transform: rotateY(0deg) translateZ(150px); }
-  .right  { transform: rotateY(90deg) translateZ(150px); }
-  .back   { transform: rotateY(180deg) translateZ(150px); }
-  .left   { transform: rotateY(-90deg) translateZ(150px); }
-  .top    { transform: rotateX(90deg) translateZ(150px); }
-  .bottom { transform: rotateX(-90deg) translateZ(150px); }
-  
+}
+
+@media (max-width: 768px) {
   .cube-navigation {
     flex-wrap: wrap;
-    justify-content: center;
+  }
+  
+  .cube-navigation button {
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+  }
+  
+  .group-label {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .x-axis, .y-axis {
+    font-size: 0.7rem;
+  }
+  
+  .cube-navigation button {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
   }
 }

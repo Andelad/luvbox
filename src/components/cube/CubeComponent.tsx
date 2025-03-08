@@ -7,170 +7,193 @@ import TopFace from './TopFace';
 import Header from '../common/Header';
 
 const CubeComponent: React.FC = () => {
-  const [rotation, setRotation] = useState({ x: 0, y: 0 });
-  const [currentFace, setCurrentFace] = useState(0);
+  const [currentFace, setCurrentFace] = useState('qualities');
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [manualRotation, setManualRotation] = useState({ x: 0, y: 0 });
-  const [isAutoRotating, setIsAutoRotating] = useState(true);
+  const [axisLabels, setAxisLabels] = useState({
+    xLabels: ['Pe', 'PA', 'FV', 'Va', 'B', 'G', 'Vi'],
+    yLabels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    xGroupLabels: ['Intimacy', 'Purpose'],
+    showGroupLabels: false,
+    xAxisTitle: '',
+    yAxisTitle: ''
+  });
+  
+  // Preset rotations for each view
+  const faceRotations = {
+    qualities: { x: 0, y: 0 },      // Front face (Equalizer)
+    purpose: { x: -90, y: 0 },      // Top face
+    time: { x: 0, y: -90 }          // Right face (IsometricFace)
+  };
+  
+  const [rotation, setRotation] = useState(faceRotations.qualities);
 
-  // Preset rotations for each face
-  const faceRotations = [
-    { x: 0, y: 0 },      // Front (Equalizer)
-    { x: 0, y: -90 },    // Right (Graph)
-    { x: 0, y: -180 },   // Back (Isometric)
-    { x: 0, y: -270 },   // Left (placeholder for future)
-    { x: -90, y: 0 },    // Top
-    { x: 90, y: 0 }      // Bottom (placeholder for future)
-  ];
-
-  // Auto-rotation effect
+  // Update axis labels when face changes
   useEffect(() => {
-    let autoRotateInterval: NodeJS.Timeout;
-    
-    if (isAutoRotating) {
-      autoRotateInterval = setInterval(() => {
-        setManualRotation(prev => ({
-          x: prev.x,
-          y: prev.y - 0.2 // Slowly rotate around Y axis
-        }));
-      }, 50);
-    }
-    
-    return () => {
-      if (autoRotateInterval) {
-        clearInterval(autoRotateInterval);
-      }
-    };
-  }, [isAutoRotating]);
-
-  // Stop auto-rotation when a face is selected
-  useEffect(() => {
-    if (currentFace !== null) {
-      setIsAutoRotating(false);
-    }
-  }, [currentFace]);
-
-  const navigateTo = (faceIndex: number) => {
-    if (isTransitioning) return;
-    
     setIsTransitioning(true);
-    setCurrentFace(faceIndex);
-    setRotation(faceRotations[faceIndex]);
-    setManualRotation({ x: 0, y: 0 }); // Reset manual rotation
     
+    // Set appropriate rotation
+    setRotation(faceRotations[currentFace]);
+    
+    // Update axis labels based on selected face
+    if (currentFace === 'qualities') {
+      setAxisLabels({
+        xLabels: ['Pe', 'PA', 'FV', 'Va', 'B', 'G', 'Vi'],
+        yLabels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        xGroupLabels: [],
+        showGroupLabels: false,
+        xAxisTitle: '',
+        yAxisTitle: ''
+      });
+    } else if (currentFace === 'purpose') {
+      setAxisLabels({
+        xLabels: ['Pe', 'PA', 'FV', 'Va', 'B', 'G', 'Vi'],
+        yLabels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        xGroupLabels: ['Intimacy', 'Purpose'],
+        showGroupLabels: true,
+        xAxisTitle: '',
+        yAxisTitle: ''
+      });
+    } else if (currentFace === 'time') {
+      setAxisLabels({
+        xLabels: ['0', '20', '40', '60', '80', '100'],
+        yLabels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        xGroupLabels: [],
+        showGroupLabels: false,
+        xAxisTitle: 'Years',
+        yAxisTitle: ''
+      });
+    }
+    
+    // Transition timer
     setTimeout(() => {
       setIsTransitioning(false);
-    }, 1000); // Match this with the CSS transition duration
-  };
+    }, 1000); // Match transition duration
+  }, [currentFace]);
 
-  const handleRotateControl = (direction: string) => {
-    setIsAutoRotating(false);
-    
-    switch (direction) {
-      case 'up':
-        setManualRotation(prev => ({ ...prev, x: prev.x + 15 }));
-        break;
-      case 'right':
-        setManualRotation(prev => ({ ...prev, y: prev.y - 15 }));
-        break;
-      case 'down':
-        setManualRotation(prev => ({ ...prev, x: prev.x - 15 }));
-        break;
-      case 'left':
-        setManualRotation(prev => ({ ...prev, y: prev.y + 15 }));
-        break;
-      case 'reset':
-        setManualRotation({ x: 0, y: 0 });
-        setCurrentFace(0);
-        setRotation(faceRotations[0]);
-        break;
-      case 'auto':
-        setIsAutoRotating(prev => !prev);
-        if (!isAutoRotating) {
-          setCurrentFace(null); // Set to null when auto-rotating
-        }
-        break;
-    }
-  };
-
-  // Combine preset rotations with manual adjustments
-  const finalRotation = {
-    x: rotation.x + manualRotation.x,
-    y: rotation.y + manualRotation.y
+  const navigateTo = (face: string) => {
+    if (isTransitioning) return;
+    setCurrentFace(face);
   };
 
   return (
     <div className="cube-wrapper">
       <Header />
       <div className="cube-container">
+        <div className="graph-plane">
+          {/* Y Axis */}
+          <div className="y-axis">
+            <div className="axis-title">{axisLabels.yAxisTitle}</div>
+            <div className="axis-labels">
+              {axisLabels.yLabels.map((label, index) => (
+                <div 
+                  key={`y-${index}`} 
+                  className="axis-label"
+                  style={{ bottom: `${(index / (axisLabels.yLabels.length - 1)) * 100}%` }}
+                >
+                  {label}
+                </div>
+              ))}
+            </div>
+            <div className="axis-line"></div>
+          </div>
+          
+          {/* X Axis */}
+          <div className="x-axis">
+            <div className="axis-line"></div>
+            <div className="axis-title">{axisLabels.xAxisTitle}</div>
+            <div className="axis-labels">
+              {axisLabels.xLabels.map((label, index) => (
+                <div 
+                  key={`x-${index}`} 
+                  className="axis-label"
+                  style={{ 
+                    left: `${(index / (axisLabels.xLabels.length - 1)) * 100}%`,
+                    transform: 'translateX(-50%)'
+                  }}
+                >
+                  {label}
+                </div>
+              ))}
+            </div>
+            
+            {/* Group labels for purpose view */}
+            {axisLabels.showGroupLabels && (
+              <div className="group-labels">
+                <div 
+                  className="group-label"
+                  style={{ 
+                    left: '21.5%', 
+                    width: '43%',
+                    transform: 'translateX(-50%)'
+                  }}
+                >
+                  {axisLabels.xGroupLabels[0]}
+                </div>
+                <div 
+                  className="group-label"
+                  style={{ 
+                    left: '71.5%', 
+                    width: '57%',
+                    transform: 'translateX(-50%)'
+                  }}
+                >
+                  {axisLabels.xGroupLabels[1]}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* 3D Cube */}
+          <div className="scene">
+            <div 
+              className="cube" 
+              style={{
+                transform: `translateZ(-250px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`
+              }}
+            >
+              <div className={`cube-face front ${currentFace !== 'qualities' ? 'inactive' : ''}`}>
+                <EqualizerFace />
+              </div>
+              <div className={`cube-face right ${currentFace !== 'time' ? 'inactive' : ''}`}>
+                <IsometricFace />
+              </div>
+              <div className={`cube-face back ${currentFace !== 'back' ? 'inactive' : ''}`}>
+                <GraphFace />
+              </div>
+              <div className={`cube-face left ${currentFace !== 'left' ? 'inactive' : ''}`}>
+                <div className="placeholder-face">Future Face</div>
+              </div>
+              <div className={`cube-face top ${currentFace !== 'purpose' ? 'inactive' : ''}`}>
+                <TopFace />
+              </div>
+              <div className={`cube-face bottom ${currentFace !== 'bottom' ? 'inactive' : ''}`}>
+                <div className="placeholder-face">Future Face</div>
+              </div>
+            </div>
+            <div className="cube-shadow"></div>
+          </div>
+        </div>
+
+        {/* Navigation buttons below the cube */}
         <div className="cube-navigation">
-          <button onClick={() => navigateTo(0)} className={currentFace === 0 ? 'active' : ''}>
-            Emotional Intelligence
-          </button>
-          <button onClick={() => navigateTo(1)} className={currentFace === 1 ? 'active' : ''}>
-            Relationship Patterns
-          </button>
-          <button onClick={() => navigateTo(2)} className={currentFace === 2 ? 'active' : ''}>
-            Relationship Structure
-          </button>
-          <button onClick={() => navigateTo(4)} className={currentFace === 4 ? 'active' : ''}>
-            Love Languages
-          </button>
-        </div>
-
-        <div className="scene">
-          <div 
-            className="cube" 
-            style={{
-              transform: `translateZ(-200px) rotateX(${finalRotation.x}deg) rotateY(${finalRotation.y}deg)`
-            }}
+          <button 
+            onClick={() => navigateTo('qualities')} 
+            className={currentFace === 'qualities' ? 'active' : ''}
           >
-            <div className={`cube-face front ${currentFace !== 0 && !isAutoRotating ? 'inactive' : ''}`}>
-              <EqualizerFace />
-            </div>
-            <div className={`cube-face right ${currentFace !== 1 && !isAutoRotating ? 'inactive' : ''}`}>
-              <GraphFace />
-            </div>
-            <div className={`cube-face back ${currentFace !== 2 && !isAutoRotating ? 'inactive' : ''}`}>
-              <IsometricFace />
-            </div>
-            <div className={`cube-face left ${currentFace !== 3 && !isAutoRotating ? 'inactive' : ''}`}>
-              <div className="placeholder-face">Future Face</div>
-            </div>
-            <div className={`cube-face top ${currentFace !== 4 && !isAutoRotating ? 'inactive' : ''}`}>
-              <TopFace />
-            </div>
-            <div className={`cube-face bottom ${currentFace !== 5 && !isAutoRotating ? 'inactive' : ''}`}>
-              <div className="placeholder-face">Future Face</div>
-            </div>
-          </div>
-          <div className="cube-shadow"></div>
-        </div>
-
-        <div className="cube-rotation-controls">
-          <div className="rotation-control" onClick={() => handleRotateControl('up')} title="Rotate Up">
-            ↑
-          </div>
-          <div className="rotation-control" onClick={() => handleRotateControl('left')} title="Rotate Left">
-            ←
-          </div>
-          <div className="rotation-control" onClick={() => handleRotateControl('reset')} title="Reset View">
-            ⟳
-          </div>
-          <div className="rotation-control" onClick={() => handleRotateControl('right')} title="Rotate Right">
-            →
-          </div>
-          <div className="rotation-control" onClick={() => handleRotateControl('down')} title="Rotate Down">
-            ↓
-          </div>
-          <div 
-            className="rotation-control" 
-            onClick={() => handleRotateControl('auto')} 
-            title={isAutoRotating ? "Stop Auto-Rotation" : "Start Auto-Rotation"}
-            style={{ backgroundColor: isAutoRotating ? '#d7967b' : '#eee', color: isAutoRotating ? 'white' : 'black' }}
+            Qualities
+          </button>
+          <button 
+            onClick={() => navigateTo('purpose')} 
+            className={currentFace === 'purpose' ? 'active' : ''}
           >
-            ⥁
-          </div>
+            Purpose
+          </button>
+          <button 
+            onClick={() => navigateTo('time')} 
+            className={currentFace === 'time' ? 'active' : ''}
+          >
+            Time
+          </button>
         </div>
       </div>
     </div>
