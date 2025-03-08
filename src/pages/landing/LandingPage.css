@@ -36,6 +36,7 @@ header {
   align-items: center;
   font-family: 'EB Garamond', serif;
   font-style: italic;
+  font-weight: 600;
   font-size: 1.5rem;
 }
 
@@ -72,6 +73,7 @@ p {
   font-size: 1.2rem;
   line-height: 1.6;
   margin-bottom: 2rem;
+  text-align: left;
   color: #555;
 }
 

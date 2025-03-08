@@ -9,10 +9,16 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "keywords": ["dating", "love", "navigation", "react"],
+  "keywords": [
+    "dating",
+    "love",
+    "navigation",
+    "react"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "postcss-selector-parser": "^6.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.0"
