@@ -22,7 +22,7 @@ const LandingPage: React.FC = () => {
         <div className="text-content">
           <h1>Your <em>SatNav</em> for dating and love</h1>
           <p>Love is rich and complex. But today, everyone is trying to make a really simple story theirs. What if your story could be different?</p>
-          <Link to="/cube" className="cta-button">Enter</Link>
+          <Link to="/form/dealbreakers" className="cta-button">Start Your Journey</Link>
         </div>
         
         <div className="visual-content">

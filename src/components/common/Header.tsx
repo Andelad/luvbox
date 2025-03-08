@@ -1,20 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
+
+// Import logo
 import logo from '../../assets/images/logo.png';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  showHomeLink?: boolean;
+}
+
+const Header: React.FC<HeaderProps> = ({ showHomeLink = true }) => {
   return (
-    <header className="main-header">
-      <div className="logo">
-        <Link to="/">
-          <img src={logo} alt="LuvNav Logo" height="40" />
-          <span>LuvNav</span>
-        </Link>
+    <header className="app-header">
+      <div className="logo-container">
+        {showHomeLink ? (
+          <Link to="/" className="logo-link">
+            <img src={logo} alt="LuvNav Logo" className="header-logo" />
+            <span className="logo-text">LuvNav</span>
+          </Link>
+        ) : (
+          <div className="logo">
+            <img src={logo} alt="LuvNav Logo" className="header-logo" />
+            <span className="logo-text">LuvNav</span>
+          </div>
+        )}
       </div>
-      <nav className="main-nav">
-        {/* You can add navigation items here later */}
-      </nav>
     </header>
   );
 };
