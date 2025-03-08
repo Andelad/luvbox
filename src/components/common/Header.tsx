@@ -16,7 +16,7 @@ const Header: React.FC<HeaderProps> = ({ showHomeLink = true }) => {
         {showHomeLink ? (
           <Link to="/" className="logo-link">
             <img src={logo} alt="LuvBox Logo" className="header-logo" />
-            <span className="logo-text">LuvBox</span>
+            <span className="logo-text">LuvBox 1.0</span>
           </Link>
         ) : (
           <div className="logo">

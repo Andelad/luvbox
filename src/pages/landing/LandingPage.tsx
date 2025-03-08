@@ -25,63 +25,65 @@ const LandingPage: React.FC = () => {
           
           <div className="visual-content">
             <div className="diagram">
-              {/* SVG for triangle with line-based arrows */}
+              {/* SVG for triangle with curved arrows */}
               <svg className="triangle-svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
-                {/* Define line-based arrowhead marker */}
+                {/* Define chevron arrowhead markers */}
                 <defs>
                   <marker 
-                    id="arrowhead" 
+                    id="chevron-arrow" 
                     markerWidth="10" 
                     markerHeight="10" 
-                    refX="8" 
+                    refX="6" 
                     refY="5" 
                     orient="auto"
                     markerUnits="strokeWidth"
                   >
-                    <path d="M0,0 L0,10 L10,5 L0,0" stroke="#2d2d2d" fill="none" strokeWidth="1.5"/>
+                    <path d="M0,0 L6,5 L0,10" stroke="#2d2d2d" fill="none" strokeWidth="1.5"/>
                   </marker>
                   <marker 
-                    id="arrowhead-reverse" 
+                    id="chevron-arrow-reverse" 
                     markerWidth="10" 
                     markerHeight="10" 
-                    refX="2" 
+                    refX="4" 
                     refY="5" 
                     orient="auto"
                     markerUnits="strokeWidth"
                   >
-                    <path d="M10,0 L10,10 L0,5 L10,0" stroke="#2d2d2d" fill="none" strokeWidth="1.5"/>
+                    <path d="M6,0 L0,5 L6,10" stroke="#2d2d2d" fill="none" strokeWidth="1.5"/>
                   </marker>
                 </defs>
                 
-                {/* Line from Cube to Book - only 60% of the distance */}
+                {/* Line from Cube to Book - properly positioned to avoid cube */}
                 <line 
-                  x1="200" y1="80" 
-                  x2="140" y2="180" 
+                  x1="170" y1="120" 
+                  x2="145" y2="170" 
                   stroke="#2d2d2d" 
                   strokeWidth="1.5" 
                   strokeDasharray="5,5" 
-                  markerEnd="url(#arrowhead)" 
+                  markerStart="url(#chevron-arrow-reverse)"
+                  markerEnd="url(#chevron-arrow)" 
                 />
                 
-                {/* Line from Cube to Person - only 60% of the distance */}
+                {/* Line from Cube to Person - properly positioned to avoid cube */}
                 <line 
-                  x1="200" y1="80" 
-                  x2="260" y2="180" 
+                  x1="230" y1="120" 
+                  x2="255" y2="170" 
                   stroke="#2d2d2d" 
                   strokeWidth="1.5" 
-                  strokeDasharray="5,5" 
-                  markerEnd="url(#arrowhead)" 
+                  strokeDasharray="5,5"
+                  markerStart="url(#chevron-arrow-reverse)" 
+                  markerEnd="url(#chevron-arrow)" 
                 />
                 
-                {/* Line from Book to Person - only 60% of the distance */}
+                {/* Line from Book to Person - bi-directional */}
                 <line 
                   x1="140" y1="215" 
                   x2="260" y2="215" 
                   stroke="#2d2d2d" 
                   strokeWidth="1.5" 
                   strokeDasharray="5,5" 
-                  markerStart="url(#arrowhead-reverse)" 
-                  markerEnd="url(#arrowhead)" 
+                  markerStart="url(#chevron-arrow-reverse)" 
+                  markerEnd="url(#chevron-arrow)" 
                 />
               </svg>
               
