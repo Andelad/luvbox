@@ -187,7 +187,7 @@
   font-size: 2rem;
   background-color: rgba(255, 255, 255, 0.95);
   border: 1px solid #ddd;
-  backface-visibility: visible;
+  backface-visibility: hidden;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1) inset;
   transition: opacity 0.5s ease;
@@ -220,7 +220,8 @@
 }
 
 .cube-face.inactive {
-  opacity: 0.3;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .placeholder-face {

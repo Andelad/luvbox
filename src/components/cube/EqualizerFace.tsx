@@ -1,37 +1,52 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './CubeFaces.css';
 
 const EqualizerFace: React.FC = () => {
-  const [bars, setBars] = useState<number[]>([]);
+  // Sample dealbreaker values (1-10 scale)
+  const dealbreakerValues = [7, 6, 5, 8, 4, 4, 9];
   
-  // Generate random heights for equalizer bars
-  useEffect(() => {
-    const generateBars = () => {
-      const newBars = Array.from({ length: 20 }, () => 
-        Math.floor(Math.random() * 80) + 20
-      );
-      setBars(newBars);
-    };
+  // Create a smooth curve using SVG's built-in smooth curve command
+  const createSmoothCurve = () => {
+    // Generate points
+    const points = dealbreakerValues.map((val, index) => ({
+      x: index * (100/6),
+      y: 100 - (val * 10)
+    }));
     
-    generateBars();
-    const interval = setInterval(generateBars, 1000);
+    // Start with the first point
+    let path = `M${points[0].x},${points[0].y}`;
     
-    return () => clearInterval(interval);
-  }, []);
+    // Add the remaining points with smooth curve command
+    points.slice(1).forEach(point => {
+      path += ` S${point.x},${point.y} ${point.x},${point.y}`;
+    });
+    
+    return path;
+  };
   
   return (
-    <div className="equalizer-face">
-      <h2>Emotional Intelligence</h2>
-      <div className="equalizer-container">
-        {bars.map((height, index) => (
-          <div 
-            key={index} 
-            className="equalizer-bar"
-            style={{ height: `${height}%` }}
+    <div style={{ width: '100%', height: '100%', overflow: 'hidden', position: 'relative' }}>
+      <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+        {/* Draw the curved line */}
+        <path
+          d={createSmoothCurve()}
+          stroke="#888"
+          strokeWidth="1"
+          strokeDasharray="2,2"
+          fill="none"
+        />
+        
+        {/* Draw the dots */}
+        {dealbreakerValues.map((val, index) => (
+          <circle
+            key={index}
+            cx={index * (100/6)}
+            cy={100 - (val * 10)}
+            r="2"
+            fill="#666"
           />
         ))}
-      </div>
-      <p>Understanding your emotional landscape</p>
+      </svg>
     </div>
   );
 };
