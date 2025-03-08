@@ -53,10 +53,10 @@ const LandingPage: React.FC = () => {
                   </marker>
                 </defs>
                 
-                {/* Line from Cube to Book - properly positioned to avoid cube */}
+                {/* Line from Cube to Book - 45 degree angle, avoiding cube */}
                 <line 
-                  x1="170" y1="120" 
-                  x2="145" y2="170" 
+                  x1="160" y1="140" 
+                  x2="120" y2="180" 
                   stroke="#2d2d2d" 
                   strokeWidth="1.5" 
                   strokeDasharray="5,5" 
@@ -64,10 +64,10 @@ const LandingPage: React.FC = () => {
                   markerEnd="url(#chevron-arrow)" 
                 />
                 
-                {/* Line from Cube to Person - properly positioned to avoid cube */}
+                {/* Line from Cube to Person - 45 degree angle, avoiding cube */}
                 <line 
-                  x1="230" y1="120" 
-                  x2="255" y2="170" 
+                  x1="240" y1="140" 
+                  x2="280" y2="180" 
                   stroke="#2d2d2d" 
                   strokeWidth="1.5" 
                   strokeDasharray="5,5"
