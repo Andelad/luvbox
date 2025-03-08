@@ -14,10 +14,21 @@ body {
   min-height: 100vh;
 }
 
-.landing-container {
+.landing-wrapper {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: #f0e9e2;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .content {
@@ -26,10 +37,6 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 0;
 }
 
 .text-content {
@@ -120,11 +127,27 @@ p {
   position: absolute;
   z-index: 2; /* Make sure images appear above SVG */
   transition: transform 2s ease-in-out;
+  text-align: center;
+}
+
+.diagram-element img {
+  display: block;
+  margin: 0 auto;
+}
+
+.element-label {
+  font-family: 'EB Garamond', serif;
+  font-weight: 600;
+  font-style: italic;
+  font-size: 1.2rem;
+  color: #2d2d2d;
+  margin-bottom: 10px;
+  display: block;
 }
 
 /* Triangle layout positioning */
 .diagram-cube {
-  width: 80px;
+  width: 100px;
   top: 40px;
   left: 50%;
   transform: translateX(-50%);
@@ -172,7 +195,6 @@ p {
 @media (max-width: 768px) {
   .content {
     flex-direction: column;
-    padding: 1rem;
   }
   
   .visual-content {
@@ -208,5 +230,9 @@ p {
   .person {
     width: 60px;
     right: 12%;
+  }
+  
+  .element-label {
+    font-size: 1.1rem;
   }
 }
