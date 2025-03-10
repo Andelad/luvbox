@@ -25,7 +25,7 @@ const SettingsPage: React.FC = () => {
       // If no saved values, create default ones based on questions
       const defaultValues = dealbreakersQuestions.map(q => ({
         questionId: q.id,
-        value: 0
+        value: 5 // Default to middle value
       }));
       setDealbreakerValues(defaultValues);
     }
@@ -39,6 +39,45 @@ const SettingsPage: React.FC = () => {
       localStorage.setItem('dealbreakers', JSON.stringify(dealbreakerValues));
     }
   }, [dealbreakerValues, loaded]);
+
+  // Set up polyfill for input event if needed
+  useEffect(() => {
+    // For browsers that might not properly support continuous updates during drag
+    const sliders = document.querySelectorAll('input[type="range"]');
+    
+    sliders.forEach(slider => {
+      // Use both mousedown and touchstart to ensure all device support
+      slider.addEventListener('mousedown', function() {
+        // Add mousemove listener when mouse is down
+        const handleMove = () => {
+          // Dispatch input event to ensure continuous updates
+          slider.dispatchEvent(new Event('input', { bubbles: true }));
+        };
+        
+        document.addEventListener('mousemove', handleMove);
+        
+        // Remove listener when mouse is up
+        document.addEventListener('mouseup', function cleanUp() {
+          document.removeEventListener('mousemove', handleMove);
+          document.removeEventListener('mouseup', cleanUp);
+        }, { once: true });
+      });
+      
+      // Similar setup for touch events
+      slider.addEventListener('touchstart', function() {
+        const handleTouchMove = () => {
+          slider.dispatchEvent(new Event('input', { bubbles: true }));
+        };
+        
+        document.addEventListener('touchmove', handleTouchMove);
+        
+        document.addEventListener('touchend', function cleanUp() {
+          document.removeEventListener('touchmove', handleTouchMove);
+          document.removeEventListener('touchend', cleanUp);
+        }, { once: true });
+      });
+    });
+  }, [loaded]);
 
   const handleSliderChange = (id: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(e.target.value, 10);
@@ -66,6 +105,18 @@ const SettingsPage: React.FC = () => {
       window.dispatchEvent(new Event('dealbreakersChanged'));
       
       return updatedValues;
+    });
+  };
+
+  // Also handle input events for continuous updates
+  const handleSliderInput = (id: string) => (e: React.FormEvent<HTMLInputElement>) => {
+    const newValue = parseInt((e.target as HTMLInputElement).value, 10);
+    
+    // Update state to reflect continuous movement
+    setDealbreakerValues(prev => {
+      return prev.map(item => 
+        item.questionId === id ? { ...item, value: newValue } : item
+      );
     });
   };
 
@@ -131,16 +182,19 @@ const SettingsPage: React.FC = () => {
                 </label>
                 <span style={{ fontWeight: 'bold', color: '#d7967b', minWidth: '24px', textAlign: 'right' }}>{currentValue}</span>
               </div>
-              <input
-                type="range"
-                id={`slider-${question.id}`}
-                min="0"
-                max="10"
-                step="1"
-                value={currentValue}
-                onChange={handleSliderChange(question.id)}
-                className="dealbreaker-slider"
-              />
+              <div className="slider-wrapper">
+                <input
+                  type="range"
+                  id={`slider-${question.id}`}
+                  min="0"
+                  max="10"
+                  step="1"
+                  value={currentValue}
+                  onChange={handleSliderChange(question.id)}
+                  onInput={handleSliderInput(question.id)}
+                  className="dealbreaker-slider"
+                />
+              </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: '#888' }}>
                 <span>Not important (0)</span>
                 <span>Very important (10)</span>
