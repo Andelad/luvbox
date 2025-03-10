@@ -196,27 +196,21 @@
 
 .front  { 
   transform: rotateY(0deg) translateZ(230px);
-  border-color: #d7967b;
 }
 .right  { 
   transform: rotateY(90deg) translateZ(230px);
-  border-color: #c27b5d;
 }
 .back   { 
   transform: rotateY(180deg) translateZ(230px);
-  border-color: #a25a3c;
 }
 .left   { 
   transform: rotateY(-90deg) translateZ(230px);
-  border-color: #b46b4d;
 }
 .top    { 
   transform: rotateX(90deg) translateZ(230px);
-  border-color: #d7967b;
 }
 .bottom { 
   transform: rotateX(-90deg) translateZ(230px);
-  border-color: #915132;
 }
 
 .cube-face.inactive {

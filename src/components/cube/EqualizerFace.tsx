@@ -75,6 +75,20 @@ const EqualizerFace: React.FC = () => {
         style={{ position: 'relative', height: '100%', width: '100%', padding: 0 }}
       >
         <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+          {/* Vertical grid lines */}
+          {userValues.map((_, index) => (
+            <line
+              key={`grid-line-${index}`}
+              x1={index * (100/6)}
+              y1="0"
+              x2={index * (100/6)}
+              y2="100"
+              stroke="#e0e0e0"
+              strokeWidth="0.5"
+              opacity="0.6"
+            />
+          ))}
+          
           {/* Draw segments with color based on comparison */}
           {userValues.map((val, index) => {
             if (index === 0) return null; // Skip first point, no segment to draw yet

@@ -14,7 +14,7 @@
   background-color: white;
   font-family: 'Source Sans Pro', sans-serif;
   border-radius: 3px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05) inset;
+  /* Removed box-shadow: 0 0 10px rgba(0, 0, 0, 0.05) inset; */
 }
 
 h2 {
