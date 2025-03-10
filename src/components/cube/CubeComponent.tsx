@@ -4,14 +4,26 @@ import EqualizerFace from './EqualizerFace';
 import GraphFace from './GraphFace';
 import IsometricFace from './IsometricFace';
 import TopFace from './TopFace';
-import Header from '../common/Header';
+
+// Define types for face rotation
+type FaceType = 'qualities' | 'purpose' | 'time' | 'back' | 'left' | 'bottom';
+
+// Define types for axis labels
+interface AxisLabels {
+  xLabels: string[];
+  yLabels: (number | string)[];  // Allow both numbers and strings
+  xGroupLabels: string[];
+  showGroupLabels: boolean;
+  xAxisTitle: string;
+  yAxisTitle: string;
+}
 
 const CubeComponent: React.FC = () => {
-  const [currentFace, setCurrentFace] = useState('qualities');
+  const [currentFace, setCurrentFace] = useState<FaceType>('qualities');
   const [isTransitioning, setIsTransitioning] = useState(false);
   // Sample values for the sliders (0-10 scale)
   const [sliderValues, setSliderValues] = useState<number[]>([7, 6, 5, 8, 4, 4, 9]);
-  const [axisLabels, setAxisLabels] = useState({
+  const [axisLabels, setAxisLabels] = useState<AxisLabels>({
     xLabels: ['Pe', 'PA', 'FV', 'Va', 'B', 'G', 'Vi'],
     yLabels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     xGroupLabels: ['Intimacy', 'Purpose'],
@@ -21,10 +33,13 @@ const CubeComponent: React.FC = () => {
   });
   
   // Preset rotations for each view
-  const faceRotations = {
+  const faceRotations: Record<FaceType, { x: number, y: number }> = {
     qualities: { x: 0, y: 0 },      // Front face (Equalizer)
     purpose: { x: -90, y: 0 },      // Top face
-    time: { x: 0, y: -90 }          // Right face (IsometricFace)
+    time: { x: 0, y: -90 },         // Right face (IsometricFace)
+    back: { x: 0, y: 180 },         // Back face
+    left: { x: 0, y: 90 },          // Left face
+    bottom: { x: 90, y: 0 }         // Bottom face
   };
   
   const [rotation, setRotation] = useState(faceRotations.qualities);
@@ -72,14 +87,13 @@ const CubeComponent: React.FC = () => {
     }, 1000); // Match transition duration
   }, [currentFace]);
 
-  const navigateTo = (face: string) => {
+  const navigateTo = (face: FaceType) => {
     if (isTransitioning) return;
     setCurrentFace(face);
   };
 
   return (
     <div className="cube-wrapper">
-      <Header />
       <div className="cube-container">
         <div className="graph-plane">
           {/* Additional Axes */}
