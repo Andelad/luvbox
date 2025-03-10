@@ -1,0 +1,182 @@
+[33mcommit b28a10dd5c27168fbae0c679bfbbda5c05dfc396[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Eido <toandyjohnston@gmail.com>
+Date:   Mon Mar 10 12:56:14 2025 +0000
+
+    Sidebar 2
+
+[33mcommit dac54b985d492e282e020b6f432788773606c8d7[m
+Author: Eido <toandyjohnston@gmail.com>
+Date:   Mon Mar 10 12:46:11 2025 +0000
+
+    Sidebar
+
+[33mcommit 7c3412b7f9fe4253e8c9ce97c45037cccbe29824[m
+Author: Eido <toandyjohnston@gmail.com>
+Date:   Mon Mar 10 12:25:19 2025 +0000
+
+    Cube
+
+[33mcommit fb06231d1295c82f0934f9787568c076b4354c40[m
+Author: Eido <toandyjohnston@gmail.com>
+Date:   Mon Mar 10 11:21:33 2025 +0000
+
+    Commit
+
+[33mcommit b12a9faae2241f78b51288843f3bd565191333a7[m
+Author: Eido <toandyjohnston@gmail.com>
+Date:   Mon Mar 10 10:23:07 2025 +0000
+
+    Equaliser Face
+
+[33mcommit faf94fc283d504ed8fbd02fab9ca869b286b8b71[m
+Author: Eido <toandyjohnston@gmail.com>
+Date:   Sat Mar 8 17:17:42 2025 +0000
+
+    Dealbreaker Line
+
+[33mcommit b102673892c76a55e9ccc6cfbe5910f6ae49a7a6[m
+Author: Eido <toandyjohnston@gmail.com>
+Date:   Sat Mar 8 16:12:50 2025 +0000
+
+    Arrows
+
+[33mcommit d64a069d1402fc029f5ae41152fb2a37fbdf7311[m
+Author: Eido <toandyjohnston@gmail.com>
+Date:   Sat Mar 8 16:08:46 2025 +0000
+
+    Arrows
+
+[33mcommit 57970940c8e895802fbd7ba94aebd11a75867cc5[m
+Author: Eido <toandyjohnston@gmail.com>
+Date:   Sat Mar 8 15:30:55 2025 +0000
+
+    Ladning Page Update
+
+[33mcommit de82ee4446a5df4b53cd2c5caf4a73f1ca58993d[m
+Author: Eido <toandyjohnston@gmail.com>
+Date:   Sat Mar 8 15:16:33 2025 +0000
+
+    Landing Page update
+
+[33mcommit 861040f4733e3b92cadf0e94324f5c2404176b7d[m
+Author: Eido <toandyjohnston@gmail.com>
+Date:   Sat Mar 8 14:32:25 2025 +0000
+
+    Cube Dev
+
+[33mcommit eac7dd361111b7d8a04485cf4946709b67dcad2e[m
+Author: Eido <toandyjohnston@gmail.com>
+Date:   Sat Mar 8 13:45:01 2025 +0000
+
+    Landing Page Updates
+
+[33mcommit bebc1d5bc72b4de9dd5da928d963d7d67c5ac908[m
+Author: Eido <toandyjohnston@gmail.com>
+Date:   Sat Mar 8 13:11:03 2025 +0000
+
+    Updated LandingPage.css and added ProgressBar component
+
+[33mcommit f018d91af0a1116a55787cd8b68a390e4d82ba9a[m
+Author: Eido <toandyjohnston@gmail.com>
+Date:   Sat Mar 8 12:10:13 2025 +0000
+
+    Next
+
+[33mcommit 2ced24e948a422416aa8af12e96d92fcf2f119c6[m
+Author: Eido <toandyjohnston@gmail.com>
+Date:   Sat Mar 8 11:23:12 2025 +0000
+
+    Sat 8th
+
+[33mcommit 0a805c53acdf598e98d38228e502b430999a719f[m
+Author: Eido <toandyjohnston@gmail.com>
+Date:   Fri Mar 7 16:04:56 2025 +0000
+
+    Update
+
+[33mcommit d225c62566a2f7838a2576eec1e24f8a34798365[m
+Merge: 35f8c5c7 3e86ff39
+Author: Eido <toandyjohnston@gmail.com>
+Date:   Fri Mar 7 16:01:03 2025 +0000
+
+    Fix cube component structure
+
+[33mcommit 35f8c5c749a056a183bab4fe81da756156bd3e5c[m
+Author: Eido <toandyjohnston@gmail.com>
+Date:   Fri Mar 7 15:00:06 2025 +0000
+
+    Eh?
+
+[33mcommit 3e86ff39067bcfb3437b39a5d0a4fe7749fad1e9[m
+Author: Andrew Johnston <toandyjohnston@gmail.com>
+Date:   Fri Mar 7 14:17:35 2025 +0000
+
+    Update package.json
+
+[33mcommit 89b6a424df634d3d59b71398eeff53710e3f6ccc[m
+Author: Eido <toandyjohnston@gmail.com>
+Date:   Fri Mar 7 14:11:53 2025 +0000
+
+    Update
+
+[33mcommit 44bdc9378db3abb0f403a2cfe6c10938f266f346[m
+Merge: 867881ec af2ac67e
+Author: Eido <toandyjohnston@gmail.com>
+Date:   Fri Mar 7 13:48:35 2025 +0000
+
+    Merge branch 'main' of https://github.com/Andelad/luvbox
+
+[33mcommit 867881ec76da29a26a359b914597ff9744c78e2b[m
+Author: Eido <toandyjohnston@gmail.com>
+Date:   Fri Mar 7 13:45:29 2025 +0000
+
+    CSS and landing page
+
+[33mcommit e8d79fb9785b6b3ed2a52f80c90e91e38c1ec807[m
+Author: Eido <toandyjohnston@gmail.com>
+Date:   Fri Mar 7 13:38:38 2025 +0000
+
+    Adding Dependencies
+
+[33mcommit 2b431515a3de8473f1f6b0caee72e355133cbfb7[m
+Author: Eido <toandyjohnston@gmail.com>
+Date:   Fri Mar 7 13:38:19 2025 +0000
+
+    Add React Router dependencies
+
+[33mcommit af2ac67ea832ca5343bf376bfeec907b5655be80[m
+Merge: dec1cd5a fd3975d9
+Author: Andrew Johnston <toandyjohnston@gmail.com>
+Date:   Fri Mar 7 13:35:02 2025 +0000
+
+    Merge branch 'main' of https://github.com/Andelad/luvbox
+
+[33mcommit dec1cd5ae61aa939a18280d1a6d4ea064c512a22[m
+Author: Andrew Johnston <toandyjohnston@gmail.com>
+Date:   Fri Mar 7 13:34:35 2025 +0000
+
+    Incoming
+
+[33mcommit fd3975d95d5a3724e85f5fb9c1df632a8e5ec3c2[m
+Author: Eido <toandyjohnston@gmail.com>
+Date:   Fri Mar 7 13:33:10 2025 +0000
+
+    Further Building
+
+[33mcommit 6a2f5e226cdab588d5e77e441a1a38cb44bc6f08[m
+Author: Eido <toandyjohnston@gmail.com>
+Date:   Fri Mar 7 10:46:26 2025 +0000
+
+    Initial project layout
+
+[33mcommit dae9dce997fb6e2dc352097f5c3f6abd92ae66c0[m
+Author: Eido <toandyjohnston@gmail.com>
+Date:   Fri Mar 7 10:32:27 2025 +0000
+
+    Intro Project Structure.
+
+[33mcommit a84e228cb93e9165a0bc19b3a1a96ec650f3aa91[m
+Author: Eido <toandyjohnston@gmail.com>
+Date:   Fri Mar 7 09:54:41 2025 +0000
+
+    Initial commit
