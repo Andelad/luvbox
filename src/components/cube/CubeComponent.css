@@ -23,77 +23,86 @@
   height: min(80vw, 600px);
   aspect-ratio: 1/1;
   margin: 0 auto 2rem;
-  border: 1px solid #666;
   box-sizing: border-box;
 }
 
 /* Axis Styling */
-.x-axis, .y-axis {
+.x-axis, .y-axis, .x-axis-top, .y-axis-right {
   position: absolute;
   color: #666;
-  transition: opacity 0.5s ease;
+  transition: opacity 1s ease;
+  opacity: 1;
+}
+
+.x-axis.transitioning, 
+.y-axis.transitioning, 
+.x-axis-top.transitioning, 
+.y-axis-right.transitioning,
+.axis-title.transitioning,
+.axis-labels.transitioning {
+  opacity: 0;
 }
 
 .x-axis {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 40px;
+  height: 50px;
 }
 
 .x-axis-top {
   top: 0;
   left: 0;
   width: 100%;
-  height: 40px;
+  height: 50px;
   position: absolute;
 }
 
 .y-axis {
   left: 0;
-  bottom: 40px;
-  width: 40px;
-  height: calc(100% - 40px);
+  bottom: 50px;
+  width: 50px;
+  height: calc(100% - 50px);
 }
 
 .y-axis-right {
   right: 0;
-  bottom: 40px;
-  width: 40px;
-  height: calc(100% - 40px);
+  bottom: 50px;
+  width: 50px;
+  height: calc(100% - 50px);
   position: absolute;
 }
 
 .axis-line {
   position: absolute;
-  background-color: #666;
+  background-color: transparent;
 }
 
 .x-axis .axis-line {
   top: 0;
-  left: 40px;
-  height: 1px;
-  width: calc(100% - 30px);
+  left: 50px;
+  height: 0;
+  width: calc(100% - 50px);
 }
 
 .x-axis-top .axis-line {
   bottom: 0;
-  left: 40px;
-  height: 1px;
-  width: calc(100% - 30px);
+  left: 50px;
+  height: 0;
+  width: calc(100% - 50px);
 }
 
 .y-axis .axis-line {
   bottom: 0;
   right: 0;
-  width: 1px;
+  width: 0;
   height: calc(100% + 10px);
 }
 
 .y-axis-right .axis-line {
   bottom: 0;
   left: 0;
-  width: 1px;
+  width: 0;
   height: calc(100% + 10px);
 }
 
@@ -101,50 +110,60 @@
   position: absolute;
   font-size: 0.9rem;
   font-weight: 600;
+  color: #666;
+  transition: opacity 1s ease;
 }
 
 .x-axis .axis-title {
-  right: 0;
+  left: 50%;
   bottom: -25px;
+  transform: translateX(-50%);
+  text-align: center;
 }
 
 .y-axis .axis-title {
-  left: -30px;
+  left: -18px;
   top: 50%;
   transform: rotate(-90deg) translateX(50%);
   transform-origin: left center;
+  text-align: center;
 }
 
+/* Key change - container position and sizing */
 .axis-labels {
   position: absolute;
   font-size: 0.8rem;
+  transition: opacity 1s ease;
 }
 
 .x-axis .axis-labels {
+  left: 50px;
   top: 5px;
-  left: 40px;
-  width: calc(100% - 40px);
+  width: calc(100% - 100px);
   height: 20px;
 }
 
 .y-axis .axis-labels {
   right: 5px;
-  bottom: 0;
+  bottom: 50px;
   width: 30px;
-  height: 100%;
+  height: calc(100% - 100px);
 }
 
 .axis-label {
   position: absolute;
   white-space: nowrap;
+  font-size: 0.75rem;
 }
 
+/* Group labels positioning */
 .group-labels {
   position: absolute;
   top: -30px;
-  left: 40px;
-  width: calc(100% - 40px);
+  left: 50px;
+  width: calc(100% - 50px);
   height: 20px;
+  transition: opacity 1s ease;
 }
 
 .group-label {
@@ -157,12 +176,12 @@
 
 /* 3D Scene styling */
 .scene {
-  width: calc(100% - 80px);
-  height: calc(100% - 80px);
+  width: calc(100% - 100px);
+  height: calc(100% - 100px);
   perspective: 1200px;
   position: absolute;
-  top: 40px;
-  left: 40px;
+  top: 50px;
+  left: 50px;
   transform-style: preserve-3d;
   background-color: rgba(240, 240, 240, 0.2);
   border-radius: 8px;

@@ -9,13 +9,15 @@ import Header from '../common/Header';
 const CubeComponent: React.FC = () => {
   const [currentFace, setCurrentFace] = useState('qualities');
   const [isTransitioning, setIsTransitioning] = useState(false);
+  // Sample values for the sliders (0-10 scale)
+  const [sliderValues, setSliderValues] = useState<number[]>([7, 6, 5, 8, 4, 4, 9]);
   const [axisLabels, setAxisLabels] = useState({
     xLabels: ['Pe', 'PA', 'FV', 'Va', 'B', 'G', 'Vi'],
-    yLabels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    yLabels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     xGroupLabels: ['Intimacy', 'Purpose'],
     showGroupLabels: false,
-    xAxisTitle: '',
-    yAxisTitle: ''
+    xAxisTitle: 'Characteristics',
+    yAxisTitle: 'Number'
   });
   
   // Preset rotations for each view
@@ -38,29 +40,29 @@ const CubeComponent: React.FC = () => {
     if (currentFace === 'qualities') {
       setAxisLabels({
         xLabels: ['Pe', 'PA', 'FV', 'Va', 'B', 'G', 'Vi'],
-        yLabels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        yLabels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         xGroupLabels: [],
         showGroupLabels: false,
-        xAxisTitle: '',
-        yAxisTitle: ''
+        xAxisTitle: 'Characteristics',
+        yAxisTitle: 'Rating'
       });
     } else if (currentFace === 'purpose') {
       setAxisLabels({
         xLabels: ['Pe', 'PA', 'FV', 'Va', 'B', 'G', 'Vi'],
-        yLabels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        yLabels: ['0', '20', '40', '60', '80', '100'],
         xGroupLabels: ['Intimacy', 'Purpose'],
         showGroupLabels: true,
-        xAxisTitle: '',
-        yAxisTitle: ''
+        xAxisTitle: 'Characteristics',
+        yAxisTitle: 'Years'
       });
     } else if (currentFace === 'time') {
       setAxisLabels({
         xLabels: ['0', '20', '40', '60', '80', '100'],
-        yLabels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        yLabels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         xGroupLabels: [],
         showGroupLabels: false,
         xAxisTitle: 'Years',
-        yAxisTitle: ''
+        yAxisTitle: 'Rating'
       });
     }
     
@@ -81,52 +83,80 @@ const CubeComponent: React.FC = () => {
       <div className="cube-container">
         <div className="graph-plane">
           {/* Additional Axes */}
-          <div className="x-axis-top">
+          <div className={`x-axis-top ${isTransitioning ? 'transitioning' : ''}`}>
             <div className="axis-line"></div>
           </div>
-          <div className="y-axis-right">
+          <div className={`y-axis-right ${isTransitioning ? 'transitioning' : ''}`}>
             <div className="axis-line"></div>
           </div>
 
           {/* Y Axis */}
-          <div className="y-axis">
-            <div className="axis-title">{axisLabels.yAxisTitle}</div>
-            <div className="axis-labels">
-              {axisLabels.yLabels.map((label, index) => (
-                <div 
-                  key={`y-${index}`} 
-                  className="axis-label"
-                  style={{ bottom: `${(index / (axisLabels.yLabels.length - 1)) * 100}%` }}
-                >
-                  {label}
-                </div>
-              ))}
+          <div className={`y-axis ${isTransitioning ? 'transitioning' : ''}`}>
+            <div className={`axis-title ${isTransitioning ? 'transitioning' : ''}`}>{axisLabels.yAxisTitle}</div>
+            <div className={`axis-labels ${isTransitioning ? 'transitioning' : ''}`}>
+              {axisLabels.yLabels.map((label, index) => {
+                // Calculate position as a percentage to ensure proper spacing
+                // For y-axis we need to invert since 0% is at the top visually
+                // and 100% is at the bottom
+                const position = 100 - (index / (axisLabels.yLabels.length - 1) * 100);
+                
+                return (
+                  <div 
+                    key={`y-${index}`} 
+                    className="axis-label"
+                    style={{ 
+                      top: `${position}%`,
+                      transform: 'translateY(-50%)'
+                    }}
+                  >
+                    {label}
+                  </div>
+                );
+              })}
             </div>
             <div className="axis-line"></div>
           </div>
           
           {/* X Axis */}
-          <div className="x-axis">
+          <div className={`x-axis ${isTransitioning ? 'transitioning' : ''}`}>
             <div className="axis-line"></div>
-            <div className="axis-title">{axisLabels.xAxisTitle}</div>
-            <div className="axis-labels">
-              {axisLabels.xLabels.map((label, index) => (
-                <div 
-                  key={`x-${index}`} 
-                  className="axis-label"
-                  style={{ 
-                    left: `${(index / (axisLabels.xLabels.length - 1)) * 100}%`,
-                    transform: 'translateX(-50%)'
-                  }}
-                >
-                  {label}
-                </div>
-              ))}
+            <div className={`axis-title ${isTransitioning ? 'transitioning' : ''}`}>{axisLabels.xAxisTitle}</div>
+            <div className={`axis-labels ${isTransitioning ? 'transitioning' : ''}`}>
+              {axisLabels.xLabels.map((label, index) => {
+                // Calculate position as a percentage to ensure proper spacing
+                const position = index / (axisLabels.xLabels.length - 1) * 100;
+                
+                // Get the actual slider value for this position
+                const value = sliderValues[index] !== undefined 
+                  ? sliderValues[index].toFixed(1) 
+                  : '0.0';
+                
+                return (
+                  <div 
+                    key={`x-${index}`} 
+                    className="axis-label"
+                    style={{ 
+                      left: `${position}%`,
+                      transform: 'translateX(-50%)'
+                    }}
+                  >
+                    <div>{label}</div>
+                    <div style={{ 
+                      marginTop: '15px', 
+                      fontSize: '0.8rem', 
+                      color: '#a25a3c',
+                      fontWeight: '600'
+                    }}>
+                      {value}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
             
             {/* Group labels for purpose view */}
             {axisLabels.showGroupLabels && (
-              <div className="group-labels">
+              <div className={`group-labels ${isTransitioning ? 'transitioning' : ''}`}>
                 <div 
                   className="group-label"
                   style={{ 
@@ -160,7 +190,10 @@ const CubeComponent: React.FC = () => {
               }}
             >
               <div className={`cube-face front ${currentFace !== 'qualities' ? 'inactive' : ''}`}>
-                <EqualizerFace />
+                <EqualizerFace 
+                  values={sliderValues} 
+                  onValuesChange={setSliderValues} 
+                />
               </div>
               <div className={`cube-face right ${currentFace !== 'time' ? 'inactive' : ''}`}>
                 <IsometricFace />
