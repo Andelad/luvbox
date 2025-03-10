@@ -18,19 +18,69 @@ interface AxisLabels {
   yAxisTitle: string;
 }
 
+// Define the structure for dealbreaker answers stored in localStorage
+interface DealbrakerAnswer {
+  questionId: string;
+  value: number;
+}
+
+interface UserLineValues {
+  values: number[];
+}
+
 const CubeComponent: React.FC = () => {
   const [currentFace, setCurrentFace] = useState<FaceType>('qualities');
   const [isTransitioning, setIsTransitioning] = useState(false);
-  // Sample values for the sliders (0-10 scale)
-  const [sliderValues, setSliderValues] = useState<number[]>([7, 6, 5, 8, 4, 4, 9]);
+  // Default values for the sliders (0-10 scale)
+  const [sliderValues, setSliderValues] = useState<number[]>([5, 5, 5, 5, 5, 5, 5]);
   const [axisLabels, setAxisLabels] = useState<AxisLabels>({
-    xLabels: ['Pe', 'PA', 'FV', 'Va', 'B', 'G', 'Vi'],
+    xLabels: ['Pe', 'PA', 'FC', 'SV', 'GB', 'G', 'Vi'],
     yLabels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     xGroupLabels: ['Intimacy', 'Purpose'],
     showGroupLabels: false,
     xAxisTitle: 'Characteristics',
     yAxisTitle: 'Number'
   });
+  
+  // Set the initial slider values (default to 5)
+  useEffect(() => {
+    // Check if we have stored user selections
+    const userSelections = localStorage.getItem('userLineValues');
+    
+    if (userSelections) {
+      try {
+        const parsedSelections = JSON.parse(userSelections);
+        if (parsedSelections.values && parsedSelections.values.length === 7) {
+          // Use the stored user selections
+          setSliderValues(parsedSelections.values);
+        } else {
+          // Default to 5 for each value
+          setSliderValues([5, 5, 5, 5, 5, 5, 5]);
+        }
+      } catch (e) {
+        console.error('Error parsing saved user selections:', e);
+        setSliderValues([5, 5, 5, 5, 5, 5, 5]);
+      }
+    } else {
+      // Default to 5 for each value
+      setSliderValues([5, 5, 5, 5, 5, 5, 5]);
+    }
+    
+    // Just update the axis labels
+    setAxisLabels(prev => ({
+      ...prev,
+      xLabels: ['Pe', 'PA', 'FC', 'SV', 'GB', 'G', 'Vi']
+    }));
+  }, []);
+
+  // Handle slider value changes and save to localStorage
+  const handleValuesChange = (newValues: number[]) => {
+    setSliderValues(newValues);
+    
+    // Save to localStorage
+    const userSelection: UserLineValues = { values: newValues };
+    localStorage.setItem('userLineValues', JSON.stringify(userSelection));
+  };
   
   // Preset rotations for each view
   const faceRotations: Record<FaceType, { x: number, y: number }> = {
@@ -54,7 +104,7 @@ const CubeComponent: React.FC = () => {
     // Update axis labels based on selected face
     if (currentFace === 'qualities') {
       setAxisLabels({
-        xLabels: ['Pe', 'PA', 'FV', 'Va', 'B', 'G', 'Vi'],
+        xLabels: ['Pe', 'PA', 'FC', 'SV', 'GB', 'G', 'Vi'],
         yLabels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         xGroupLabels: [],
         showGroupLabels: false,
@@ -63,7 +113,7 @@ const CubeComponent: React.FC = () => {
       });
     } else if (currentFace === 'purpose') {
       setAxisLabels({
-        xLabels: ['Pe', 'PA', 'FV', 'Va', 'B', 'G', 'Vi'],
+        xLabels: ['Pe', 'PA', 'FC', 'SV', 'GB', 'G', 'Vi'],
         yLabels: ['0', '20', '40', '60', '80', '100'],
         xGroupLabels: ['Intimacy', 'Purpose'],
         showGroupLabels: true,
@@ -206,7 +256,7 @@ const CubeComponent: React.FC = () => {
               <div className={`cube-face front ${currentFace !== 'qualities' ? 'inactive' : ''}`}>
                 <EqualizerFace 
                   values={sliderValues} 
-                  onValuesChange={setSliderValues} 
+                  onValuesChange={handleValuesChange} 
                 />
               </div>
               <div className={`cube-face right ${currentFace !== 'time' ? 'inactive' : ''}`}>

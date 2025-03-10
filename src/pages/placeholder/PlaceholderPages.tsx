@@ -1,4 +1,5 @@
 import React from 'react';
+import SettingsPage from './SettingsPage';
 
 // Shared styling for placeholder pages
 const placeholderStyle = {
@@ -66,43 +67,5 @@ export const CommunityPage: React.FC = () => {
   );
 };
 
-// Settings Page
-export const SettingsPage: React.FC = () => {
-  return (
-    <div style={placeholderStyle}>
-      <h1 style={headingStyle}>Settings</h1>
-      <p style={paragraphStyle}>
-        Customize your LuvBox experience.
-      </p>
-      <div style={{
-        backgroundColor: 'white',
-        padding: '2rem',
-        borderRadius: '8px',
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
-        width: '100%',
-        maxWidth: '600px',
-      }}>
-        <h2 style={{
-          fontFamily: "'EB Garamond', serif",
-          fontSize: '1.8rem',
-          marginBottom: '1.5rem',
-          color: '#2d2d2d'
-        }}>My Dealbreaker Line</h2>
-        <p style={{
-          fontSize: '1rem',
-          marginBottom: '2rem',
-          color: '#666'
-        }}>
-          Configure the dealbreaker threshold that appears in the Cube visualization.
-          This setting determines the minimum acceptable level for relationship qualities.
-        </p>
-        <div style={{
-          margin: '1rem 0',
-          textAlign: 'center'
-        }}>
-          <p>Coming soon: Ability to adjust your dealbreaker values</p>
-        </div>
-      </div>
-    </div>
-  );
-};
+// Export the newly created SettingsPage
+export { SettingsPage };

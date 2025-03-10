@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './CubeFaces.css';
 import './EqualizerFace.css';
 
@@ -7,11 +7,89 @@ interface EqualizerFaceProps {
   onValuesChange: (values: number[]) => void;
 }
 
+// Define the structure for dealbreaker answers stored in localStorage
+interface DealbrakerAnswer {
+  questionId: string;
+  value: number;
+}
+
+// Define structure for user selections to store in localStorage
+interface UserSelection {
+  values: number[];
+}
+
 const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange }) => {
-  // Sample dealbreaker values (0-10 scale)
-  const dealbreakerValues = [7, 6, 5, 8, 4, 4, 9];
+  // Load dealbreaker values from localStorage
+  const [dealbreakerValues, setDealbreakerValues] = useState<number[]>([0, 0, 0, 0, 0, 0, 0]);
   const [activeDot, setActiveDot] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const hasInitializedRef = useRef<boolean>(false);
+  
+  // Initialize user line values on first mount only
+  useEffect(() => {
+    if (hasInitializedRef.current) {
+      return; // Skip if already initialized
+    }
+    
+    // Check if we have stored user selections
+    const userSelections = localStorage.getItem('userLineValues');
+    
+    if (userSelections) {
+      try {
+        const parsedSelections: UserSelection = JSON.parse(userSelections);
+        if (parsedSelections.values && parsedSelections.values.length === 7) {
+          // Use the stored user selections
+          onValuesChange(parsedSelections.values);
+          hasInitializedRef.current = true;
+          return;
+        }
+      } catch (e) {
+        console.error('Error parsing saved user selections:', e);
+      }
+    }
+    
+    // If no valid stored selections, start with all values at 5
+    onValuesChange([5, 5, 5, 5, 5, 5, 5]);
+    hasInitializedRef.current = true;
+  }, [onValuesChange]);
+  
+  // Load dealbreaker values from localStorage and respond to changes
+  useEffect(() => {
+    const loadDealbreakerValues = () => {
+      const savedAnswers = localStorage.getItem('dealbreakers');
+      if (savedAnswers) {
+        try {
+          const parsedAnswers: DealbrakerAnswer[] = JSON.parse(savedAnswers);
+          
+          // Create a mapping for the order we want to display the values
+          const questionOrder = [
+            'personality', 'physical', 'family', 'values', 
+            'behavior', 'goals', 'viability'
+          ];
+          
+          // Create a new array with values in the correct order
+          const orderedValues = questionOrder.map(id => {
+            const answer = parsedAnswers.find(a => a.questionId === id);
+            return answer ? answer.value : 0; // Default to 0 if not found
+          });
+          
+          setDealbreakerValues(orderedValues);
+        } catch (e) {
+          console.error('Error parsing saved dealbreaker answers:', e);
+        }
+      }
+    };
+    
+    // Initial load
+    loadDealbreakerValues();
+    
+    // Listen for changes to dealbreaker values (from settings page)
+    window.addEventListener('dealbreakersChanged', loadDealbreakerValues);
+    
+    return () => {
+      window.removeEventListener('dealbreakersChanged', loadDealbreakerValues);
+    };
+  }, []);
   
   // Creates SVG path data from values
   const createPath = (vals: number[]) => {

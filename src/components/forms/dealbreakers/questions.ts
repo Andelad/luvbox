@@ -1,36 +1,30 @@
-// Add the questions content here
-export interface DealbreakerQuestion {
-    id: string;
-    text: string;
+export const dealbreakersQuestions: DealbreakerQuestion[] = [
+  {
+    id: 'personality',
+    text: 'How important is personality to you?'
+  },
+  {
+    id: 'physical',
+    text: 'How important is physical attraction to you?'
+  },
+  {
+    id: 'family',
+    text: 'How important is family culture (shared interests, shared family vibe)?'
+  },
+  {
+    id: 'values',
+    text: 'How important are shared values to you?'
+  },
+  {
+    id: 'behavior',
+    text: 'How important is good behaviour to you?'
+  },
+  {
+    id: 'goals',
+    text: 'How important is agreement over goals to you?'
+  },
+  {
+    id: 'viability',
+    text: 'How important is viability to you (financial or location)?'
   }
-  
-  export const dealbreakersQuestions: DealbreakerQuestion[] = [
-    {
-      id: 'honesty',
-      text: 'How important is complete honesty and transparency in your relationship?'
-    },
-    {
-      id: 'independence',
-      text: 'How important is maintaining your independence and personal space?'
-    },
-    {
-      id: 'communication',
-      text: 'How important is regular, open communication about feelings and needs?'
-    },
-    {
-      id: 'values',
-      text: 'How important is sharing similar core values and life goals?'
-    },
-    {
-      id: 'intimacy',
-      text: 'How important is physical intimacy and affection in your relationship?'
-    },
-    {
-      id: 'trust',
-      text: 'How important is being able to trust your partner completely?'
-    },
-    {
-      id: 'growth',
-      text: 'How important is personal growth and supporting each other\'s ambitions?'
-    }
-  ];
+];
