@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ActionPanel.css';
 
 // Social icons inline SVGs
@@ -45,16 +45,22 @@ const socialIcons = {
       <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4z"/>
     </svg>
   ),
+  share: (
+    <svg xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 0 24 24" width="16" fill="currentColor">
+      <path d="M0 0h24v24H0z" fill="none"/>
+      <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
+    </svg>
+  ),
   expand: (
     <svg xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 0 24 24" width="16" fill="currentColor">
       <path d="M0 0h24v24H0z" fill="none"/>
-      <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+      <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
     </svg>
   ),
   collapse: (
     <svg xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 0 24 24" width="16" fill="currentColor">
       <path d="M0 0h24v24H0z" fill="none"/>
-      <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+      <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
     </svg>
   ),
 };
@@ -66,13 +72,27 @@ interface SubscribeFormData {
 }
 
 const ActionPanel: React.FC = () => {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(true); // Default to expanded
   const [showSubscribeModal, setShowSubscribeModal] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
   const [subscribeData, setSubscribeData] = useState<SubscribeFormData>({
     firstName: '',
     lastName: '',
     email: '',
   });
+
+  // Load saved state from localStorage
+  useEffect(() => {
+    const savedState = localStorage.getItem('actionPanelExpanded');
+    if (savedState !== null) {
+      setExpanded(savedState === 'true');
+    }
+  }, []);
+
+  // Save state to localStorage when it changes
+  useEffect(() => {
+    localStorage.setItem('actionPanelExpanded', String(expanded));
+  }, [expanded]);
 
   const toggleExpand = () => {
     setExpanded(!expanded);
@@ -80,6 +100,10 @@ const ActionPanel: React.FC = () => {
 
   const toggleSubscribeModal = () => {
     setShowSubscribeModal(!showSubscribeModal);
+  };
+
+  const toggleShareModal = () => {
+    setShowShareModal(!showShareModal);
   };
 
   const handleSubscribeFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -136,6 +160,9 @@ const ActionPanel: React.FC = () => {
     if (shareLink) {
       window.open(shareLink, '_blank', 'width=600,height=400');
     }
+    
+    // Close the share modal after sharing
+    setShowShareModal(false);
   };
 
   const handleFeedback = () => {
@@ -159,40 +186,14 @@ const ActionPanel: React.FC = () => {
           {expanded && <span>Buy Me A Coffee</span>}
         </button>
         
-        <div className="social-buttons">
-          <button 
-            className="action-button social-button instagram" 
-            onClick={() => handleShareTo('instagram')}
-            title="Share on Instagram"
-          >
-            {socialIcons.instagram}
-            {expanded && <span>Instagram</span>}
-          </button>
-          <button 
-            className="action-button social-button facebook" 
-            onClick={() => handleShareTo('facebook')}
-            title="Share on Facebook"
-          >
-            {socialIcons.facebook}
-            {expanded && <span>Facebook</span>}
-          </button>
-          <button 
-            className="action-button social-button twitter" 
-            onClick={() => handleShareTo('twitter')}
-            title="Share on X/Twitter"
-          >
-            {socialIcons.twitter}
-            {expanded && <span>X</span>}
-          </button>
-          <button 
-            className="action-button social-button linkedin" 
-            onClick={() => handleShareTo('linkedin')}
-            title="Share on LinkedIn"
-          >
-            {socialIcons.linkedin}
-            {expanded && <span>LinkedIn</span>}
-          </button>
-        </div>
+        <button 
+          className="action-button share-button" 
+          onClick={toggleShareModal}
+          title="Share"
+        >
+          {socialIcons.share}
+          {expanded && <span>Share</span>}
+        </button>
         
         <button 
           className="action-button subscribe-button" 
@@ -260,6 +261,47 @@ const ActionPanel: React.FC = () => {
               
               <button type="submit" className="submit-button">Subscribe</button>
             </form>
+          </div>
+        </div>
+      )}
+      
+      {/* Share Modal */}
+      {showShareModal && (
+        <div className="share-modal-overlay">
+          <div className="share-modal">
+            <button className="close-modal" onClick={toggleShareModal}>×</button>
+            <h3>Share LuvBox</h3>
+            <p>Choose a platform to share this tool with others.</p>
+            
+            <div className="social-share-buttons">
+              <button 
+                className="social-share-button facebook-share"
+                onClick={() => handleShareTo('facebook')}
+              >
+                {socialIcons.facebook} Facebook
+              </button>
+              
+              <button 
+                className="social-share-button twitter-share"
+                onClick={() => handleShareTo('twitter')}
+              >
+                {socialIcons.twitter} Twitter/X
+              </button>
+              
+              <button 
+                className="social-share-button linkedin-share"
+                onClick={() => handleShareTo('linkedin')}
+              >
+                {socialIcons.linkedin} LinkedIn
+              </button>
+              
+              <button 
+                className="social-share-button instagram-share"
+                onClick={() => handleShareTo('instagram')}
+              >
+                {socialIcons.instagram} Instagram
+              </button>
+            </div>
           </div>
         </div>
       )}

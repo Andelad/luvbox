@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './LandingPage.css';
 import Header from '../../components/common/Header';
-import ActionPanel from '../../components/common/ActionPanel';
 
 // Import images
 import cube from '../../assets/images/cube.png';
@@ -105,7 +104,6 @@ const LandingPage: React.FC = () => {
           </div>
         </main>
       </div>
-      <ActionPanel />
     </div>
   );
 };

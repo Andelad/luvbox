@@ -1,0 +1,95 @@
+.product-panel {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    max-height: calc(100vh - 160px);
+  }
+  
+  .product-panel.expanded {
+    width: 160px;
+  }
+  
+  .product-panel.collapsed {
+    width: 50px;
+  }
+  
+  .product-panel-toggle {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #888;
+    z-index: 2;
+    transition: color 0.2s ease;
+  }
+  
+  .product-panel-toggle:hover {
+    color: #d7967b;
+  }
+  
+  .product-panel-content {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 8px;
+  }
+  
+  .product-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    border: none;
+    background-color: transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    color: #2d2d2d;
+    font-size: 14px;
+    text-align: left;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  
+  .product-button:hover {
+    background-color: rgba(215, 150, 123, 0.1);
+  }
+  
+  .amazon-button {
+    color: #ff9900;
+    font-weight: 600;
+  }
+  
+  .amazon-button:hover {
+    background-color: rgba(255, 153, 0, 0.1);
+  }
+  
+  .pdf-button {
+    color: #d7967b;
+    font-weight: 600;
+  }
+  
+  .pdf-button:hover {
+    background-color: rgba(215, 150, 123, 0.1);
+  }
+  
+  /* Media Queries for mobile view */
+  @media (max-width: 768px) {
+    .product-panel {
+      bottom: 80px;
+    }
+  }

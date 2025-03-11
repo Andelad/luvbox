@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { Sidebar } from '../components/common';
 import Header from '../components/common/Header';
 import ActionPanel from '../components/common/ActionPanel';
+import ProductPanel from '../components/common/ProductPanel';
 
 const MainLayout: React.FC = () => {
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
@@ -35,6 +36,10 @@ const MainLayout: React.FC = () => {
       </div>
       
       <ActionPanel />
+      <ProductPanel 
+        amazonUrl="https://www.amazon.com" 
+        pdfUrl="#" 
+      />
     </div>
   );
 };
