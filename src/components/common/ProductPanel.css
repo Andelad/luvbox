@@ -1,8 +1,8 @@
 .product-panel {
     position: fixed;
     bottom: 20px;
-    left: 20px;
-    background-color: white;
+    right: 20px;
+    background-color: #f0e9e2;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     z-index: 999;
@@ -14,7 +14,7 @@
   }
   
   .product-panel.expanded {
-    width: 160px;
+    width: 180px; /* Increased width to fit content */
   }
   
   .product-panel.collapsed {
@@ -23,21 +23,40 @@
   
   .product-panel-toggle {
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: 50%;
+    left: -24px; /* Position toggle on left side */
+    transform: translateY(-50%);
     width: 24px;
     height: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    color: #888;
-    z-index: 2;
-    transition: color 0.2s ease;
+    color: #2d2d2d;
+    z-index: 5;
+    transition: all 0.3s ease;
+    background-color: #f0e9e2;
+    border-radius: 4px 0 0 4px;
+    border: none;
+    overflow: visible; /* Ensure the icon is fully visible */
   }
   
   .product-panel-toggle:hover {
     color: #d7967b;
+    background-color: #f5f0ea;
+  }
+  
+  .product-panel::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -24px; /* Match the toggle position */
+    width: 24px; /* Widened to ensure complete coverage */
+    height: 24px;
+    background-color: #f0e9e2;
+    transform: translateY(-50%);
+    z-index: 4;
+    border-radius: 4px 0 0 4px;
   }
   
   .product-panel-content {
@@ -60,36 +79,50 @@
     color: #2d2d2d;
     font-size: 14px;
     text-align: left;
-    text-decoration: none;
     white-space: nowrap;
     overflow: hidden;
+    text-decoration: none;
   }
   
   .product-button:hover {
-    background-color: rgba(215, 150, 123, 0.1);
+    background-color: rgba(215, 150, 123, 0.2);
+    color: #a25a3c;
+  }
+  
+  .product-button svg {
+    flex-shrink: 0; /* Prevent SVG from shrinking */
+    min-width: 16px; /* Ensure minimum width for the icon */
   }
   
   .amazon-button {
-    color: #ff9900;
-    font-weight: 600;
+    color: #2d2d2d;
+    font-weight: 700;
   }
   
-  .amazon-button:hover {
-    background-color: rgba(255, 153, 0, 0.1);
+  .amazon-button svg {
+    color: #a25a3c;
   }
   
   .pdf-button {
-    color: #d7967b;
-    font-weight: 600;
-  }
-  
-  .pdf-button:hover {
-    background-color: rgba(215, 150, 123, 0.1);
+    color: #2d2d2d;
+    font-weight: 400;
   }
   
   /* Media Queries for mobile view */
   @media (max-width: 768px) {
     .product-panel {
+      top: auto;
       bottom: 80px;
+      right: 20px;
+    }
+    
+    .product-panel-toggle {
+      left: -12px;
+      top: 12px;
+      transform: none;
+    }
+    
+    .product-panel::before {
+      display: none;
     }
   }

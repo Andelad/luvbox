@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ProductPanel.css';
 
 // Product icons inline SVGs
@@ -38,18 +38,23 @@ const ProductPanel: React.FC<ProductPanelProps> = ({
   amazonUrl = "https://www.amazon.com",
   pdfUrl = "#" 
 }) => {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(true);
+
+  // Load saved state from localStorage
+  useEffect(() => {
+    const savedState = localStorage.getItem('productPanelExpanded');
+    if (savedState !== null) {
+      setExpanded(savedState === 'true');
+    }
+  }, []);
+
+  // Save state to localStorage when it changes
+  useEffect(() => {
+    localStorage.setItem('productPanelExpanded', String(expanded));
+  }, [expanded]);
 
   const toggleExpand = () => {
     setExpanded(!expanded);
-  };
-
-  const handleAmazonClick = () => {
-    window.open(amazonUrl, '_blank', 'noopener,noreferrer');
-  };
-
-  const handlePdfClick = () => {
-    window.open(pdfUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -61,7 +66,6 @@ const ProductPanel: React.FC<ProductPanelProps> = ({
       <div className="product-panel-content">
         <a 
           className="product-button amazon-button" 
-          onClick={handleAmazonClick}
           href={amazonUrl}
           target="_blank"
           rel="noopener noreferrer"
@@ -73,7 +77,6 @@ const ProductPanel: React.FC<ProductPanelProps> = ({
         
         <a 
           className="product-button pdf-button" 
-          onClick={handlePdfClick}
           href={pdfUrl}
           target="_blank"
           rel="noopener noreferrer"
