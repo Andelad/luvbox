@@ -77,8 +77,8 @@ const DealbreakersForm: React.FC = () => {
     // Save the last answer
     handleNext(value);
     
-    // Navigate to cube component
-    navigate('/cube');
+    // Navigate to narrative ranking form instead of cube
+    navigate('/form/narratives');
   };
   
   const currentQuestion = dealbreakersQuestions[currentQuestionIndex];

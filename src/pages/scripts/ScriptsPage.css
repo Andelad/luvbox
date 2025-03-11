@@ -1,0 +1,159 @@
+.scripts-page {
+    min-height: 100vh;
+    background-color: #f0e9e2;
+    padding: 2rem;
+  }
+  
+  .scripts-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .scripts-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .scripts-header h1 {
+    font-family: 'EB Garamond', serif;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #2d2d2d;
+  }
+  
+  .scripts-header p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .narratives-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .narrative-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .narrative-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  }
+  
+  .narrative-header {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid #f0e9e2;
+  }
+  
+  .narrative-rank {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: #d7967b;
+    color: white;
+    border-radius: 50%;
+    font-weight: 600;
+    margin-right: 1rem;
+    flex-shrink: 0;
+  }
+  
+  .narrative-title {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.5rem;
+    color: #2d2d2d;
+  }
+  
+  .narrative-body {
+    padding: 1.5rem;
+  }
+  
+  .narrative-section {
+    margin-bottom: 1.5rem;
+  }
+  
+  .narrative-section:last-child {
+    margin-bottom: 0;
+  }
+  
+  .section-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #a25a3c;
+  }
+  
+  .section-content {
+    color: #555;
+    line-height: 1.6;
+  }
+  
+  .no-rankings {
+    text-align: center;
+    padding: 3rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .no-rankings h2 {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #2d2d2d;
+  }
+  
+  .no-rankings p {
+    color: #555;
+    margin-bottom: 2rem;
+  }
+  
+  .start-button {
+    display: inline-block;
+    background-color: #d7967b;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.8rem 2rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+  }
+  
+  .start-button:hover {
+    background-color: #c27b5d;
+  }
+  
+  @media (max-width: 768px) {
+    .scripts-page {
+      padding: 1rem;
+    }
+    
+    .scripts-header h1 {
+      font-size: 2rem;
+    }
+    
+    .narrative-header {
+      padding: 1rem;
+    }
+    
+    .narrative-body {
+      padding: 1rem;
+    }
+    
+    .narrative-title {
+      font-size: 1.3rem;
+    }
+  }
