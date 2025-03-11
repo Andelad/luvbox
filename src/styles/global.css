@@ -1,28 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap');
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Source Sans Pro', sans-serif;
-  background-color: #f0e9e2;
-  color: #2d2d2d;
-  min-height: 100vh;
-  line-height: 1.5;
-}
-
-a {
-  color: #d7967b;
-  text-decoration: none;
-}
-
-button, input, select, textarea {
-  font-family: inherit;
-}
+/* Add these to your existing global.css */
 
 .main-layout {
   display: flex;
@@ -30,29 +6,29 @@ button, input, select, textarea {
   min-height: 100vh;
 }
 
-.main-content {
+.content-with-sidebar {
   flex: 1;
+  margin-left: 0;
+  padding: 20px;
+  transition: margin-left 0.3s ease;
 }
 
-.container {
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
+/* Ensuring content doesn't overlap with floating sidebar */
+@media (min-width: 769px) {
+  .content-with-sidebar {
+    margin-left: 0;
+    padding-left: 100px; /* Space for collapsed sidebar */
+  }
+  
+  .content-with-sidebar.sidebar-expanded {
+    padding-left: 220px; /* Space for expanded sidebar */
+  }
 }
 
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .content-with-sidebar {
+    padding-left: 20px;
+    padding-bottom: 80px; /* Space for bottom sidebar on mobile */
+  }
 }

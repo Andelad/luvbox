@@ -1,21 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Sidebar } from '../components/common';
+import Header from '../components/common/Header';
 import ActionPanel from '../components/common/ActionPanel';
 
 const MainLayout: React.FC = () => {
-  const [sidebarExpanded, setSidebarExpanded] = useState(true);
+  const [sidebarExpanded, setSidebarExpanded] = useState(false);
   
-  // Get stored sidebar state from localStorage or default to true
+  // Get stored sidebar state from localStorage or default to collapsed
   useEffect(() => {
     const storedState = localStorage.getItem('sidebarExpanded');
     if (storedState !== null) {
       setSidebarExpanded(storedState === 'true');
-    }
-    
-    // Adjust for mobile on initial load
-    if (window.innerWidth < 768) {
-      setSidebarExpanded(false);
     }
   }, []);
   
@@ -30,10 +26,14 @@ const MainLayout: React.FC = () => {
   
   return (
     <div className="main-layout">
+      <Header showHomeLink={true} />
+      
       <Sidebar expanded={sidebarExpanded} onToggle={toggleSidebar} />
+      
       <div className={`content-with-sidebar ${sidebarExpanded ? 'sidebar-expanded' : ''}`}>
         <Outlet />
       </div>
+      
       <ActionPanel />
     </div>
   );
