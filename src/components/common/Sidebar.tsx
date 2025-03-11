@@ -12,6 +12,12 @@ const icons = {
       <path d="M21 16.5c0 .38-.21.71-.53.88l-7.9 4.44c-.16.12-.36.18-.57.18s-.41-.06-.57-.18l-7.9-4.44A.991.991 0 0 1 3 16.5v-9c0-.38.21-.71.53-.88l7.9-4.44c.16-.12.36-.18.57-.18s.41.06.57.18l7.9 4.44c.32.17.53.5.53.88v9zM12 4.15L6.04 7.5 12 10.85l5.96-3.35L12 4.15zM5 15.91l6 3.38v-6.71L5 9.21v6.7zm14 0v-6.7l-6 3.37v6.71l6-3.38z"/>
     </svg>
   ),
+  cubeTest: (
+    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="currentColor">
+      <path d="M0 0h24v24H0z" fill="none"/>
+      <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM13.96 12.29l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/>
+    </svg>
+  ),
   scripts: (
     <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="currentColor">
       <path d="M0 0h24v24H0z" fill="none"/>
@@ -46,6 +52,7 @@ export interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ expanded, onToggle }) => {
   const navItems = [
     { to: '/cube', label: 'The Cube', icon: icons.cube },
+    { to: '/cube-test', label: 'Cube Tests', icon: icons.cubeTest },
     { to: '/scripts', label: 'My Scripts', icon: icons.scripts },
     { to: '/self', label: 'My Self', icon: icons.self },
     { to: '/community', label: 'Community', icon: icons.community },

@@ -5,6 +5,7 @@ import CubeComponent from './components/cube';
 import DealbreakersForm from './components/forms/dealbreakers';
 import MainLayout from './layouts/MainLayout';
 import { ScriptsPage, SelfPage, CommunityPage, SettingsPage } from './pages/placeholder/PlaceholderPages';
+import CubeTestPage from './pages/CubeTestPage';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         {/* Public routes outside of main layout */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/form/dealbreakers" element={<DealbreakersForm />} />
+        <Route path="/cube-test" element={<CubeTestPage />} />
         
         {/* Routes with sidebar layout */}
         <Route element={<MainLayout />}>

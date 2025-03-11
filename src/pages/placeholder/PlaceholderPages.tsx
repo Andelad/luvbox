@@ -41,19 +41,6 @@ export const ScriptsPage: React.FC = () => {
   );
 };
 
-// Self Page
-export const SelfPage: React.FC = () => {
-  return (
-    <div style={placeholderStyle}>
-      <h1 style={headingStyle}>My Self</h1>
-      <p style={paragraphStyle}>
-        Discover insights about yourself and your relationship patterns.
-        This feature is coming soon.
-      </p>
-    </div>
-  );
-};
-
 // Community Page
 export const CommunityPage: React.FC = () => {
   return (
