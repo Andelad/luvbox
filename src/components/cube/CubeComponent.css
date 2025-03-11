@@ -243,7 +243,7 @@
   font-style: italic;
 }
 
-/* Navigation buttons - now below the cube */
+/* Navigation buttons - below the cube */
 .cube-navigation {
   display: flex;
   justify-content: center;

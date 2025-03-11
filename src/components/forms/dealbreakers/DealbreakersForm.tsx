@@ -1,4 +1,3 @@
-// Add the DealbreakersForm content here
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './DealbreakersForm.css';
@@ -6,6 +5,7 @@ import ProgressBar from './ProgressBar';
 import QuestionPage from './QuestionPage';
 import { dealbreakersQuestions } from './questions';
 import Header from '../../common/Header';
+import ActionPanel from '../../common/ActionPanel';
 
 interface Answer {
   questionId: string;
@@ -111,6 +111,8 @@ const DealbreakersForm: React.FC = () => {
           isLastQuestion={isLastQuestion}
         />
       </div>
+      
+      <ActionPanel />
     </div>
   );
 };

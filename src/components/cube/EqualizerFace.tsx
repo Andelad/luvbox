@@ -156,7 +156,24 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
         style={{ position: 'relative', height: '100%', width: '100%', padding: 0 }}
       >
         <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-          {/* Vertical grid lines */}
+          {/* Define patterns */}
+          <defs>
+            {/* Refined diagonal hash pattern for caution zones - finer with less space */}
+            <pattern id="diagonalHatch" patternUnits="userSpaceOnUse" width="4" height="4">
+              <path d="M-1,1 l2,-2
+                      M0,4 l4,-4
+                      M3,5 l2,-2" 
+                    style={{ stroke: '#a25a3c', strokeWidth: 0.5, opacity: 0.25 }} />
+            </pattern>
+          </defs>
+          
+          {/* Upper caution zone (9-10) */}
+          <rect x="0" y="0" width="100" height="10" fill="url(#diagonalHatch)" />
+          
+          {/* Lower caution zone (0-2) */}
+          <rect x="0" y="80" width="100" height="20" fill="url(#diagonalHatch)" />
+          
+          {/* Vertical grid lines only - removed horizontal grid */}
           {values.map((_, index) => (
             <line
               key={`grid-line-${index}`}
@@ -164,13 +181,13 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
               y1="0"
               x2={index * (100/6)}
               y2="100"
-              stroke="#e0e0e0"
-              strokeWidth="0.5"
-              opacity="0.6"
+              stroke="#e0d9d2"
+              strokeWidth="0.6"
+              opacity="0.7"
             />
           ))}
           
-          {/* Draw segments with color based on comparison */}
+          {/* Draw segments with color based on comparison - more elegant styling */}
           {values.map((val, index) => {
             if (index === 0) return null; // Skip first point, no segment to draw yet
             
@@ -216,11 +233,15 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
                   <g key={`segment-${index}`}>
                     <polygon 
                       points={points}
-                      fill="rgba(0, 128, 0, 0.2)"
+                      fill="rgba(169, 183, 146, 0.3)"
+                      stroke="rgba(169, 183, 146, 0.5)"
+                      strokeWidth="0.3"
                     />
                     <polygon 
                       points={`${intersectX},${intersectY} ${currX},${currY} ${currX},${dbCurrY} ${intersectX},${intersectY}`}
-                      fill="rgba(255, 0, 0, 0.2)"
+                      fill="rgba(215, 150, 123, 0.3)"
+                      stroke="rgba(215, 150, 123, 0.5)"
+                      strokeWidth="0.3"
                     />
                   </g>
                 );
@@ -230,11 +251,15 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
                   <g key={`segment-${index}`}>
                     <polygon 
                       points={`${prevX},${prevY} ${intersectX},${intersectY} ${intersectX},${intersectY} ${prevX},${dbPrevY}`}
-                      fill="rgba(255, 0, 0, 0.2)"
+                      fill="rgba(215, 150, 123, 0.3)"
+                      stroke="rgba(215, 150, 123, 0.5)"
+                      strokeWidth="0.3"
                     />
                     <polygon 
                       points={`${intersectX},${intersectY} ${currX},${currY} ${currX},${dbCurrY} ${intersectX},${intersectY}`}
-                      fill="rgba(0, 128, 0, 0.2)"
+                      fill="rgba(169, 183, 146, 0.3)"
+                      stroke="rgba(169, 183, 146, 0.5)"
+                      strokeWidth="0.3"
                     />
                   </g>
                 );
@@ -248,52 +273,56 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
                 <polygon 
                   key={`segment-${index}`}
                   points={points}
-                  fill={isSegmentAbove ? 'rgba(0, 128, 0, 0.2)' : 'rgba(255, 0, 0, 0.2)'}
+                  fill={isSegmentAbove ? 'rgba(169, 183, 146, 0.3)' : 'rgba(215, 150, 123, 0.3)'}
+                  stroke={isSegmentAbove ? 'rgba(169, 183, 146, 0.5)' : 'rgba(215, 150, 123, 0.5)'}
+                  strokeWidth="0.3"
                 />
               );
             }
           })}
           
-          {/* Draw the dealbreaker curved line (behind) */}
+          {/* Draw the dealbreaker curved line (behind) - refined style */}
           <path
             d={createPath(dealbreakerValues)}
-            stroke="#888"
-            strokeWidth="1"
-            strokeDasharray="2,2"
+            stroke="#666"
+            strokeWidth="0.8"
+            strokeDasharray="1.5,1.5"
             fill="none"
             opacity="0.6"
           />
           
-          {/* Draw the user's curved line (front) */}
+          {/* Draw the user's curved line (front) - refined style */}
           <path
             d={createPath(values)}
-            stroke="#d7967b"
-            strokeWidth="1.5"
+            stroke="#a25a3c"
+            strokeWidth="1.2"
             fill="none"
+            filter="drop-shadow(0px 1px 1px rgba(0,0,0,0.1))"
           />
           
-          {/* Draw the dealbreaker dots */}
+          {/* Draw the dealbreaker dots - refined style */}
           {dealbreakerValues.map((val, index) => (
             <circle
               key={`db-${index}`}
               cx={index * (100/6)}
               cy={100 - (val * 10)}
-              r="1.5"
-              fill="#888"
-              opacity="0.6"
+              r="1.2"
+              fill="#666"
+              opacity="0.7"
             />
           ))}
           
-          {/* Draw the draggable user dots */}
+          {/* Draw the draggable user dots - refined style */}
           {values.map((val, index) => (
             <circle
               key={`user-${index}`}
               cx={index * (100/6)}
               cy={100 - (val * 10)}
-              r="3"
-              fill="#d7967b"
+              r="2.5"
+              fill="#a25a3c"
               stroke="#fff"
-              strokeWidth="1"
+              strokeWidth="0.8"
+              filter="drop-shadow(0px 1px 1px rgba(0,0,0,0.2))"
               style={{ cursor: 'pointer' }}
               onMouseDown={handleDotMouseDown(index)}
               className={activeDot === index ? 'active-dot' : ''}

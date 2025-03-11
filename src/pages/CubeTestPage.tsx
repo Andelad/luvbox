@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import IsometricCubeTest from '../components/cube/IsometricCubeTest';
 import ThreeFaceCubeTest from '../components/cube/ThreeFaceCubeTest';
+import ActionPanel from '../components/common/ActionPanel';
 
 const CubeTestPage: React.FC = () => {
   const [activeView, setActiveView] = useState<'isometric' | 'three-face'>('isometric');
@@ -90,6 +91,7 @@ const CubeTestPage: React.FC = () => {
           </div>
         </div>
       </div>
+      <ActionPanel />
     </div>
   );
 };

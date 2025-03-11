@@ -1,3 +1,8 @@
+export interface DealbreakerQuestion {
+  id: string;
+  text: string;
+}
+
 export const dealbreakersQuestions: DealbreakerQuestion[] = [
   {
     id: 'personality',

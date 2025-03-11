@@ -1,5 +1,6 @@
 import React from 'react';
 import SettingsPage from './SettingsPage';
+import SelfPage from '../self/SelfPage';
 
 // Shared styling for placeholder pages
 const placeholderStyle = {
@@ -54,5 +55,5 @@ export const CommunityPage: React.FC = () => {
   );
 };
 
-// Export the newly created SettingsPage
-export { SettingsPage };
+// Export the SettingsPage and SelfPage
+export { SettingsPage, SelfPage };
