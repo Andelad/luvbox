@@ -8,6 +8,7 @@ import NarrativeRankingForm from './components/forms/narratives';
 import MainLayout from './layouts/MainLayout';
 import { ScriptsPage, SelfPage, CommunityPage, SettingsPage } from './pages/placeholder/PlaceholderPages';
 import CubeTestPage from './pages/CubeTestPage';
+import MapPage from './pages/map/MapPage';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           
           {/* Routes with sidebar layout */}
           <Route element={<MainLayout />}>
+            <Route path="/map" element={<MapPage />} />
             <Route path="/cube" element={<CubeComponent />} />
             <Route path="/scripts" element={<ScriptsPage />} />
             <Route path="/self" element={<SelfPage />} />

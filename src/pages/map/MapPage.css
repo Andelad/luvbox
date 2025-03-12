@@ -1,0 +1,42 @@
+.map-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f0e9e2;
+}
+
+.map-container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.map-page h1 {
+  font-family: 'EB Garamond', serif;
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: #2d2d2d;
+  text-align: center;
+}
+
+.map-content {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  .map-container {
+    padding: 1rem;
+  }
+  
+  .map-content {
+    padding: 1.5rem;
+  }
+  
+  .map-page h1 {
+    font-size: 2rem;
+  }
+}
