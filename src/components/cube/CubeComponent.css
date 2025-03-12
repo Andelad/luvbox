@@ -1,8 +1,9 @@
 .cube-wrapper {
-  min-height: 100vh;
+  height: calc(100vh - 60px); /* Subtract header height */
   display: flex;
   flex-direction: column;
   background-color: #f0e9e2;
+  overflow-y: auto;
 }
 
 .cube-container {
@@ -11,97 +12,93 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2rem 1rem;
-  overflow: hidden;
+  padding: 1rem 1rem 1rem;
   position: relative;
+  min-height: 400px; /* Minimum height for the cube container */
+}
+
+/* Cube Icons Navigation */
+.cube-icons-navigation {
+  display: flex;
+  width: calc(100% - 100px); /* Match the width of the cube for proper alignment */
+  max-width: 460px; /* Limit maximum width to keep buttons compact */
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1.5rem;
+  padding: 0;
+  justify-content: space-between; /* Space them evenly */
+}
+
+.cube-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  width: 32%; /* Each takes approximately a third of the total width */
+}
+
+.cube-icon-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.cube-icon-wrapper:hover {
+  background-color: rgba(215, 150, 123, 0.1);
+}
+
+.cube-icon-wrapper.active {
+  background-color: rgba(215, 150, 123, 0.2);
+}
+
+.cube-icon-label {
+  margin-left: 0.7rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #2d2d2d;
+  white-space: nowrap;
+}
+
+.cube-icon-wrapper.active .cube-icon-label {
+  color: #a25a3c;
 }
 
 /* Graph Plane Styling */
 .graph-plane {
   position: relative;
-  width: min(80%, 600px);
+  width: min(90%, 600px);
   height: min(80vw, 600px);
   aspect-ratio: 1/1;
-  margin: 0 auto 2rem;
+  margin: 0 auto;
   box-sizing: border-box;
 }
 
 /* Axis Styling */
-.x-axis, .y-axis, .x-axis-top, .y-axis-right {
+.y-axis {
   position: absolute;
+  left: 0;
+  bottom: 50px;
+  width: 50px;
+  height: calc(100% - 50px);
   color: #666;
   transition: opacity 1s ease;
   opacity: 1;
 }
 
-.x-axis.transitioning, 
-.y-axis.transitioning, 
-.x-axis-top.transitioning, 
-.y-axis-right.transitioning,
+.y-axis.transitioning,
 .axis-title.transitioning,
 .axis-labels.transitioning {
   opacity: 0;
 }
 
-.x-axis {
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 50px;
-}
-
-.x-axis-top {
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 50px;
-  position: absolute;
-}
-
-.y-axis {
-  left: 0;
-  bottom: 50px;
-  width: 50px;
-  height: calc(100% - 50px);
-}
-
-.y-axis-right {
-  right: 0;
-  bottom: 50px;
-  width: 50px;
-  height: calc(100% - 50px);
-  position: absolute;
-}
-
 .axis-line {
   position: absolute;
   background-color: transparent;
-}
-
-.x-axis .axis-line {
-  top: 0;
-  left: 50px;
-  height: 0;
-  width: calc(100% - 50px);
-}
-
-.x-axis-top .axis-line {
-  bottom: 0;
-  left: 50px;
-  height: 0;
-  width: calc(100% - 50px);
-}
-
-.y-axis .axis-line {
   bottom: 0;
   right: 0;
-  width: 0;
-  height: calc(100% + 10px);
-}
-
-.y-axis-right .axis-line {
-  bottom: 0;
-  left: 0;
   width: 0;
   height: calc(100% + 10px);
 }
@@ -112,16 +109,6 @@
   font-weight: 600;
   color: #666;
   transition: opacity 1s ease;
-}
-
-.x-axis .axis-title {
-  left: 50%;
-  bottom: -25px;
-  transform: translateX(-50%);
-  text-align: center;
-}
-
-.y-axis .axis-title {
   left: -18px;
   top: 50%;
   transform: rotate(-90deg) translateX(50%);
@@ -134,16 +121,6 @@
   position: absolute;
   font-size: 0.8rem;
   transition: opacity 1s ease;
-}
-
-.x-axis .axis-labels {
-  left: 50px;
-  top: 5px;
-  width: calc(100% - 100px);
-  height: 20px;
-}
-
-.y-axis .axis-labels {
   right: 5px;
   bottom: 50px;
   width: 30px;
@@ -154,24 +131,6 @@
   position: absolute;
   white-space: nowrap;
   font-size: 0.75rem;
-}
-
-/* Group labels positioning */
-.group-labels {
-  position: absolute;
-  top: -30px;
-  left: 50px;
-  width: calc(100% - 50px);
-  height: 20px;
-  transition: opacity 1s ease;
-}
-
-.group-label {
-  position: absolute;
-  font-size: 0.9rem;
-  font-weight: 600;
-  text-align: center;
-  color: #a25a3c;
 }
 
 /* 3D Scene styling */
@@ -243,33 +202,206 @@
   font-style: italic;
 }
 
-/* Navigation buttons - below the cube */
-.cube-navigation {
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-top: 1rem;
+/* Clean interface container */
+.cube-interface {
+  width: min(90%, 600px);
+  margin: 20px auto 0;
+  padding: 0 0 2rem;
 }
 
-.cube-navigation button {
+/* Label row - the Pe, PA, etc. labels */
+.label-row {
+  display: flex;
+  width: calc(100% - 100px);
+  margin: 0 auto 0 50px;
+}
+
+.label-column {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.axis-label-text {
+  font-family: 'EB Garamond', serif;
+  font-weight: 600;
+  font-style: italic;
+  font-size: 1.3rem;
+  color: #2d2d2d;
+  text-align: center;
+}
+
+/* Category lines with labels */
+.category-lines {
+  display: flex;
+  width: calc(100% - 100px);
+  margin: 0 auto 1.5rem 50px;
+  position: relative;
+}
+
+.category-section {
+  position: relative;
+}
+
+/* Specific widths for each category section */
+.category-section.chemistry {
+  width: 42.85%; /* First 3 columns */
+}
+
+.category-section.compatibility {
+  width: 42.85%; /* Next 3 columns */
+}
+
+.category-section.viability {
+  width: 14.3%; /* Last column */
+}
+
+/* Lines with vertical dividers */
+.category-line {
+  position: relative;
+  height: 2px;
+  background-color: #2d2d2d;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  width: 100%;
+}
+
+/* Vertical dividers for category sections */
+.category-section.chemistry .category-line::after,
+.category-section.compatibility .category-line::after,
+.category-section.viability .category-line::after,
+.category-section.chemistry .category-line::before,
+.category-section.compatibility .category-line::before,
+.category-section.viability .category-line::before {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 10px;
+  background-color: #2d2d2d;
+  top: -4px;
+}
+
+.category-section.chemistry .category-line::before {
+  left: 0;
+}
+
+.category-section.chemistry .category-line::after {
+  right: 0;
+}
+
+.category-section.compatibility .category-line::before {
+  left: 0;
+}
+
+.category-section.compatibility .category-line::after {
+  right: 0;
+}
+
+.category-section.viability .category-line::before {
+  left: 0;
+}
+
+.category-section.viability .category-line::after {
+  right: 0;
+}
+
+.category-label {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #2d2d2d;
+  text-align: center;
+}
+
+/* Row of input values */
+.value-row {
+  display: flex;
+  justify-content: space-between;
+  width: calc(100% - 100px);
+  margin: 0 auto 0 50px;
+}
+
+.value-column {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+/* Value input field styling - limited to 2 digits */
+.value-input {
+  width: 50px; /* Width for 2-digit plus decimal */
+  height: 48px; /* Taller input field as requested */
+  font-size: 1rem;
+  padding: 4px 4px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-align: center;
+  color: #2d2d2d; 
+  background-color: white;
+  margin: 0 auto;
+  font-weight: 400; /* Less bold */
+}
+
+.value-input:focus {
+  outline: none;
+  border-color: #a25a3c;
+  box-shadow: 0 0 0 2px rgba(162, 90, 60, 0.1);
+}
+
+/* Controls row for name input and snapshot button */
+.controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+/* Name input field styling */
+.name-input-container {
+  display: flex;
+  align-items: center;
+}
+
+.name-input {
+  padding: 10px 12px;
+  height: 48px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  width: 200px;
+  background-color: white;
+  box-sizing: border-box;
+}
+
+.name-input:focus {
+  outline: none;
+  border-color: #a25a3c;
+  box-shadow: 0 0 0 2px rgba(162, 90, 60, 0.1);
+}
+
+.name-label {
+  margin-right: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2d2d2d;
+}
+
+/* Snapshot button styling */
+.snapshot-button {
   background-color: #d7967b;
   color: white;
   border: none;
-  padding: 0.8rem 1.5rem;
   border-radius: 4px;
-  cursor: pointer;
-  font-family: 'Source Sans Pro', sans-serif;
+  height: 48px;
+  padding: 0 20px;
   font-weight: 600;
-  font-size: 1.1rem;
+  cursor: pointer;
+  font-size: 1rem;
   transition: background-color 0.3s ease;
 }
 
-.cube-navigation button:hover {
+.snapshot-button:hover {
   background-color: #c27b5d;
-}
-
-.cube-navigation button.active {
-  background-color: #a25a3c;
 }
 
 /* Responsive styles */
@@ -280,27 +412,32 @@
 }
 
 @media (max-width: 768px) {
-  .cube-navigation {
-    flex-wrap: wrap;
+  .cube-wrapper {
+    height: auto;
+    min-height: 100vh;
   }
   
-  .cube-navigation button {
-    padding: 0.6rem 1.2rem;
-    font-size: 1rem;
+  .cube-container {
+    height: auto;
+    min-height: 400px;
   }
   
-  .group-label {
-    font-size: 0.8rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .x-axis, .y-axis {
-    font-size: 0.7rem;
+  .cube-icons-navigation {
+    gap: 0.5rem;
   }
   
-  .cube-navigation button {
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
+  .cube-interface {
+    width: 95%;
+  }
+  
+  .controls-row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .name-input-container,
+  .name-input,
+  .snapshot-button {
+    width: 100%;
   }
 }
