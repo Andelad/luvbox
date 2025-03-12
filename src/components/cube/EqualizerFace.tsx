@@ -145,11 +145,95 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
     document.addEventListener('mouseup', handleMouseUp);
   };
   
-  // Determine if user value is above dealbreaker at each point
-  const isAbove = values.map((val, i) => val >= dealbreakerValues[i]);
+  // Function to render segments with proper coloring
+  const renderSegments = () => {
+    const segments: JSX.Element[] = [];
+    
+    // For each pair of points
+    for (let i = 1; i < values.length; i++) {
+      const prevIndex = i - 1;
+      const currIndex = i;
+      
+      // User line coordinates (flipped Y axis since SVG Y is top-down)
+      const prevX = prevIndex * (100/6);
+      const prevY = 100 - (values[prevIndex] * 10);
+      const currX = currIndex * (100/6);
+      const currY = 100 - (values[currIndex] * 10);
+      
+      // Dealbreaker line coordinates
+      const dbPrevY = 100 - (dealbreakerValues[prevIndex] * 10);
+      const dbCurrY = 100 - (dealbreakerValues[currIndex] * 10);
+      
+      // Check if both user points are above dealbreaker line
+      const prevPointAbove = prevY <= dbPrevY;
+      const currPointAbove = currY <= dbCurrY;
+      
+      // If both points are on same side of dealbreaker line, render a simple polygon
+      if ((prevPointAbove && currPointAbove) || (!prevPointAbove && !currPointAbove)) {
+        const isAbove = prevPointAbove && currPointAbove;
+        segments.push(
+          <polygon 
+            key={`segment-${i}`}
+            points={`${prevX},${prevY} ${currX},${currY} ${currX},${dbCurrY} ${prevX},${dbPrevY}`}
+            fill={isAbove ? 'rgba(169, 183, 146, 0.8)' : 'rgba(230, 180, 180, 0.6)'}
+            stroke={isAbove ? 'rgba(169, 183, 146, 0.9)' : 'rgba(220, 170, 170, 0.7)'}
+            strokeWidth="0.5"
+          />
+        );
+      } 
+      // If the line crosses the dealbreaker line
+      else {
+        // Calculate intersection point
+        // Line equation: y = mx + b
+        const userM = (currY - prevY) / (currX - prevX);
+        const userB = prevY - userM * prevX;
+        
+        const dbM = (dbCurrY - dbPrevY) / (currX - prevX);
+        const dbB = dbPrevY - dbM * prevX;
+        
+        // Intersection at x: userM*x + userB = dbM*x + dbB
+        const intersectX = (dbB - userB) / (userM - dbM);
+        const intersectY = userM * intersectX + userB;
+        
+        // Y-coordinate on dealbreaker line at intersection x
+        const dbIntersectY = dbM * (intersectX - prevX) + dbPrevY;
+        
+        // First segment: from prev point to intersection
+        segments.push(
+          <polygon 
+            key={`segment-${i}-1`}
+            points={`${prevX},${prevY} ${intersectX},${intersectY} ${intersectX},${dbIntersectY} ${prevX},${dbPrevY}`}
+            fill={prevPointAbove ? 'rgba(169, 183, 146, 0.8)' : 'rgba(230, 180, 180, 0.6)'}
+            stroke={prevPointAbove ? 'rgba(169, 183, 146, 0.9)' : 'rgba(220, 170, 170, 0.7)'}
+            strokeWidth="0.5"
+          />
+        );
+        
+        // Second segment: from intersection to current point
+        segments.push(
+          <polygon 
+            key={`segment-${i}-2`}
+            points={`${intersectX},${intersectY} ${currX},${currY} ${currX},${dbCurrY} ${intersectX},${dbIntersectY}`}
+            fill={currPointAbove ? 'rgba(169, 183, 146, 0.8)' : 'rgba(230, 180, 180, 0.6)'}
+            stroke={currPointAbove ? 'rgba(169, 183, 146, 0.9)' : 'rgba(220, 170, 170, 0.7)'}
+            strokeWidth="0.5"
+          />
+        );
+      }
+    }
+    
+    return segments;
+  };
   
   return (
-    <div className="equalizer-face" style={{ width: '100%', height: '100%', padding: 0 }}>
+    <div className="equalizer-face" style={{ 
+      width: '100%', 
+      height: '100%', 
+      padding: 0,
+      backgroundColor: '#f0e9e2', // Set background to match page background
+      border: '1px solid #666', // Softer outline
+      borderRadius: '6px' // Add slight border radius for softer appearance
+    }}>
       <div 
         ref={containerRef}
         className="equalizer-container"
@@ -187,115 +271,24 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
             />
           ))}
           
-          {/* Draw segments with color based on comparison - more elegant styling */}
-          {values.map((val, index) => {
-            if (index === 0) return null; // Skip first point, no segment to draw yet
-            
-            const prevX = (index-1) * (100/6);
-            const prevY = 100 - (values[index-1] * 10);
-            const currX = index * (100/6);
-            const currY = 100 - (val * 10);
-            
-            const dbPrevY = 100 - (dealbreakerValues[index-1] * 10);
-            const dbCurrY = 100 - (dealbreakerValues[index] * 10);
-            
-            // Create polygon points - connect exactly at the intersections
-            let points = '';
-            
-            // Determine if lines intersect within this segment
-            const userLine = { x1: prevX, y1: prevY, x2: currX, y2: currY };
-            const dbLine = { x1: prevX, y1: dbPrevY, x2: currX, y2: dbCurrY };
-            
-            // Check if lines cross
-            const linesCross = (prevY > dbPrevY && currY < dbCurrY) || 
-                               (prevY < dbPrevY && currY > dbCurrY);
-            
-            if (linesCross) {
-              // Calculate intersection point
-              // Line equation: y = mx + b
-              const userM = (currY - prevY) / (currX - prevX);
-              const userB = prevY - userM * prevX;
-              
-              const dbM = (dbCurrY - dbPrevY) / (currX - prevX);
-              const dbB = dbPrevY - dbM * prevX;
-              
-              // Intersection at x: userM*x + userB = dbM*x + dbB
-              // x = (dbB - userB) / (userM - dbM)
-              const intersectX = (dbB - userB) / (userM - dbM);
-              const intersectY = userM * intersectX + userB;
-              
-              // Determine which parts are above/below
-              if (prevY < dbPrevY) {
-                // User line starts above dealbreaker, ends below
-                points = `${prevX},${prevY} ${intersectX},${intersectY} ${intersectX},${intersectY} ${prevX},${dbPrevY}`;
-                
-                return (
-                  <g key={`segment-${index}`}>
-                    <polygon 
-                      points={points}
-                      fill="rgba(169, 183, 146, 0.3)"
-                      stroke="rgba(169, 183, 146, 0.5)"
-                      strokeWidth="0.3"
-                    />
-                    <polygon 
-                      points={`${intersectX},${intersectY} ${currX},${currY} ${currX},${dbCurrY} ${intersectX},${intersectY}`}
-                      fill="rgba(215, 150, 123, 0.3)"
-                      stroke="rgba(215, 150, 123, 0.5)"
-                      strokeWidth="0.3"
-                    />
-                  </g>
-                );
-              } else {
-                // User line starts below dealbreaker, ends above
-                return (
-                  <g key={`segment-${index}`}>
-                    <polygon 
-                      points={`${prevX},${prevY} ${intersectX},${intersectY} ${intersectX},${intersectY} ${prevX},${dbPrevY}`}
-                      fill="rgba(215, 150, 123, 0.3)"
-                      stroke="rgba(215, 150, 123, 0.5)"
-                      strokeWidth="0.3"
-                    />
-                    <polygon 
-                      points={`${intersectX},${intersectY} ${currX},${currY} ${currX},${dbCurrY} ${intersectX},${intersectY}`}
-                      fill="rgba(169, 183, 146, 0.3)"
-                      stroke="rgba(169, 183, 146, 0.5)"
-                      strokeWidth="0.3"
-                    />
-                  </g>
-                );
-              }
-            } else {
-              // No intersection, color entire segment
-              points = `${prevX},${prevY} ${currX},${currY} ${currX},${dbCurrY} ${prevX},${dbPrevY}`;
-              const isSegmentAbove = (prevY <= dbPrevY) && (currY <= dbCurrY);
-              
-              return (
-                <polygon 
-                  key={`segment-${index}`}
-                  points={points}
-                  fill={isSegmentAbove ? 'rgba(169, 183, 146, 0.3)' : 'rgba(215, 150, 123, 0.3)'}
-                  stroke={isSegmentAbove ? 'rgba(169, 183, 146, 0.5)' : 'rgba(215, 150, 123, 0.5)'}
-                  strokeWidth="0.3"
-                />
-              );
-            }
-          })}
+          {/* Draw all segments with proper coloring */}
+          {renderSegments()}
           
           {/* Draw the dealbreaker curved line (behind) - refined style */}
           <path
             d={createPath(dealbreakerValues)}
-            stroke="#666"
-            strokeWidth="0.8"
+            stroke="#888"
+            strokeWidth="0.7"
             strokeDasharray="1.5,1.5"
             fill="none"
-            opacity="0.6"
+            opacity="0.5"
           />
           
           {/* Draw the user's curved line (front) - refined style */}
           <path
             d={createPath(values)}
             stroke="#a25a3c"
-            strokeWidth="1.2"
+            strokeWidth="1.8" // Made slightly thicker for better visibility
             fill="none"
             filter="drop-shadow(0px 1px 1px rgba(0,0,0,0.1))"
           />
@@ -312,17 +305,17 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
             />
           ))}
           
-          {/* Draw the draggable user dots - refined style */}
+          {/* Draw the draggable user dots - refined style with improved visibility */}
           {values.map((val, index) => (
             <circle
               key={`user-${index}`}
               cx={index * (100/6)}
               cy={100 - (val * 10)}
-              r="2.5"
+              r="3" // Made slightly larger
               fill="#a25a3c"
               stroke="#fff"
-              strokeWidth="0.8"
-              filter="drop-shadow(0px 1px 1px rgba(0,0,0,0.2))"
+              strokeWidth="1.2" // Increased stroke width
+              filter="drop-shadow(0px 2px 2px rgba(0,0,0,0.3))" // Enhanced shadow
               style={{ cursor: 'pointer' }}
               onMouseDown={handleDotMouseDown(index)}
               className={activeDot === index ? 'active-dot' : ''}

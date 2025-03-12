@@ -5,4 +5,33 @@
   margin: 0;
   position: relative;
   overflow: hidden;
+  background-color: #f0e9e2; /* Match page background */
+  border: 1px solid #666; /* Softer outline */
+  border-radius: 6px; /* Slight border radius */
+}
+
+/* Style for active dot when being dragged */
+.active-dot {
+  filter: drop-shadow(0px 3px 5px rgba(0,0,0,0.4)) !important;
+  r: 4 !important; /* Larger radius when active */
+  stroke-width: 2 !important; /* Bolder outline when active */
+}
+
+/* Equalizer container styling */
+.equalizer-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  padding: 8px; /* Add some padding inside the border */
+}
+
+/* Add hover effect to dots for better interaction cues */
+circle[class*="user-"] {
+  transition: r 0.2s ease, stroke-width 0.2s ease, filter 0.2s ease;
+}
+
+circle[class*="user-"]:hover {
+  r: 3.5;
+  stroke-width: 1.5;
+  filter: drop-shadow(0px 2px 3px rgba(0,0,0,0.4));
 }
