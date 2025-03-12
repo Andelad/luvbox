@@ -1,8 +1,22 @@
+/* CSS Variables for colors and common values */
+:root {
+  --color-primary: #d7967b;
+  --color-primary-dark: #c27b5d;
+  --color-primary-darker: #a25a3c;
+  --color-text: #2d2d2d;
+  --color-text-light: #666;
+  --color-background: #f0e9e2;
+  --color-border: #ddd;
+  --cube-border-radius: 6px;
+  --input-height: 48px;
+}
+
+/* Layout containers */
 .cube-wrapper {
-  height: calc(100vh - 60px); /* Subtract header height */
+  height: calc(100vh - 60px);
   display: flex;
   flex-direction: column;
-  background-color: #f0e9e2;
+  background-color: var(--color-background);
   overflow-y: auto;
 }
 
@@ -12,61 +26,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1rem 1rem 1rem;
+  padding: 1rem;
   position: relative;
-  min-height: 400px; /* Minimum height for the cube container */
+  min-height: 400px;
 }
 
-/* Cube Icons Navigation */
-.cube-icons-navigation {
-  display: flex;
-  width: calc(100% - 100px); /* Match the width of the cube for proper alignment */
-  max-width: 460px; /* Limit maximum width to keep buttons compact */
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 1.5rem;
-  padding: 0;
-  justify-content: space-between; /* Space them evenly */
-}
-
-.cube-icon-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  padding: 0.5rem 0.8rem;
-  border-radius: 6px;
-  width: 32%; /* Each takes approximately a third of the total width */
-}
-
-.cube-icon-content {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.cube-icon-wrapper:hover {
-  background-color: rgba(215, 150, 123, 0.1);
-}
-
-.cube-icon-wrapper.active {
-  background-color: rgba(215, 150, 123, 0.2);
-}
-
-.cube-icon-label {
-  margin-left: 0.7rem;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #2d2d2d;
-  white-space: nowrap;
-}
-
-.cube-icon-wrapper.active .cube-icon-label {
-  color: #a25a3c;
-}
-
-/* Graph Plane Styling */
+/* Graph Plane and Scene */
 .graph-plane {
   position: relative;
   width: min(90%, 600px);
@@ -74,66 +39,9 @@
   aspect-ratio: 1/1;
   margin: 0 auto;
   box-sizing: border-box;
+  margin-bottom: 80px; /* Space for labels and category lines */
 }
 
-/* Axis Styling */
-.y-axis {
-  position: absolute;
-  left: 0;
-  bottom: 50px;
-  width: 50px;
-  height: calc(100% - 50px);
-  color: #666;
-  transition: opacity 1s ease;
-  opacity: 1;
-}
-
-.y-axis.transitioning,
-.axis-title.transitioning,
-.axis-labels.transitioning {
-  opacity: 0;
-}
-
-.axis-line {
-  position: absolute;
-  background-color: transparent;
-  bottom: 0;
-  right: 0;
-  width: 0;
-  height: calc(100% + 10px);
-}
-
-.axis-title {
-  position: absolute;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #666;
-  transition: opacity 1s ease;
-  left: -18px;
-  top: 50%;
-  transform: rotate(-90deg) translateX(50%);
-  transform-origin: left center;
-  text-align: center;
-}
-
-/* Key change - container position and sizing */
-.axis-labels {
-  position: absolute;
-  font-size: 0.8rem;
-  transition: opacity 1s ease;
-  right: 5px;
-  bottom: 50px;
-  width: 30px;
-  height: calc(100% - 100px);
-}
-
-.axis-label {
-  position: absolute;
-  white-space: nowrap;
-  font-size: 0.75rem;
-}
-
-/* 3D Scene styling */
 .scene {
   width: calc(100% - 100px);
   height: calc(100% - 100px);
@@ -143,9 +51,10 @@
   left: 50px;
   transform-style: preserve-3d;
   background-color: rgba(240, 240, 240, 0.2);
-  border-radius: 8px;
+  border-radius: var(--cube-border-radius);
 }
 
+/* 3D Cube styling */
 .cube {
   width: 100%;
   height: 100%;
@@ -164,7 +73,7 @@
   justify-content: center;
   font-size: 2rem;
   background-color: rgba(255, 255, 255, 0.95);
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   backface-visibility: hidden;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1) inset;
@@ -172,24 +81,13 @@
   box-sizing: border-box;
 }
 
-.front  { 
-  transform: rotateY(0deg) translateZ(230px);
-}
-.right  { 
-  transform: rotateY(90deg) translateZ(230px);
-}
-.back   { 
-  transform: rotateY(180deg) translateZ(230px);
-}
-.left   { 
-  transform: rotateY(-90deg) translateZ(230px);
-}
-.top    { 
-  transform: rotateX(90deg) translateZ(230px);
-}
-.bottom { 
-  transform: rotateX(-90deg) translateZ(230px);
-}
+/* Cube face positions */
+.front  { transform: rotateY(0deg) translateZ(230px); }
+.right  { transform: rotateY(90deg) translateZ(230px); }
+.back   { transform: rotateY(180deg) translateZ(230px); }
+.left   { transform: rotateY(-90deg) translateZ(230px); }
+.top    { transform: rotateX(90deg) translateZ(230px); }
+.bottom { transform: rotateX(-90deg) translateZ(230px); }
 
 .cube-face.inactive {
   opacity: 0;
@@ -202,118 +100,188 @@
   font-style: italic;
 }
 
-/* Clean interface container */
-.cube-interface {
-  width: min(90%, 600px);
-  margin: 20px auto 0;
-  padding: 0 0 2rem;
-}
-
-/* Label row - the Pe, PA, etc. labels */
-.label-row {
+/* Cube Navigation Icons */
+.cube-icons-navigation {
   display: flex;
   width: calc(100% - 100px);
-  margin: 0 auto 0 50px;
+  max-width: 460px;
+  margin: 0 auto 1.5rem;
+  justify-content: space-between;
+}
+
+.cube-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 0.5rem 0.8rem;
+  border-radius: var(--cube-border-radius);
+  width: 32%;
+}
+
+.cube-icon-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.cube-icon-label {
+  margin-left: 0.7rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+/* Hover and active states */
+.cube-icon-wrapper:hover {
+  background-color: rgba(215, 150, 123, 0.1);
+}
+
+.cube-icon-wrapper.active {
+  background-color: rgba(215, 150, 123, 0.2);
+}
+
+.cube-icon-wrapper.active .cube-icon-label {
+  color: var(--color-primary-darker);
+}
+
+/* Axis styling */
+.y-axis {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 50px;
+  height: 100%;
+  color: var(--color-text-light);
+  transition: opacity 1s ease;
+  opacity: 1;
+}
+
+.axis-title {
+  position: absolute;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-light);
+  transition: opacity 1s ease;
+  left: -18px;
+  top: 50%;
+  transform: rotate(-90deg) translateX(50%);
+  transform-origin: left center;
+  text-align: center;
+}
+
+.axis-labels {
+  position: absolute;
+  font-size: 0.8rem;
+  transition: opacity 1s ease;
+  right: 5px;
+  bottom: 0;
+  width: 30px;
+  height: 100%;
+}
+
+.axis-label {
+  position: absolute;
+  white-space: nowrap;
+  font-size: 0.75rem;
+}
+
+/* Transitioning states */
+.y-axis.transitioning,
+.axis-title.transitioning,
+.axis-labels.transitioning {
+  opacity: 0;
+}
+
+/* X-axis labels */
+.label-row {
+  display: flex;
+  width: 100%;
+  position: absolute;
+  bottom: -30px;
+  left: 0;
+  z-index: 2;
+  justify-content: space-between;
 }
 
 .label-column {
-  flex: 1;
   display: flex;
   justify-content: center;
+  width: calc(100% / 7); /* Divide space equally for 7 columns */
+  position: relative;
 }
 
 .axis-label-text {
   font-family: 'EB Garamond', serif;
   font-weight: 600;
   font-style: italic;
-  font-size: 1.3rem;
-  color: #2d2d2d;
+  font-size: 1.1rem;
+  color: var(--color-text);
   text-align: center;
+  background-color: rgba(240, 233, 226, 0.7);
+  padding: 0 5px;
+  border-radius: 4px;
 }
 
-/* Category lines with labels */
+/* Category sections */
 .category-lines {
   display: flex;
-  width: calc(100% - 100px);
-  margin: 0 auto 1.5rem 50px;
-  position: relative;
+  width: 100%;
+  position: absolute;
+  bottom: -55px;
+  left: 0;
+  z-index: 2;
 }
 
 .category-section {
   position: relative;
 }
 
-/* Specific widths for each category section */
-.category-section.chemistry {
-  width: 42.85%; /* First 3 columns */
-}
+.category-section.chemistry { width: calc(3 * (100% / 7)); }
+.category-section.compatibility { width: calc(3 * (100% / 7)); }
+.category-section.viability { width: calc(1 * (100% / 7)); }
 
-.category-section.compatibility {
-  width: 42.85%; /* Next 3 columns */
-}
-
-.category-section.viability {
-  width: 14.3%; /* Last column */
-}
-
-/* Lines with vertical dividers */
 .category-line {
   position: relative;
   height: 2px;
-  background-color: #2d2d2d;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  background-color: var(--color-text);
+  margin: 0.5rem 0;
   width: 100%;
 }
 
-/* Vertical dividers for category sections */
-.category-section.chemistry .category-line::after,
-.category-section.compatibility .category-line::after,
-.category-section.viability .category-line::after,
-.category-section.chemistry .category-line::before,
-.category-section.compatibility .category-line::before,
-.category-section.viability .category-line::before {
+/* Category section dividers */
+.category-section .category-line::before,
+.category-section .category-line::after {
   content: '';
   position: absolute;
   width: 2px;
   height: 10px;
-  background-color: #2d2d2d;
+  background-color: var(--color-text);
   top: -4px;
 }
 
-.category-section.chemistry .category-line::before {
-  left: 0;
-}
-
-.category-section.chemistry .category-line::after {
-  right: 0;
-}
-
-.category-section.compatibility .category-line::before {
-  left: 0;
-}
-
-.category-section.compatibility .category-line::after {
-  right: 0;
-}
-
-.category-section.viability .category-line::before {
-  left: 0;
-}
-
-.category-section.viability .category-line::after {
-  right: 0;
-}
+.category-section .category-line::before { left: 0; }
+.category-section .category-line::after { right: 0; }
 
 .category-label {
   font-family: 'EB Garamond', serif;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   font-weight: 500;
-  color: #2d2d2d;
+  color: var(--color-text);
   text-align: center;
+  margin-top: 2px;
 }
 
-/* Row of input values */
+/* Interface controls */
+.cube-interface {
+  width: min(90%, 600px);
+  margin: 20px auto 0;
+  padding: 0 0 2rem;
+}
+
+/* Value inputs row */
 .value-row {
   display: flex;
   justify-content: space-between;
@@ -327,28 +295,27 @@
   justify-content: center;
 }
 
-/* Value input field styling - limited to 2 digits */
 .value-input {
-  width: 50px; /* Width for 2-digit plus decimal */
-  height: 48px; /* Taller input field as requested */
+  width: 50px;
+  height: var(--input-height);
   font-size: 1rem;
-  padding: 4px 4px;
-  border: 1px solid #ddd;
+  padding: 4px;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   text-align: center;
-  color: #2d2d2d; 
+  color: var(--color-text);
   background-color: white;
   margin: 0 auto;
-  font-weight: 400; /* Less bold */
+  font-weight: 400;
 }
 
 .value-input:focus {
   outline: none;
-  border-color: #a25a3c;
+  border-color: var(--color-primary-darker);
   box-shadow: 0 0 0 2px rgba(162, 90, 60, 0.1);
 }
 
-/* Controls row for name input and snapshot button */
+/* Snapshot controls */
 .controls-row {
   display: flex;
   justify-content: space-between;
@@ -356,16 +323,22 @@
   margin-top: 2rem;
 }
 
-/* Name input field styling */
 .name-input-container {
   display: flex;
   align-items: center;
 }
 
+.name-label {
+  margin-right: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
 .name-input {
   padding: 10px 12px;
-  height: 48px;
-  border: 1px solid #ddd;
+  height: var(--input-height);
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   font-size: 1rem;
   width: 200px;
@@ -375,24 +348,16 @@
 
 .name-input:focus {
   outline: none;
-  border-color: #a25a3c;
+  border-color: var(--color-primary-darker);
   box-shadow: 0 0 0 2px rgba(162, 90, 60, 0.1);
 }
 
-.name-label {
-  margin-right: 10px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #2d2d2d;
-}
-
-/* Snapshot button styling */
 .snapshot-button {
-  background-color: #d7967b;
+  background-color: var(--color-primary);
   color: white;
   border: none;
   border-radius: 4px;
-  height: 48px;
+  height: var(--input-height);
   padding: 0 20px;
   font-weight: 600;
   cursor: pointer;
@@ -401,7 +366,7 @@
 }
 
 .snapshot-button:hover {
-  background-color: #c27b5d;
+  background-color: var(--color-primary-dark);
 }
 
 /* Responsive styles */
@@ -418,7 +383,6 @@
   }
   
   .cube-container {
-    height: auto;
     min-height: 400px;
   }
   
@@ -430,6 +394,27 @@
     width: 95%;
   }
   
+  .label-row {
+    bottom: -25px;
+  }
+  
+  .category-lines {
+    bottom: -45px;
+  }
+  
+  .axis-label-text {
+    font-size: 0.8rem;
+  }
+  
+  .category-label {
+    font-size: 0.8rem;
+  }
+  
+  .graph-plane {
+    margin-bottom: 100px;
+  }
+  
+  /* Stack controls vertically on mobile */
   .controls-row {
     flex-direction: column;
     gap: 1rem;

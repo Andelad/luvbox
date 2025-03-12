@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Sidebar } from '../components/common';
-import Header from '../components/common/Header';
-import ActionPanel from '../components/common/ActionPanel';
-import ProductPanel from '../components/common/ProductPanel';
+import { Sidebar, Header, Footer, ActionPanel, ProductPanel } from '../components/common';
 
 const MainLayout: React.FC = () => {
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
@@ -34,6 +31,8 @@ const MainLayout: React.FC = () => {
       <div className={`content-with-sidebar ${sidebarExpanded ? 'sidebar-expanded' : ''}`}>
         <Outlet />
       </div>
+      
+      <Footer />
       
       <ActionPanel />
       <ProductPanel 

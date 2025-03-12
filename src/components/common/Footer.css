@@ -1,0 +1,33 @@
+.app-footer {
+    padding: 1rem 2rem;
+    background-color: #f0e9e2;
+    border-top: 1px solid #e0d9d2;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .footer-copyright, .footer-credits {
+    padding: 0.5rem 0;
+  }
+  
+  /* Media query for mobile devices */
+  @media (max-width: 768px) {
+    .app-footer {
+      padding: 1rem;
+    }
+    
+    .footer-content {
+      flex-direction: column;
+      gap: 0.5rem;
+      text-align: center;
+    }
+  }

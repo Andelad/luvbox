@@ -237,9 +237,9 @@ const CubeComponent: React.FC = () => {
             <div className={`axis-labels ${isTransitioning ? 'transitioning' : ''}`}>
               {axisLabels.yLabels.map((label, index) => {
                 // Calculate position as a percentage to ensure proper spacing
-                // For y-axis we need to invert since 0% is at the top visually
-                // and 100% is at the bottom
-                const position = 100 - (index / (axisLabels.yLabels.length - 1) * 100);
+                // Use totalLabels to ensure even spacing from 0 to 100%
+                const totalLabels = axisLabels.yLabels.length - 1;
+                const position = 100 - (index / totalLabels * 100);
                 
                 return (
                   <div 
@@ -289,36 +289,39 @@ const CubeComponent: React.FC = () => {
               </div>
             </div>
           </div>
+          
+          {/* X-axis labels and category lines - only shown for Equalizer face */}
+          {currentFace === 'qualities' && (
+            <>
+              <div className="label-row">
+                {axisLabels.xLabels.map((label, index) => (
+                  <div key={index} className="label-column">
+                    <div className="axis-label-text">{label}</div>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="category-lines">
+                <div className="category-section chemistry">
+                  <div className="category-line"></div>
+                  <div className="category-label">Chemistry</div>
+                </div>
+                <div className="category-section compatibility">
+                  <div className="category-line"></div>
+                  <div className="category-label">Compatibility</div>
+                </div>
+                <div className="category-section viability">
+                  <div className="category-line"></div>
+                  <div className="category-label">Viability</div>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
       
       {/* Clean interface below the cube */}
       <div className="cube-interface">
-        {/* Row of labels */}
-        <div className="label-row">
-          {axisLabels.xLabels.map((label, index) => (
-            <div key={index} className="label-column">
-              <div className="axis-label-text">{label}</div>
-            </div>
-          ))}
-        </div>
-        
-        {/* Category lines with labels */}
-        <div className="category-lines">
-          <div className="category-section chemistry">
-            <div className="category-line"></div>
-            <div className="category-label">Chemistry</div>
-          </div>
-          <div className="category-section compatibility">
-            <div className="category-line"></div>
-            <div className="category-label">Compatibility</div>
-          </div>
-          <div className="category-section viability">
-            <div className="category-line"></div>
-            <div className="category-label">Viability</div>
-          </div>
-        </div>
-        
         {/* Row of input values */}
         <div className="value-row">
           {sliderValues.map((value, index) => (
