@@ -26,7 +26,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: var(--spacing-md);
   position: relative;
   min-height: 400px;
 }
@@ -50,8 +50,8 @@
   top: 50px;
   left: 50px;
   transform-style: preserve-3d;
-  background-color: rgba(240, 240, 240, 0.2);
-  border-radius: var(--cube-border-radius);
+  background-color: rgba(var(--color-background-rgb), 0.2);
+  border-radius: var(--radius-sm);
 }
 
 /* 3D Cube styling */
@@ -72,7 +72,7 @@
   align-items: center;
   justify-content: center;
   font-size: 2rem;
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(var(--color-white-rgb), 0.95);
   border: 1px solid var(--color-border);
   backface-visibility: hidden;
   overflow: hidden;
@@ -95,7 +95,7 @@
 }
 
 .placeholder-face {
-  color: #999;
+  color: var(--color-text-light);
   text-align: center;
   font-style: italic;
 }
@@ -115,8 +115,8 @@
   justify-content: center;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  padding: 0.5rem 0.8rem;
-  border-radius: var(--cube-border-radius);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-sm);
   width: 32%;
 }
 
@@ -128,7 +128,7 @@
 
 .cube-icon-label {
   margin-left: 0.7rem;
-  font-size: 0.9rem;
+  font-size: var(--font-size-sm);
   font-weight: 600;
   color: var(--color-text);
   white-space: nowrap;
@@ -136,11 +136,11 @@
 
 /* Hover and active states */
 .cube-icon-wrapper:hover {
-  background-color: rgba(215, 150, 123, 0.1);
+  background-color: rgba(var(--color-primary-rgb), 0.1);
 }
 
 .cube-icon-wrapper.active {
-  background-color: rgba(215, 150, 123, 0.2);
+  background-color: rgba(var(--color-primary-rgb), 0.2);
 }
 
 .cube-icon-wrapper.active .cube-icon-label {
@@ -151,17 +151,24 @@
 .y-axis {
   position: absolute;
   left: 0;
-  bottom: 0;
+  /* Position relative to scene, not graph-plane */
+  top: 50px;
+  bottom: 50px;
   width: 50px;
-  height: 100%;
+  height: calc(100% - 100px); /* Match the scene height exactly */
   color: var(--color-text-light);
   transition: opacity 1s ease;
   opacity: 1;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
 }
 
 .axis-title {
   position: absolute;
-  font-size: 0.9rem;
+  font-size: 1em; /* Increased from 0.9rem to 1em */
   font-weight: 600;
   color: var(--color-text-light);
   transition: opacity 1s ease;
@@ -174,18 +181,27 @@
 
 .axis-labels {
   position: absolute;
-  font-size: 0.8rem;
+  font-size: 1em; /* Increased from 0.8rem to 1em */
   transition: opacity 1s ease;
   right: 5px;
-  bottom: 0;
-  width: 30px;
+  top: 0;
   height: 100%;
+  width: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* Use padding to fine-tune alignment with cube face */
+  padding: 6px 0;
+  box-sizing: border-box;
 }
 
 .axis-label {
-  position: absolute;
+  position: relative;
   white-space: nowrap;
-  font-size: 0.75rem;
+  font-size: 1em; /* Increased from 0.75rem to 1em */
+  text-align: right;
+  padding-right: 10px;
+  /* Remove absolute positioning to use flex layout */
 }
 
 /* Transitioning states */
@@ -198,19 +214,38 @@
 /* X-axis labels */
 .label-row {
   display: flex;
-  width: 100%;
+  width: calc(100% - 100px); /* Match scene width */
   position: absolute;
-  bottom: -30px;
-  left: 0;
+  bottom: 20px; /* Position closer to the cube face */
+  left: 50px; /* Match scene left offset */
   z-index: 2;
-  justify-content: space-between;
+  transition: opacity 0.5s ease;
+  padding: 0 15px; /* Add padding to constrain the labels within the face width */
+  box-sizing: border-box;
+}
+
+/* Make sure labels are visible for all faces */
+.label-row.transitioning {
+  opacity: 0;
 }
 
 .label-column {
   display: flex;
   justify-content: center;
-  width: calc(100% / 7); /* Divide space equally for 7 columns */
   position: relative;
+  flex: 1;
+  /* Remove any margins that might cause overflow */
+  margin: 0;
+  padding: 0;
+}
+
+/* First and last labels special alignment */
+.label-column:first-child {
+  justify-content: center; /* Center the first label rather than align left */
+}
+
+.label-column:last-child {
+  justify-content: center; /* Center the last label rather than align right */
 }
 
 .axis-label-text {
@@ -220,28 +255,66 @@
   font-size: 1.1rem;
   color: var(--color-text);
   text-align: center;
-  background-color: rgba(240, 233, 226, 0.7);
+  background-color: rgba(var(--color-background-rgb), 0.7);
   padding: 0 5px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
 }
 
 /* Category sections */
 .category-lines {
   display: flex;
-  width: 100%;
+  width: calc(100% - 100px); /* Match scene width */
   position: absolute;
-  bottom: -55px;
-  left: 0;
+  bottom: -25px; /* Position below the x-axis labels */
+  left: 50px; /* Match scene left offset */
   z-index: 2;
+  transition: opacity 0.5s ease;
 }
 
+.category-lines.transitioning {
+  opacity: 0;
+}
+
+/* Reset the flex layout for precise positioning */
 .category-section {
-  position: relative;
+  position: absolute;
+  height: 30px;
 }
 
-.category-section.chemistry { width: calc(3 * (100% / 7)); }
-.category-section.compatibility { width: calc(3 * (100% / 7)); }
-.category-section.viability { width: calc(1 * (100% / 7)); }
+/* First bracket: from 0/6ths (left edge) to 2/6ths */
+.category-section.chemistry { 
+  left: 0; /* Start from the left edge (0/6ths) */
+  width: calc(2 * (100% / 6)); /* Width of 2/6ths */
+}
+
+/* Second bracket: from 3/6ths to 5/6ths */
+.category-section.compatibility { 
+  left: calc(3 * (100% / 6)); /* Start at 3/6ths */
+  width: calc(2 * (100% / 6)); /* Width of 2/6ths */
+}
+
+/* Third bracket: just the right edge at 6/6ths */
+.category-section.viability { 
+  left: calc(100% - 10px); /* Aligned with the right edge */
+  width: 10px; /* Minimal width */
+}
+
+/* Adjust category label positions to be centered under their brackets */
+.category-section .category-label {
+  position: relative;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+
+/* Special case for viability label to be centered under the right edge (6/6th) */
+.category-section.viability .category-label {
+  position: absolute;
+  width: 80px; /* Fixed width for the label */
+  text-align: center;
+  right: 5px; /* Align with the bracket line */
+  transform: translateX(-50%); /* Center the label by moving it left by half its width */
+}
 
 .category-line {
   position: relative;
@@ -257,16 +330,17 @@
   content: '';
   position: absolute;
   width: 2px;
-  height: 10px;
+  height: 8px; /* Adjust height as needed */
   background-color: var(--color-text);
-  top: -4px;
+  top: -8px; /* Position exactly above the horizontal line */
+  transform: none; /* Remove transform to avoid positioning issues */
 }
 
 .category-section .category-line::before { left: 0; }
 .category-section .category-line::after { right: 0; }
 
 .category-label {
-  font-family: 'EB Garamond', serif;
+  font-family: var(--font-family-primary);
   font-size: 0.9rem;
   font-weight: 500;
   color: var(--color-text);
@@ -298,13 +372,13 @@
 .value-input {
   width: 50px;
   height: var(--input-height);
-  font-size: 1rem;
+  font-size: var(--font-size-md);
   padding: 4px;
   border: 1px solid var(--color-border);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   text-align: center;
   color: var(--color-text);
-  background-color: white;
+  background-color: var(--color-white);
   margin: 0 auto;
   font-weight: 400;
 }
@@ -312,7 +386,7 @@
 .value-input:focus {
   outline: none;
   border-color: var(--color-primary-darker);
-  box-shadow: 0 0 0 2px rgba(162, 90, 60, 0.1);
+  box-shadow: 0 0 0 2px rgba(var(--color-primary-darker-rgb), 0.1);
 }
 
 /* Snapshot controls */
@@ -349,7 +423,7 @@
 .name-input:focus {
   outline: none;
   border-color: var(--color-primary-darker);
-  box-shadow: 0 0 0 2px rgba(162, 90, 60, 0.1);
+  box-shadow: 0 0 0 2px rgba(var(--color-primary-darker-rgb), 0.1);
 }
 
 .snapshot-button {
@@ -395,11 +469,11 @@
   }
   
   .label-row {
-    bottom: -25px;
+    bottom: 20px; /* Consistent with desktop */
   }
   
   .category-lines {
-    bottom: -45px;
+    bottom: -25px;
   }
   
   .axis-label-text {

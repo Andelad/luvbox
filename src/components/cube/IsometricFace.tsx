@@ -126,6 +126,20 @@ const IsometricFace: React.FC = () => {
           );
         })}
       </div>
+
+      {/* Add X-axis labels with consistent styling */}
+      <div className="iso-axis-labels x-axis">
+        <div className="axis-title">My Life (yrs)</div>
+        <div className="axis-values">
+          <span>0</span>
+          <span>20</span>
+          <span>40</span>
+          <span>60</span>
+          <span>80</span>
+          <span>100+</span>
+        </div>
+      </div>
+      
       <p>Building meaningful connections</p>
     </div>
   );

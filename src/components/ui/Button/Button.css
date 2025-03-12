@@ -1,0 +1,50 @@
+.app-button {
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.app-button.primary {
+  background-color: #d7967b;
+  color: white;
+}
+
+.app-button.primary:hover {
+  background-color: #c27b5d;
+}
+
+.app-button.secondary {
+  background-color: transparent;
+  border: 1px solid #d7967b;
+  color: #d7967b;
+}
+
+.app-button.secondary:hover {
+  background-color: rgba(215, 150, 123, 0.1);
+}
+
+.app-button.text {
+  background-color: transparent;
+  color: #d7967b;
+}
+
+.app-button.text:hover {
+  background-color: rgba(215, 150, 123, 0.1);
+}
+
+.app-button.small {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
+
+.app-button.medium {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+}
+
+.app-button.large {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+}

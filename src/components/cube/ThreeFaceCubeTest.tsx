@@ -53,20 +53,20 @@ const ThreeFaceCubeTest: React.FC = () => {
     } else if (currentFace === 'purpose') {
       setAxisLabels({
         xLabels: ['Pe', 'PA', 'FC', 'SV', 'GB', 'G', 'Vi'],
-        yLabels: ['0', '20', '40', '60', '80', '100'],
+        yLabels: ['0', '20', '40', '60', '80', '100+'],
         xGroupLabels: ['Intimacy', 'Purpose'],
         showGroupLabels: true,
         xAxisTitle: 'Characteristics',
-        yAxisTitle: 'Years'
+        yAxisTitle: 'My Life (yrs)'
       });
       setRotation({ x: 45, y: -15 });
     } else if (currentFace === 'time') {
       setAxisLabels({
-        xLabels: ['0', '20', '40', '60', '80', '100'],
+        xLabels: ['0', '20', '40', '60', '80', '100+'],
         yLabels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         xGroupLabels: [],
         showGroupLabels: false,
-        xAxisTitle: 'Years',
+        xAxisTitle: 'My Life (yrs)',
         yAxisTitle: 'Rating'
       });
       setRotation({ x: 15, y: 45 });

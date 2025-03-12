@@ -72,6 +72,40 @@ const CubeIcon = ({ faceColor = 'none', onClick, isActive, label }: {
   );
 };
 
+// Add a reusable XAxisLabels component
+const XAxisLabels: React.FC<{
+  labels: string[], 
+  isTransitioning: boolean
+}> = ({ labels, isTransitioning }) => (
+  <div className={`label-row ${isTransitioning ? 'transitioning' : ''}`}>
+    {labels.map((label, index) => (
+      <div key={index} className="label-column">
+        <div className="axis-label-text">{label}</div>
+      </div>
+    ))}
+  </div>
+);
+
+// Add a reusable CategoryLines component with proper bracket positioning
+const CategoryLines: React.FC<{
+  isTransitioning: boolean
+}> = ({ isTransitioning }) => (
+  <div className={`category-lines ${isTransitioning ? 'transitioning' : ''}`}>
+    <div className="category-section chemistry">
+      <div className="category-line"></div>
+      <div className="category-label">Chemistry</div>
+    </div>
+    <div className="category-section compatibility">
+      <div className="category-line"></div>
+      <div className="category-label">Compatibility</div>
+    </div>
+    <div className="category-section viability">
+      <div className="category-line"></div>
+      <div className="category-label">Viability</div>
+    </div>
+  </div>
+);
+
 const CubeComponent: React.FC = () => {
   const [currentFace, setCurrentFace] = useState<FaceType>('qualities');
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -82,7 +116,7 @@ const CubeComponent: React.FC = () => {
     yLabels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     xGroupLabels: ['Intimacy', 'Purpose'],
     showGroupLabels: false,
-    yAxisTitle: 'Rating'
+    yAxisTitle: 'Score'
   });
   
   // State for snapshot name
@@ -154,23 +188,23 @@ const CubeComponent: React.FC = () => {
         yLabels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         xGroupLabels: [],
         showGroupLabels: false,
-        yAxisTitle: 'Rating'
+        yAxisTitle: 'Score'
       });
     } else if (currentFace === 'purpose') {
       setAxisLabels({
         xLabels: ['Pe', 'PA', 'FV', 'Va', 'G', 'Be', 'Vi'],
-        yLabels: ['0', '20', '40', '60', '80', '100'],
+        yLabels: ['0', '20', '40', '60', '80', '100+'],
         xGroupLabels: ['Intimacy', 'Purpose'],
         showGroupLabels: true,
-        yAxisTitle: 'Years'
+        yAxisTitle: 'My Life (yrs)'
       });
     } else if (currentFace === 'time') {
       setAxisLabels({
-        xLabels: ['0', '20', '40', '60', '80', '100'],
+        xLabels: ['0', '20', '40', '60', '80', '100+'],
         yLabels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         xGroupLabels: [],
         showGroupLabels: false,
-        yAxisTitle: 'Rating'
+        yAxisTitle: 'Score'
       });
     }
     
@@ -205,6 +239,11 @@ const CubeComponent: React.FC = () => {
     alert(`Snapshot "${snapshotName}" saved!`);
   };
 
+  // Show category lines based on current face
+  const shouldShowCategories = () => {
+    return currentFace === 'qualities' || currentFace === 'purpose';
+  };
+
   return (
     <div className="cube-wrapper">
       <div className="cube-container">
@@ -235,25 +274,15 @@ const CubeComponent: React.FC = () => {
           <div className={`y-axis ${isTransitioning ? 'transitioning' : ''}`}>
             <div className={`axis-title ${isTransitioning ? 'transitioning' : ''}`}>{axisLabels.yAxisTitle}</div>
             <div className={`axis-labels ${isTransitioning ? 'transitioning' : ''}`}>
-              {axisLabels.yLabels.map((label, index) => {
-                // Calculate position as a percentage to ensure proper spacing
-                // Use totalLabels to ensure even spacing from 0 to 100%
-                const totalLabels = axisLabels.yLabels.length - 1;
-                const position = 100 - (index / totalLabels * 100);
-                
-                return (
-                  <div 
-                    key={`y-${index}`} 
-                    className="axis-label"
-                    style={{ 
-                      top: `${position}%`,
-                      transform: 'translateY(-50%)'
-                    }}
-                  >
-                    {label}
-                  </div>
-                );
-              })}
+              {/* Render labels in reverse order for flex column layout (bottom to top) */}
+              {[...axisLabels.yLabels].reverse().map((label, index) => (
+                <div 
+                  key={`y-${index}`} 
+                  className="axis-label"
+                >
+                  {label}
+                </div>
+              ))}
             </div>
             <div className="axis-line"></div>
           </div>
@@ -290,32 +319,15 @@ const CubeComponent: React.FC = () => {
             </div>
           </div>
           
-          {/* X-axis labels and category lines - only shown for Equalizer face */}
-          {currentFace === 'qualities' && (
-            <>
-              <div className="label-row">
-                {axisLabels.xLabels.map((label, index) => (
-                  <div key={index} className="label-column">
-                    <div className="axis-label-text">{label}</div>
-                  </div>
-                ))}
-              </div>
-              
-              <div className="category-lines">
-                <div className="category-section chemistry">
-                  <div className="category-line"></div>
-                  <div className="category-label">Chemistry</div>
-                </div>
-                <div className="category-section compatibility">
-                  <div className="category-line"></div>
-                  <div className="category-label">Compatibility</div>
-                </div>
-                <div className="category-section viability">
-                  <div className="category-line"></div>
-                  <div className="category-label">Viability</div>
-                </div>
-              </div>
-            </>
+          {/* X-axis labels for all faces */}
+          <XAxisLabels 
+            labels={axisLabels.xLabels} 
+            isTransitioning={isTransitioning} 
+          />
+          
+          {/* Category sections for qualities and purpose faces */}
+          {shouldShowCategories() && (
+            <CategoryLines isTransitioning={isTransitioning} />
           )}
         </div>
       </div>

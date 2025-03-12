@@ -123,10 +123,50 @@ p {
   opacity: 0.5;
 }
 
+/* Added for consistent axis styling across faces */
+.iso-axis-labels {
+  position: relative;
+  width: 90%;
+  margin: 1rem auto 0;
+  text-align: center;
+}
+
+.iso-axis-labels .axis-title {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.iso-axis-labels .axis-values {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.iso-axis-labels .axis-values span {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 400;
+}
+
 /* Top Face Styles */
 .radar-container {
   width: 90%;
   height: 60%;
+}
+
+/* Adjust label row position */
+.label-row {
+  position: absolute;
+  bottom: -15px; /* Changed from -30px to bring it closer to the cube */
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  z-index: 2;
 }
 
 @media (max-width: 768px) {
