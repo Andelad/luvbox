@@ -10,23 +10,143 @@
   width: 100%;
   margin: 0 auto;
   padding: 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .map-page h1 {
   font-family: 'EB Garamond', serif;
   font-size: 2.5rem;
-  margin-bottom: 1.5rem;
+  margin-top: 5vh;
+  margin-bottom: 8vh;
   color: #2d2d2d;
   text-align: center;
 }
 
 .map-content {
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   padding: 2rem;
+  /* Removed white background and box shadow */
 }
 
+/* Added diagram styles from landing page */
+.visual-content {
+  flex: 1;
+  position: relative;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.diagram {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 800px;
+  max-height: 500px;
+  margin: 0 auto;
+}
+
+.diamond-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.diagram-element {
+  position: absolute;
+  z-index: 2; 
+  transition: all 0.3s ease; /* Quick transition for hover effect */
+  text-align: center;
+  text-decoration: none; /* Remove underline from links */
+  color: inherit; /* Inherit text color */
+  display: block; /* Ensure the link takes the full size */
+}
+
+/* Add hover effect to diagram elements */
+.diagram-element:hover {
+  transform: translateY(-8px);
+  cursor: pointer;
+}
+
+.diagram-element img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+}
+
+.element-label {
+  font-family: 'EB Garamond', serif;
+  font-weight: 600;
+  font-style: italic;
+  font-size: 1.2rem;
+  color: #2d2d2d;
+  margin-bottom: 10px;
+  display: block;
+}
+
+/* Diamond layout positioning */
+.diagram-cube {
+  width: 100px;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: float-element 6s ease-in-out infinite;
+}
+
+.book {
+  width: 100px;
+  top: 200px;
+  left: 20%;
+  animation: float-simple 6s ease-in-out infinite 1.5s;
+}
+
+.person {
+  width: 80px;
+  top: 200px;
+  right: 20%;
+  animation: float-simple 6s ease-in-out infinite 3s;
+}
+
+/* New community element positioned at the bottom of the diamond */
+.community {
+  width: 90px;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: float-element 6s ease-in-out infinite 4.5s;
+}
+
+/* Adjusted animation to work with all elements including those with translateX */
+@keyframes float-element {
+  0% {
+    transform: translateY(0px) translateX(-50%);
+  }
+  50% {
+    transform: translateY(-8px) translateX(-50%);
+  }
+  100% {
+    transform: translateY(0px) translateX(-50%);
+  }
+}
+
+/* Separate animation for elements without translateX */
+@keyframes float-simple {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Mobile responsiveness */
 @media (max-width: 768px) {
   .map-container {
     padding: 1rem;
@@ -38,5 +158,36 @@
   
   .map-page h1 {
     font-size: 2rem;
+  }
+  
+  .visual-content {
+    height: 400px;
+  }
+  
+  /* Adjust diamond layout for mobile */
+  .diagram-cube {
+    width: 60px;
+    top: 30px;
+  }
+  
+  .book {
+    width: 70px;
+    top: 160px;
+    left: 15%;
+  }
+  
+  .person {
+    width: 60px;
+    top: 160px;
+    right: 15%;
+  }
+  
+  .community {
+    width: 65px;
+    bottom: 30px;
+  }
+  
+  .element-label {
+    font-size: 1rem;
   }
 }

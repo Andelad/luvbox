@@ -9,6 +9,7 @@ import MainLayout from './layouts/MainLayout';
 import { ScriptsPage, SelfPage, CommunityPage, SettingsPage } from './pages/placeholder/PlaceholderPages';
 import CubeTestPage from './pages/CubeTestPage';
 import MapPage from './pages/map/MapPage';
+import SnapshotsPage from './pages/snapshots/SnapshotsPage'; // Import the new SnapshotsPage
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path="/self" element={<SelfPage />} />
             <Route path="/community" element={<CommunityPage />} />
             <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/snapshots" element={<SnapshotsPage />} /> {/* Add the new route */}
           </Route>
           
           {/* Redirect any other path to the landing page */}

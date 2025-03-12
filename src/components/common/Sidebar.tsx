@@ -58,16 +58,25 @@ const Sidebar: React.FC<SidebarProps> = ({ expanded, onToggle }) => {
         <path d="M0 0h24v24H0z" fill="none"/>
         <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
       </svg>
+    ),
+    snapshots: (
+      <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" fill="currentColor">
+        <path d="M0 0h24v24H0z" fill="none"/>
+        <circle cx="12" cy="12" r="3.2"/>
+        <path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
+      </svg>
     )
   };
   
   const navItems = [
-    { to: '/map', label: 'The Map', icon: icons.map },
     { to: '/cube', label: 'The Cube', icon: icons.cube },
-    { to: '/cube-test', label: 'Cube Tests', icon: icons.cubeTest },
-    { to: '/scripts', label: 'My Scripts', icon: icons.scripts },
-    { to: '/self', label: 'My Self', icon: icons.self },
-    { to: '/community', label: 'Community', icon: icons.community },
+    { to: '/map', label: 'The Map', icon: icons.map },
+    // Hiding these items temporarily:
+    // { to: '/cube-test', label: 'Cube Tests', icon: icons.cubeTest },
+    // { to: '/scripts', label: 'My Scripts', icon: icons.scripts },
+    // { to: '/self', label: 'My Self', icon: icons.self },
+    // { to: '/community', label: 'Community', icon: icons.community },
+    { to: '/snapshots', label: 'My Snapshots', icon: icons.snapshots },
   ];
 
   return (
