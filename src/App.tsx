@@ -7,13 +7,14 @@ import DealbreakersForm from './components/forms/dealbreakers';
 import NarrativeRankingForm from './components/forms/narratives';
 import MainLayout from './layouts/MainLayout';
 import { ScriptsPage, SelfPage } from './pages/placeholder/PlaceholderPages';
-import CommunityPage from './pages/community/CommunityPage';  // Update this import
+import CommunityPage from './pages/community/CommunityPage';
 import CubeTestPage from './pages/CubeTestPage';
 import MapPage from './pages/map/MapPage';
 import SnapshotsPage from './pages/snapshots/SnapshotsPage'; 
 import SettingsPage from './pages/settings';
 import TestPagesIndex from './pages/test/TestPagesIndex';
 import TestArticlePage from './pages/test/TestArticlePage';
+import LuvBoxInfoPage from './pages/luvboxinfo/LuvBoxInfoPage';
 
 function App() {
   return (
@@ -34,10 +35,11 @@ function App() {
             <Route path="/self" element={<SelfPage />} />
             <Route path="/community" element={<CommunityPage />} />
             <Route path="/settings" element={<SettingsPage />} />
-            <Route path="/snapshots" element={<SnapshotsPage />} /> 
-            <Route path="/test" element={<TestPagesIndex />} /> 
+            <Route path="/snapshots" element={<SnapshotsPage />} />
+            <Route path="/test" element={<TestPagesIndex />} />
             <Route path="/test/article" element={<TestArticlePage />} />
             <Route path="/test/:pageId" element={<TestPagesIndex />} />
+            <Route path="/luvboxinfo" element={<LuvBoxInfoPage />} />
           </Route>
           
           {/* Redirect any other path to the landing page */}

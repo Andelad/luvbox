@@ -95,12 +95,15 @@
   display: block; /* Ensure the link takes the full size */
   width: auto; /* Remove fixed widths */
   height: auto;
+  cursor: pointer; /* Add default cursor */
 }
 
-/* Remove the hover transform effects that made images jump up */
-/* Add simple cursor change on hover instead */
 .diagram-element:hover {
   cursor: pointer;
+}
+
+.diagram-element:hover img {
+  opacity: 0.8; /* Add subtle hover effect */
 }
 
 .diagram-element img {
@@ -274,4 +277,19 @@
   .map-subtitle .ps-note {
     font-size: 0.9rem;
   }
+}
+
+/* Add this new class to your existing CSS file */
+
+.map-footer {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.ps-note {
+  font-style: italic;
+  color: #777;
+  font-size: 0.9rem;
+  max-width: 600px;
+  margin: 0 auto;
 }

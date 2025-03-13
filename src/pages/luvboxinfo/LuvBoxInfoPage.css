@@ -1,0 +1,242 @@
+.luvboxinfo-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem;
+  background-color: #f0e9e2;
+}
+
+.luvboxinfo-container {
+  max-width: 1000px;
+  width: 100%;
+  margin: 3rem auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align items at the top */
+  position: relative; /* Add relative positioning to the container */
+}
+
+.side-menu {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 6rem; /* Adjust this value to better match the top of the article text */
+  margin-right: 2rem;
+  flex: 0 0 200px;
+  align-self: flex-start;
+  margin-top: 6rem; /* Match the top margin of the article content */
+  height: fit-content; /* Ensure height is based on content */
+}
+
+.side-menu h3 {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #2d2d2d;
+}
+
+.side-menu ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.side-menu ul li {
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.5rem;
+}
+
+.side-menu ul li a {
+  text-decoration: none;
+  color: #555;
+  font-size: 1rem;
+}
+
+.side-menu ul li a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.breadcrumb a {
+  color: #d7967b;
+  text-decoration: none;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.article-content {
+  padding: 2.5rem;
+  max-width: 800px;
+  margin: 3rem auto;
+  margin-top: 6rem; /* Ensure the article content starts at the same height as the side menu */
+}
+
+.article-header {
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.article-header h1 {
+  font-family: 'EB Garamond', serif;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #2d2d2d;
+  line-height: 1.2;
+  font-style: italic;
+  text-align: left;
+}
+
+.article-body {
+  line-height: 1.6;
+  color: #555;
+}
+
+.article-body h2 {
+  font-family: 'EB Garamond', serif;
+  font-size: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #2d2d2d;
+}
+
+.article-body p {
+  margin-bottom: 1.5rem;
+}
+
+.article-body ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.article-body ul li {
+  margin-bottom: 0.5rem;
+}
+
+.luvboxinfo-content {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 2rem;
+}
+
+.bullet-points-section h2 {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #2d2d2d;
+}
+
+.bullet-points-list {
+  list-style-position: outside;
+  padding-left: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.bullet-points-list li {
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+.bullet-points-list li::marker {
+  color: #d7967b;
+  font-size: 1.2em;
+}
+
+.add-bullet-section {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e0d9d2;
+}
+
+.add-bullet-section h3 {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: #2d2d2d;
+}
+
+.add-bullet-section p {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.bullet-form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.bullet-input {
+  flex: 1;
+  padding: 0.8rem 1rem;
+  border: 1px solid #e0d9d2;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #2d2d2d;
+  transition: border-color 0.3s ease;
+}
+
+.bullet-input:focus {
+  outline: none;
+  border-color: #d7967b;
+  box-shadow: 0 0 0 2px rgba(215, 150, 123, 0.2);
+}
+
+.add-button {
+  background-color: #d7967b;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.8rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-button:hover {
+  background-color: #c27b5d;
+}
+
+.go-to-top {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ddd;
+}
+
+@media (max-width: 768px) {
+  .luvboxinfo-container {
+    padding: 1rem;
+  }
+
+  .luvboxinfo-content {
+    padding: 1.5rem;
+  }
+
+  .bullet-points-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .bullet-form {
+    flex-direction: column;
+  }
+
+  .add-button {
+    width: 100%;
+  }
+}

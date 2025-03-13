@@ -29,13 +29,12 @@ const MapPage: React.FC = () => {
         <h1>The Map</h1>
         <div className="map-subtitle">
           <p>Our experience of love is shaped by the information we observe, the narratives we believe, our unique preferences, and the community that surrounds us.</p>
-          <p className="ps-note">P.S. While love always involves other people, LuvBox focuses on helping you understand and navigate your own experience of love.</p>
         </div>
         <div className="map-content">
           <div className="visual-content">
             <div className="diagram diamond-layout">
               {/* Images positioned in a diamond layout with links */}
-              <Link to="/cube" className="diagram-element diagram-cube">
+              <Link to="/luvboxinfo" className="diagram-element diagram-cube">
                 <span className="element-label">The LuvBox</span>
                 <img 
                   src={cube} 
@@ -75,6 +74,9 @@ const MapPage: React.FC = () => {
                 />
               </Link>
             </div>
+          </div>
+          <div className="map-footer">
+            <p className="ps-note">P.S. While love always involves other people, LuvBox focuses on helping you understand and navigate your own experience of love.</p>
           </div>
         </div>
       </div>
