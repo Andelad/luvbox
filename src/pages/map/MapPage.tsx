@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './MapPage.css';
 
@@ -8,8 +8,21 @@ import book from '../../assets/images/book.png';
 import person from '../../assets/images/person.png';
 import communityIcon from '../../assets/images/community.png';
 
-// Add loading optimization
 const MapPage: React.FC = () => {
+  const [imagesLoaded, setImagesLoaded] = useState({
+    cube: false,
+    book: false,
+    person: false,
+    community: false
+  });
+
+  const handleImageLoad = (imageName: string) => {
+    setImagesLoaded(prev => ({
+      ...prev,
+      [imageName]: true
+    }));
+  };
+
   return (
     <div className="map-page">
       <div className="map-container">
@@ -24,22 +37,42 @@ const MapPage: React.FC = () => {
               {/* Images positioned in a diamond layout with links */}
               <Link to="/cube" className="diagram-element diagram-cube">
                 <span className="element-label">The LuvBox</span>
-                <img src={cube} alt="Cube" />
+                <img 
+                  src={cube} 
+                  alt="Cube" 
+                  onLoad={() => handleImageLoad('cube')}
+                  style={{ opacity: imagesLoaded.cube ? 1 : 0 }}
+                />
               </Link>
               
               <Link to="/scripts" className="diagram-element book">
                 <span className="element-label">My Scripts</span>
-                <img src={book} alt="Book" />
+                <img 
+                  src={book} 
+                  alt="Book" 
+                  onLoad={() => handleImageLoad('book')}
+                  style={{ opacity: imagesLoaded.book ? 1 : 0 }}
+                />
               </Link>
               
               <Link to="/self" className="diagram-element person">
                 <span className="element-label">Myself</span>
-                <img src={person} alt="Person" loading="eager" />
+                <img 
+                  src={person} 
+                  alt="Person" 
+                  onLoad={() => handleImageLoad('person')}
+                  style={{ opacity: imagesLoaded.person ? 1 : 0 }}
+                />
               </Link>
               
               <Link to="/community" className="diagram-element community">
                 <span className="element-label">Community</span>
-                <img src={communityIcon} alt="Community" loading="eager" />
+                <img 
+                  src={communityIcon} 
+                  alt="Community" 
+                  onLoad={() => handleImageLoad('community')}
+                  style={{ opacity: imagesLoaded.community ? 1 : 0 }}
+                />
               </Link>
             </div>
           </div>

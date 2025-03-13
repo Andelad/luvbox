@@ -93,6 +93,8 @@
   text-decoration: none; /* Remove underline from links */
   color: inherit; /* Inherit text color */
   display: block; /* Ensure the link takes the full size */
+  width: auto; /* Remove fixed widths */
+  height: auto;
 }
 
 /* Remove the hover transform effects that made images jump up */
@@ -103,9 +105,11 @@
 
 .diagram-element img {
   display: block;
-  margin: 0 auto;
-  max-width: 100%;
+  width: 100%;
   height: auto;
+  max-width: 100px; /* Set maximum sizes instead of fixed sizes */
+  opacity: 1; /* Ensure images are fully visible */
+  transition: opacity 0.3s ease;
 }
 
 .element-label {
@@ -116,6 +120,23 @@
   color: #2d2d2d;
   margin-bottom: 10px;
   display: block;
+}
+
+/* Adjust specific element sizes */
+.diagram-cube img {
+  max-width: 120px;
+}
+
+.book img {
+  max-width: 100px;
+}
+
+.person img {
+  max-width: 80px;
+}
+
+.community img {
+  max-width: 90px;
 }
 
 /* Diamond layout positioning */
