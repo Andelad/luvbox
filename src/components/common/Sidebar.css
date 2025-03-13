@@ -163,20 +163,69 @@
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   .sidebar {
-    bottom: 20px;
-    top: auto;
-    left: 20px;
-    transform: none; /* Remove vertical centering on mobile */
+    top: auto; /* Remove top positioning */
+    bottom: 0; /* Position at bottom */
+    left: 0; /* Start from left edge */
+    right: 0; /* Extend to right edge */
+    width: 100%; /* Full width of viewport */
+    height: auto; /* Height based on content */
+    transform: none; /* Remove vertical centering */
     max-height: none;
+    border-radius: 0; /* Remove border radius at bottom */
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1); /* Shadow from top */
+  }
+  
+  .sidebar.expanded, 
+  .sidebar.collapsed {
+    width: 100%; /* Always full width on mobile */
   }
   
   .sidebar-toggle {
-    top: 12px;
-    right: 8px;
-    transform: none;
+    display: none; /* Hide the toggle button */
   }
   
   .sidebar::after {
-    display: none;
+    display: none; /* Hide the decorative element */
+  }
+  
+  .sidebar-content {
+    flex-direction: row; /* Horizontal layout */
+    padding: 15px 10px;
+    overflow-x: auto; /* Allow horizontal scrolling if needed */
+    justify-content: center;
+  }
+  
+  .sidebar-nav {
+    padding: 0; /* Remove padding */
+    margin-right: 15px; /* Add some space between nav and footer */
+  }
+  
+  .sidebar-nav ul {
+    display: flex; /* Arrange items horizontally */
+    flex-direction: row;
+    gap: 15px;
+  }
+  
+  .sidebar-footer {
+    border-top: none; /* Remove top border */
+    border-left: 1px solid #e0d9d2; /* Add left border instead */
+    padding: 0 0 0 15px; /* Add left padding */
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+  }
+  
+  /* Always show labels, never tooltips on mobile */
+  .nav-label {
+    display: none; /* Hide labels to save space */
+  }
+  
+  .nav-tooltip {
+    display: none; /* Hide tooltips on mobile */
+  }
+  
+  .nav-item {
+    padding: 8px;
+    margin: 0;
   }
 }
