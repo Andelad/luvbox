@@ -6,7 +6,8 @@ import CubeComponent from './components/cube';
 import DealbreakersForm from './components/forms/dealbreakers';
 import NarrativeRankingForm from './components/forms/narratives';
 import MainLayout from './layouts/MainLayout';
-import { ScriptsPage, SelfPage, CommunityPage } from './pages/placeholder/PlaceholderPages';
+import { ScriptsPage, SelfPage } from './pages/placeholder/PlaceholderPages';
+import CommunityPage from './pages/community/CommunityPage';  // Update this import
 import CubeTestPage from './pages/CubeTestPage';
 import MapPage from './pages/map/MapPage';
 import SnapshotsPage from './pages/snapshots/SnapshotsPage'; 

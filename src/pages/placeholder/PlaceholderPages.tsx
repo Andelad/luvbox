@@ -1,6 +1,7 @@
 import React from 'react';
 import SelfPage from '../self/SelfPage';
 import ScriptsPage from '../scripts/ScriptsPage';
+import CommunityPage from '../community/CommunityPage';
 
 // Shared styling for placeholder pages
 const placeholderStyle = {
@@ -29,21 +30,5 @@ const paragraphStyle = {
   color: '#555'
 };
 
-// Export ScriptsPage from the scripts directory
-export { ScriptsPage };
-
-// Community Page
-export const CommunityPage: React.FC = () => {
-  return (
-    <div style={placeholderStyle}>
-      <h1 style={headingStyle}>Community</h1>
-      <p style={paragraphStyle}>
-        Connect with others and share experiences on your journey.
-        This feature is coming soon.
-      </p>
-    </div>
-  );
-};
-
-// Export only SelfPage - SettingsPage has been moved
-export { SelfPage };
+// Export the pages
+export { SelfPage, ScriptsPage, CommunityPage };

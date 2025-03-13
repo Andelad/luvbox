@@ -2,12 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './MapPage.css';
 
-// Import the same images used in the landing page
+// Update image imports to use direct paths
 import cube from '../../assets/images/cube.png';
 import book from '../../assets/images/book.png';
 import person from '../../assets/images/person.png';
 import communityIcon from '../../assets/images/community.png';
 
+// Add loading optimization
 const MapPage: React.FC = () => {
   return (
     <div className="map-page">
@@ -33,12 +34,12 @@ const MapPage: React.FC = () => {
               
               <Link to="/self" className="diagram-element person">
                 <span className="element-label">Myself</span>
-                <img src={person} alt="Person" />
+                <img src={person} alt="Person" loading="eager" />
               </Link>
               
               <Link to="/community" className="diagram-element community">
                 <span className="element-label">Community</span>
-                <img src={communityIcon} alt="Community" />
+                <img src={communityIcon} alt="Community" loading="eager" />
               </Link>
             </div>
           </div>
