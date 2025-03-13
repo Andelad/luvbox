@@ -9,8 +9,9 @@ import MainLayout from './layouts/MainLayout';
 import { ScriptsPage, SelfPage, CommunityPage } from './pages/placeholder/PlaceholderPages';
 import CubeTestPage from './pages/CubeTestPage';
 import MapPage from './pages/map/MapPage';
-import SnapshotsPage from './pages/snapshots/SnapshotsPage'; // Import the new SnapshotsPage
+import SnapshotsPage from './pages/snapshots/SnapshotsPage'; 
 import SettingsPage from './pages/settings';
+import TestPagesIndex from './pages/test/TestPagesIndex'; // Import from the correct path
 
 function App() {
   return (
@@ -31,7 +32,10 @@ function App() {
             <Route path="/self" element={<SelfPage />} />
             <Route path="/community" element={<CommunityPage />} />
             <Route path="/settings" element={<SettingsPage />} />
-            <Route path="/snapshots" element={<SnapshotsPage />} /> {/* Add the new route */}
+            <Route path="/snapshots" element={<SnapshotsPage />} /> 
+            <Route path="/test" element={<TestPagesIndex />} /> 
+            {/* Add placeholder routes for individual test pages */}
+            <Route path="/test/:pageId" element={<TestPagesIndex />} />
           </Route>
           
           {/* Redirect any other path to the landing page */}

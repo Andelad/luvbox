@@ -1,0 +1,88 @@
+.test-pages {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f0e9e2;
+}
+
+.test-pages-container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.test-pages h1 {
+  font-family: 'EB Garamond', serif;
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: #2d2d2d;
+  text-align: center;
+}
+
+.test-pages-description {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  color: #666;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.test-pages-content {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 2rem;
+}
+
+.test-pages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.test-page-card {
+  background-color: #f8f5f2;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.test-page-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.test-page-card h2 {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #2d2d2d;
+}
+
+.test-page-card p {
+  color: #666;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .test-pages-container {
+    padding: 1rem;
+  }
+  
+  .test-pages-content {
+    padding: 1.5rem;
+  }
+  
+  .test-pages h1 {
+    font-size: 2rem;
+  }
+  
+  .test-pages-grid {
+    grid-template-columns: 1fr;
+  }
+}
