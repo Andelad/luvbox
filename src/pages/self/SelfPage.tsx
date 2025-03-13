@@ -1,29 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './SelfPage.css';
 
 const SelfPage: React.FC = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  // Close menu when clicking on a link in the menu
+  const handleLinkClick = () => {
+    setMenuOpen(false);
+  };
+
   return (
     <div className="self-page" id="top">
       <div className="self-container">
-        <div className="side-menu">
-          <div className="breadcrumb">
-            <Link to="/map">← Back to Map</Link>
+        <div className={`side-menu-container ${menuOpen ? 'open' : ''}`}>
+          {/* Hamburger menu button */}
+          <div 
+            className={`hamburger-menu ${menuOpen ? 'open' : ''}`} 
+            onClick={toggleMenu}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
           </div>
-          <h3>In this section</h3>
-          <ul>
-            <li><a href="#intelligence-of-your-gut">The Intelligence of Your Gut</a></li>
-            <li><a href="#your-unique-perspective">Your Unique Perspective</a></li>
-            <li><a href="#intuition-and-expertise">Intuition and Expertise: Partners, Not Opponents</a></li>
-            <li><a href="#cost-of-choices">The Cost of Choices</a></li>
-            <li><a href="#educating-your-gut">Educating Your Gut</a></li>
-            <li><a href="#trusting-your-direction">Trusting Your Direction</a></li>
-            <li><a href="#living-partnership">A Living Partnership</a></li>
-          </ul>
-          <div className="go-to-top">
-            <a href="#top">↑ Go to Top</a>
+          
+          <div className="side-menu">
+            <div className="breadcrumb">
+              <Link to="/map" onClick={handleLinkClick}>← Back to Map</Link>
+            </div>
+            <h3>In this section</h3>
+            <ul>
+              <li><a href="#intelligence-of-your-gut" onClick={handleLinkClick}>The Intelligence of Your Gut</a></li>
+              <li><a href="#your-unique-perspective" onClick={handleLinkClick}>Your Unique Perspective</a></li>
+              <li><a href="#intuition-and-expertise" onClick={handleLinkClick}>Intuition and Expertise: Partners, Not Opponents</a></li>
+              <li><a href="#cost-of-choices" onClick={handleLinkClick}>The Cost of Choices</a></li>
+              <li><a href="#educating-your-gut" onClick={handleLinkClick}>Educating Your Gut</a></li>
+              <li><a href="#trusting-your-direction" onClick={handleLinkClick}>Trusting Your Direction</a></li>
+              <li><a href="#living-partnership" onClick={handleLinkClick}>A Living Partnership</a></li>
+            </ul>
+            <div className="go-to-top">
+              <a href="#top" onClick={handleLinkClick}>↑ Go to Top</a>
+            </div>
           </div>
         </div>
+        
         <div className="article-content">
           <div className="article-header">
             <h1>The Wisdom of Intuition: Why Your Gut Matters in Love</h1>
