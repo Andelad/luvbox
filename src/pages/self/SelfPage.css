@@ -8,21 +8,46 @@
   background-color: #f0e9e2;
 }
 
+/* Base styles for the hamburger menu - always defined to avoid disappearing */
+.hamburger-menu {
+  display: none; /* Hidden by default, shown in media query */
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  cursor: pointer;
+  position: absolute;
+  top: 0.5rem;
+  left: 4px;
+  z-index: 1000;
+}
+
+.hamburger-menu span {
+  display: block;
+  height: 3px;
+  width: 20px;
+  background-color: #2d2d2d;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
 .self-container {
   max-width: 1000px;
   width: 100%;
   margin: 3rem auto;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start; /* Changed to flex-start for proper alignment */
   align-items: flex-start; /* Align items at the top */
   position: relative; /* Add relative positioning to the container */
 }
 
 .side-menu-container {
   position: relative;
-  flex: 0 0 200px;
+  flex: 0 0 200px; /* Fixed width of 200px */
   align-self: stretch;
-  margin-top: 6rem; /* Restored from 2rem back to original 6rem */
+  margin-top: 3rem;
   min-height: calc(100vh - 12rem); /* Restored from 8rem back to original 12rem */
   border-top: 1px solid #e0d9d2;
   border-left: 1px solid #e0d9d2;
@@ -32,7 +57,7 @@
 .side-menu {
   position: sticky;
   position: -webkit-sticky;
-  padding: 1.5rem; /* Add padding to the side menu */
+  padding: 2.5rem 1rem; /* Modified to have 2.5rem top/bottom and 1rem left/right padding */
   height: fit-content; /* Make height fit the content */
 }
 
@@ -84,10 +109,12 @@
 }
 
 .article-content {
+  flex: 1; /* Take up remaining width */
   padding: 2.5rem;
   max-width: 800px;
   margin: 3rem auto;
   margin-top: 6rem; /* Restored from 2rem back to original 6rem */
+  margin-left: 2rem; /* Add some space between sidebar and content */
   border-top: 1px solid #e0d9d2;
   border-left: 1px solid #e0d9d2;
   border-right: 1px solid #e0d9d2;
@@ -238,74 +265,69 @@
   border-top: 1px solid #ddd;
 }
 
-/* Hamburger menu styling */
-.hamburger-menu {
-  display: none;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  width: 40px;
-  height: 40px;
-  padding: 10px;
-  cursor: pointer;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-}
-
-.hamburger-menu span {
-  display: block;
-  height: 3px;
-  width: 20px;
-  background-color: #2d2d2d;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
-
 /* Media query for mobile devices */
 @media (max-width: 580px) {
   .self-container {
-    flex-direction: column;
     padding: 0;
-    margin-top: 0; /* Removed the 1rem margin that was added */
+  }
+
+  .article-content {
+    margin-top: 2rem; /* Restored from 1rem to original 2rem */
+    margin-left: 48px; /* Keep space for hamburger */
+    width: 100%; /* Full width */
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .self-page {
+    padding: 1rem; /* Reduce overall padding */
+  }
+  
+  .self-container {
+    padding: 0 0 0 48px; /* Add left padding of 48px */
+    flex-direction: column;
+    margin-top: 0;
+    position: relative; /* Ensure the container has position: relative */
   }
 
   .side-menu-container {
-    position: fixed;
-    top: 0rem;
+    position: absolute; /* Change to absolute to position relative to self-container */
+    top: 0;
     left: 0;
-    width: 48px; /* Just enough for the hamburger */
-    height: calc(100vh - 6rem); /* Restored calculation to match original top position */
+    width: 48px;
+    height: 100%; /* Height based on container height */
+    min-height: 100vh; /* Ensure minimum height covers viewport */
     margin: 0;
-    background-color: transparent; /* Make container transparent */
-    z-index: 999;
-    transition: none; /* Remove width transition */
-    box-shadow: none; /* Remove shadow */
-    overflow: visible; /* Allow content to overflow */
+    background-color: transparent;
+    z-index: 900; /* Changed from 999 to 900 to stay behind the Sidebar */
+    transition: none;
+    box-shadow: none;
+    overflow: visible;
+    border-top: 1px solid #e0d9d2; /* Restore desktop border styles */
+    border-left: 1px solid #e0d9d2; /* Restore desktop border styles */
+    border-top-left-radius: 10px; /* Restore desktop border radius */
   }
 
-  /* No width change for the container */
   .side-menu-container.open {
-    width: 48px; /* Keep container width the same */
+    width: 48px;
   }
 
   .side-menu {
-    position: absolute; /* Position absolutely within container */
+    position: absolute;
     top: 0;
     left: 0;
-    padding: 50px 1.5rem 1.5rem; /* Add padding-top for hamburger */
+    padding: 50px 1.5rem 1.5rem;
     height: 100%;
-    width: 48px; /* Start collapsed */
-    transition: width 0.3s ease, background-color 0.3s ease; /* Transition width change */
-    background-color: transparent; /* Start transparent */
+    width: 48px;
+    transition: width 0.3s ease, background-color 0.3s ease;
+    background-color: transparent;
     overflow: hidden;
   }
   
-  /* When open, the menu itself expands, not the container */
   .side-menu-container.open .side-menu {
-    width: 250px; /* Expand when open */
-    background-color: #f0e9e2; /* Background color when open */
+    width: 250px;
+    background-color: #f0e9e2;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
   }
@@ -328,15 +350,13 @@
   }
 
   .hamburger-menu {
-    display: flex;
-    position: absolute;
-    top: 0.5rem;
-    left: 12px; /* Center in the 48px width */
-    transform: none;
-    z-index: 1001; /* Ensure it's above the menu */
+    display: flex; /* Show the hamburger menu */
+    left: 4px; /* Changed from 12px to 4px to leave 4px margin on each side */
+    width: 40px; /* Explicitly set width to ensure it's 40px */
+    right: 4px; /* Add right margin of 4px */
+    margin: 0 auto; /* Center horizontally */
   }
 
-  /* Hamburger animation when menu is open */
   .hamburger-menu.open span:nth-child(1) {
     transform: translateY(8px) rotate(45deg);
   }
@@ -350,16 +370,10 @@
   }
 
   .article-content {
-    margin-top: 2rem; /* Restored from 1rem to original 2rem */
-    margin-left: 0; /* No need to adjust for the menu width since it slides over */
-    width: 100%; /* Full width */
+    margin: 0;
+    width: 100%;
     max-width: 100%;
-  }
-}
-
-@media (max-width: 768px) {
-  .self-container {
-    padding: 1rem;
+    border-radius: 0;
   }
 
   .self-content {

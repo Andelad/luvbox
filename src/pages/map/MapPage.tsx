@@ -26,7 +26,7 @@ const MapPage: React.FC = () => {
   return (
     <div className="map-page">
       <div className="map-container">
-        <h1>The Map</h1>
+        <h1>Mapping Love</h1>
         <div className="map-subtitle">
           <p>Our experience of love is shaped by the information we observe, the narratives we believe, our unique preferences, and the community that surrounds us.</p>
         </div>
