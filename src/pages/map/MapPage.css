@@ -65,9 +65,9 @@
   display: block; /* Ensure the link takes the full size */
 }
 
-/* Add hover effect to diagram elements */
+/* Remove the hover transform effects that made images jump up */
+/* Add simple cursor change on hover instead */
 .diagram-element:hover {
-  transform: translateY(-8px);
   cursor: pointer;
 }
 
@@ -94,7 +94,7 @@
   top: 40px;
   left: 50%;
   transform: translateX(-50%);
-  animation: float-element 6s ease-in-out infinite;
+  animation: float-cube 5.8s ease-in-out infinite;
 }
 
 .book {
@@ -111,22 +111,38 @@
   animation: float-simple 6s ease-in-out infinite 3s;
 }
 
-/* New community element positioned at the bottom of the diamond */
+/* Community element positioned at the bottom of the diamond */
 .community {
   width: 90px;
   bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
-  animation: float-element 6s ease-in-out infinite 4.5s;
+  animation: float-community 6.1s ease-in-out infinite; /* More similar duration */
 }
 
-/* Adjusted animation to work with all elements including those with translateX */
-@keyframes float-element {
+/* Custom animation for cube with unique timing */
+@keyframes float-cube {
   0% {
     transform: translateY(0px) translateX(-50%);
   }
   50% {
     transform: translateY(-8px) translateX(-50%);
+  }
+  100% {
+    transform: translateY(0px) translateX(-50%);
+  }
+}
+
+/* Custom animation for community with unique timing but similar range */
+@keyframes float-community {
+  0% {
+    transform: translateY(0px) translateX(-50%);
+  }
+  40% {
+    transform: translateY(-8px) translateX(-50%);
+  }
+  60% {
+    transform: translateY(-6px) translateX(-50%);
   }
   100% {
     transform: translateY(0px) translateX(-50%);

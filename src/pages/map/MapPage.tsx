@@ -12,7 +12,7 @@ const MapPage: React.FC = () => {
   return (
     <div className="map-page">
       <div className="map-container">
-        <h1>Welcome</h1>
+        <h1>LuvMap</h1>
         <div className="map-content">
           <div className="visual-content">
             <div className="diagram diamond-layout">
