@@ -19,9 +19,39 @@
   font-family: 'EB Garamond', serif;
   font-size: 2.5rem;
   margin-top: 5vh;
-  margin-bottom: 8vh;
+  margin-bottom: 1.5vh; /* Reduced from 3vh */
   color: #2d2d2d;
   text-align: center;
+}
+
+/* Update subtitle styling to use sans-serif font */
+.map-subtitle {
+  text-align: left;
+  max-width: 800px;
+  margin: 0 auto 2rem auto;
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #555;
+  padding: 0 1rem;
+}
+
+.map-subtitle p {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem; /* Reduced from 2rem */
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.map-subtitle .ps-note {
+  font-size: 0.95rem;
+  margin-top: 0.2rem; /* Reduced from 0.5rem */
+  font-style: normal;
+  color: #666;
+}
+
+/* Remove unused styles */
+.map-subtitle ol, 
+.map-subtitle li {
+  display: none;
 }
 
 .map-content {
@@ -176,6 +206,15 @@
     font-size: 2rem;
   }
   
+  .map-subtitle p {
+    font-size: 1.1rem;
+    line-height: 1.4;
+  }
+  
+  .map-subtitle li {
+    font-size: 0.95rem;
+  }
+  
   .visual-content {
     height: 400px;
   }
@@ -205,5 +244,13 @@
   
   .element-label {
     font-size: 1rem;
+  }
+
+  .map-subtitle .ps-note {
+    font-size: 0.85rem;
+  }
+
+  .map-subtitle .ps-note {
+    font-size: 0.9rem;
   }
 }
