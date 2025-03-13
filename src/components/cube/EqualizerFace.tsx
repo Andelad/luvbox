@@ -232,14 +232,29 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
       padding: 0,
       backgroundColor: '#f0e9e2', // Set background to match page background
       border: '1px solid #666', // Softer outline
-      borderRadius: '6px' // Add slight border radius for softer appearance
+      borderRadius: '6px', // Add slight border radius for softer appearance
+      position: 'relative',
+      overflow: 'visible' // Let content overflow
     }}>
       <div 
         ref={containerRef}
         className="equalizer-container"
-        style={{ position: 'relative', height: '100%', width: '100%', padding: 0 }}
+        style={{ 
+          position: 'relative', 
+          height: '100%', 
+          width: '100%', 
+          padding: 0, 
+          overflow: 'visible' // Let content overflow
+        }}
       >
-        <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <svg 
+          width="100%" 
+          height="100%" 
+          viewBox="0 0 100 100" 
+          preserveAspectRatio="none" 
+          style={{ overflow: 'visible' }} // Let SVG content overflow
+          className="equalizer-svg"
+        >
           {/* Define patterns */}
           <defs>
             {/* Refined diagonal hash pattern for caution zones - finer with less space */}
@@ -284,11 +299,11 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
             opacity="0.5"
           />
           
-          {/* Draw the user's curved line (front) - refined style */}
+          {/* Draw the user's curved line (front) - refined style - reduced width to about 2/3 */}
           <path
             d={createPath(values)}
             stroke="#a25a3c"
-            strokeWidth="1.8" // Made slightly thicker for better visibility
+            strokeWidth="1.2" // Reduced from 1.8 to 1.2 (2/3 of original)
             fill="none"
             filter="drop-shadow(0px 1px 1px rgba(0,0,0,0.1))"
           />
@@ -299,7 +314,7 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
               key={`db-${index}`}
               cx={index * (100/6)}
               cy={100 - (val * 10)}
-              r="1.2"
+              r="1.0" // Slightly reduced
               fill="#666"
               opacity="0.7"
             />
@@ -311,11 +326,11 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
               key={`user-${index}`}
               cx={index * (100/6)}
               cy={100 - (val * 10)}
-              r="3" // Made slightly larger
+              r="2.2" // Slightly larger than before (was 2)
               fill="#a25a3c"
               stroke="#fff"
-              strokeWidth="1.2" // Increased stroke width
-              filter="drop-shadow(0px 2px 2px rgba(0,0,0,0.3))" // Enhanced shadow
+              strokeWidth="0.8"
+              filter="drop-shadow(0px 1px 1px rgba(0,0,0,0.3))" 
               style={{ cursor: 'pointer' }}
               onMouseDown={handleDotMouseDown(index)}
               className={activeDot === index ? 'active-dot' : ''}

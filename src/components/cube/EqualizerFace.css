@@ -4,17 +4,17 @@
   padding: 0;
   margin: 0;
   position: relative;
-  overflow: hidden;
+  overflow: visible !important; /* Critical for allowing dots to be visible beyond edges */
   background-color: #f0e9e2; /* Match page background */
   border: 1px solid #666; /* Softer outline */
   border-radius: 6px; /* Slight border radius */
 }
 
-/* Style for active dot when being dragged */
+/* Style for active dot when being dragged - more subtle size increase */
 .active-dot {
-  filter: drop-shadow(0px 3px 5px rgba(0,0,0,0.4)) !important;
-  r: 4 !important; /* Larger radius when active */
-  stroke-width: 2 !important; /* Bolder outline when active */
+  filter: drop-shadow(0px 2px 3px rgba(0,0,0,0.4)) !important;
+  r: 2.6 !important; /* Less dramatic increase from normal 2.2 */
+  stroke-width: 1.2 !important; /* More subtle stroke increase */
 }
 
 /* Equalizer container styling */
@@ -23,15 +23,27 @@
   height: 100%;
   width: 100%;
   padding: 8px; /* Add some padding inside the border */
+  overflow: visible !important; /* Critical for allowing dots to be visible beyond edges */
 }
 
-/* Add hover effect to dots for better interaction cues */
+/* Make sure SVG doesn't clip overflow */
+.equalizer-svg {
+  overflow: visible !important; /* Critical for allowing dots to be visible beyond edges */
+}
+
+/* Add hover effect to dots for better interaction cues - more subtle */
 circle[class*="user-"] {
-  transition: r 0.2s ease, stroke-width 0.2s ease, filter 0.2s ease;
+  transition: r 0.15s ease, stroke-width 0.15s ease, filter 0.15s ease;
 }
 
 circle[class*="user-"]:hover {
-  r: 3.5;
-  stroke-width: 1.5;
-  filter: drop-shadow(0px 2px 3px rgba(0,0,0,0.4));
+  r: 2.4; /* Subtle increase from normal 2.2 */
+  stroke-width: 1; /* Subtle stroke increase */
+  filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.3));
 }
+
+/* Remove the unused selector */
+/* [class*="user-handle-"]:hover {
+  transform: translate(-50%, -50%) scale(1.2) !important;
+  box-shadow: 0px 2px 3px rgba(0,0,0,0.4) !important;
+} */

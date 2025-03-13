@@ -15,6 +15,18 @@
   font-family: 'Source Sans Pro', sans-serif;
   border-radius: 3px;
   /* Removed box-shadow: 0 0 10px rgba(0, 0, 0, 0.05) inset; */
+  overflow: visible !important;
+}
+
+.equalizer-face svg,
+.graph-face svg,
+.isometric-face svg,
+.top-face svg {
+  overflow: visible !important;
+}
+
+.cube-face {
+  overflow: visible !important;
 }
 
 h2 {
