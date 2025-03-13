@@ -135,3 +135,17 @@ button {
 .p-lg {
   padding: var(--spacing-lg);
 }
+
+/* Ensure proper styling for articles */
+.article-body h1,
+.article-body p {
+  font-style: normal;
+}
+
+.article-header h1 {
+  font-style: italic;
+}
+
+.article-body h2 {
+  font-style: normal;
+}

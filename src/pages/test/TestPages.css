@@ -68,6 +68,129 @@
   line-height: 1.5;
 }
 
+/* Article page styles */
+.article-content {
+  padding: 2.5rem;
+  max-width: 800px;
+  margin: 3rem auto; /* Increased from '0 auto' to add 50% more space at top */
+}
+
+.article-header {
+  margin-bottom: 2rem;
+  text-align: left; /* Change from center to left */
+}
+
+.article-header h1 {
+  font-family: 'EB Garamond', serif;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #2d2d2d;
+  line-height: 1.2;
+  font-style: italic; /* Changed from normal to italic */
+  text-align: left; /* Explicitly set to left */
+}
+
+.article-meta {
+  color: #777;
+  font-size: 1rem;
+  font-style: italic; /* This should remain italic */
+  text-align: left; /* Ensure meta info is also left-aligned */
+}
+
+.article-meta span {
+  margin: 0 0.5rem;
+}
+
+.article-body {
+  line-height: 1.6;
+  text-align: left;
+}
+
+.article-body p, 
+.article-body ul, 
+.article-body ol {
+  margin-bottom: 1.5rem;
+  color: #555;
+  font-size: 1.1rem;
+  font-style: normal; /* Explicitly set to normal */
+  text-align: left;
+}
+
+.article-lead {
+  font-size: 1.25rem;
+  color: #444;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+  font-style: normal;
+}
+
+.article-body h2 {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.8rem;
+  margin: 2rem 0 1rem;
+  color: #2d2d2d;
+  font-style: normal; /* Changed from italic to normal */
+  text-align: left;
+}
+
+.article-body h3 {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.4rem;
+  margin: 1.5rem 0 1rem;
+  color: #2d2d2d;
+  font-style: normal; /* Explicitly set to normal */
+  text-align: left;
+}
+
+.article-quote {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.4rem;
+  font-style: italic;
+  border-left: 3px solid #555; /* Changed color to match text and reduced width by ~33% */
+  border-radius: 1.5px; /* Added rounded ends to the line */
+  padding-left: 1.5rem;
+  margin: 2rem 0;
+  color: #444;
+}
+
+.article-quote cite {
+  display: block;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  color: #777;
+}
+
+.article-body .bullet-points-list {
+  list-style-position: outside;
+  padding-left: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.article-body .bullet-points-list li {
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+.article-body .bullet-points-list li::marker {
+  color: #555; /* Changed from #d7967b to match the text color */
+  font-size: 1.2em;
+}
+
+.article-body .numbered-list {
+  list-style-position: outside;
+  padding-left: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.article-body .numbered-list li {
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.6;
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
   .test-pages-container {
@@ -84,5 +207,26 @@
   
   .test-pages-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .article-content {
+    padding: 1.5rem;
+    margin: 2rem auto; /* Adjusted margin for mobile but still keeping extra space */
+  }
+  
+  .article-header h1 {
+    font-size: 2rem;
+  }
+  
+  .article-lead {
+    font-size: 1.1rem;
+  }
+  
+  .article-body h2 {
+    font-size: 1.6rem;
+  }
+  
+  .article-body h3 {
+    font-size: 1.3rem;
   }
 }

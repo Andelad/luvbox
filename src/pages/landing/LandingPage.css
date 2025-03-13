@@ -238,3 +238,8 @@ p {
     font-size: 1.1rem;
   }
 }
+
+/* Modify the global styles to apply only to the landing page */
+.landing-wrapper h1 em {
+  font-style: italic;
+}

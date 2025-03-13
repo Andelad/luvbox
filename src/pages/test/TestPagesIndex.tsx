@@ -9,6 +9,7 @@ const TestPagesIndex: React.FC = () => {
   // Sample test pages for the menu
   const testPages = [
     { id: 'cube', title: 'Cube Visualization Test', path: '/cube-test', description: 'Test different cube visualization approaches and interactions' },
+    { id: 'article', title: 'Blog Article Template', path: '/test/article', description: 'Sample blog article with consistent typography and layout' },
     { id: 'page1', title: 'Test Page 1', path: '/test/page1', description: 'Description for test page 1' },
     { id: 'page2', title: 'Test Page 2', path: '/test/page2', description: 'Description for test page 2' },
     { id: 'page3', title: 'Test Page 3', path: '/test/page3', description: 'Description for test page 3' },
@@ -17,14 +18,15 @@ const TestPagesIndex: React.FC = () => {
 
   // If a pageId is provided in the URL, check if we need to redirect
   React.useEffect(() => {
-    if (pageId) {
+    // Only navigate if we have a pageId parameter that's not just "test"
+    if (pageId && pageId !== 'test') {
       const page = testPages.find(p => p.id === pageId);
-      if (page && page.path.startsWith('/cube-test')) {
-        // Redirect to cube test page
+      if (page) {
+        // Navigate to the destination page
         navigate(page.path);
       }
     }
-  }, [pageId, navigate]);
+  }, [pageId, navigate, testPages]);
 
   return (
     <div className="test-pages">

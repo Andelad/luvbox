@@ -12,6 +12,7 @@ import MapPage from './pages/map/MapPage';
 import SnapshotsPage from './pages/snapshots/SnapshotsPage'; 
 import SettingsPage from './pages/settings';
 import TestPagesIndex from './pages/test/TestPagesIndex';
+import TestArticlePage from './pages/test/TestArticlePage';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/snapshots" element={<SnapshotsPage />} /> 
             <Route path="/test" element={<TestPagesIndex />} /> 
+            <Route path="/test/article" element={<TestArticlePage />} />
             <Route path="/test/:pageId" element={<TestPagesIndex />} />
           </Route>
           
