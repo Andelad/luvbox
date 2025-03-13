@@ -1,5 +1,4 @@
 import React from 'react';
-import SettingsPage from './SettingsPage';
 import SelfPage from '../self/SelfPage';
 import ScriptsPage from '../scripts/ScriptsPage';
 
@@ -46,5 +45,5 @@ export const CommunityPage: React.FC = () => {
   );
 };
 
-// Export the SettingsPage and SelfPage
-export { SettingsPage, SelfPage };
+// Export only SelfPage - SettingsPage has been moved
+export { SelfPage };

@@ -6,10 +6,11 @@ import CubeComponent from './components/cube';
 import DealbreakersForm from './components/forms/dealbreakers';
 import NarrativeRankingForm from './components/forms/narratives';
 import MainLayout from './layouts/MainLayout';
-import { ScriptsPage, SelfPage, CommunityPage, SettingsPage } from './pages/placeholder/PlaceholderPages';
+import { ScriptsPage, SelfPage, CommunityPage } from './pages/placeholder/PlaceholderPages';
 import CubeTestPage from './pages/CubeTestPage';
 import MapPage from './pages/map/MapPage';
 import SnapshotsPage from './pages/snapshots/SnapshotsPage'; // Import the new SnapshotsPage
+import SettingsPage from './pages/settings';
 
 function App() {
   return (
