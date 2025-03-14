@@ -4,6 +4,17 @@
   align-items: center;
   padding: 1rem 2rem;
   background-color: #f0e9e2;
+  transition: padding-left 0.3s ease;
+}
+
+/* Header state when sidebar is expanded */
+.app-header.sidebar-expanded {
+  padding-left: 200px; /* Matches the expanded sidebar width (180px) plus some padding */
+}
+
+/* Header state when sidebar is collapsed */
+.app-header.sidebar-collapsed {
+  padding-left: 80px; /* Matches the collapsed sidebar width (60px) plus some padding */
 }
 
 .logo-container {
@@ -31,6 +42,44 @@
   height: 40px;
   margin-right: 10px;
   animation: medium-heartbeat 2s ease-in-out infinite;
+}
+
+.page-title-container {
+  display: flex;
+  align-items: center;
+}
+
+.page-title, .page-breadcrumb {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 0;
+  color: #2d2d2d;
+}
+
+.page-breadcrumb {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.parent-link {
+  color: #d7967b;
+  text-decoration: none;
+}
+
+.parent-link:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb-separator {
+  margin: 0 0.5rem;
+  color: #888;
+}
+
+.current-page {
+  color: #2d2d2d;
 }
 
 @keyframes medium-heartbeat {
@@ -63,11 +112,21 @@
     padding: 1rem;
   }
   
+  /* Remove left padding adjustment on mobile since sidebar is at bottom */
+  .app-header.sidebar-expanded,
+  .app-header.sidebar-collapsed {
+    padding-left: 1rem;
+  }
+  
   .header-logo {
     height: 30px;
   }
   
   .logo, .logo-link {
     font-size: 1.2rem;
+  }
+  
+  .page-title, .page-breadcrumb {
+    font-size: 1.4rem;
   }
 }

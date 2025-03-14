@@ -1,6 +1,7 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import './Sidebar.css';
+import logo from '../../assets/images/logo.png';
 
 const Sidebar: React.FC<SidebarProps> = ({ expanded, onToggle }) => {
   // Material icons (using simple inline SVGs)
@@ -92,6 +93,13 @@ const Sidebar: React.FC<SidebarProps> = ({ expanded, onToggle }) => {
       </div>
 
       <div className="sidebar-content">
+        <div className="sidebar-logo">
+          <Link to="/">
+            <img src={logo} alt="LuvBox Logo" />
+            {expanded && <span className="logo-text">LuvBox 1.0</span>}
+          </Link>
+        </div>
+
         <nav className="sidebar-nav">
           <ul>
             {navItems.map((item) => (

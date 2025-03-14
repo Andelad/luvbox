@@ -2,27 +2,45 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
 
-// Import logo
-import logo from '../../assets/images/logo.png';
-
 interface HeaderProps {
   showHomeLink?: boolean;
+  pageTitle?: string;
+  parentPath?: string;
+  parentTitle?: string;
+  className?: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ showHomeLink = true }) => {
+const Header: React.FC<HeaderProps> = ({ 
+  showHomeLink = true, 
+  pageTitle = '', 
+  parentPath = '',
+  parentTitle = 'Mapping Love',
+  className = ''
+}) => {
   return (
-    <header className="app-header">
-      <div className="logo-container">
+    <header className={`app-header ${className}`}>
+      <div className="page-title-container">
         {showHomeLink ? (
-          <Link to="/" className="logo-link">
-            <img src={logo} alt="LuvBox Logo" className="header-logo" />
-            <span className="logo-text">LuvBox 1.0</span>
-          </Link>
+          <>
+            {parentTitle && pageTitle && (
+              <h1 className="page-breadcrumb">
+                <Link to={parentPath || '/map'} className="parent-link">
+                  {parentTitle}
+                </Link>
+                <span className="breadcrumb-separator">/</span>
+                <span className="current-page">{pageTitle}</span>
+              </h1>
+            )}
+            {!pageTitle && (
+              <h1 className="page-title">
+                {parentTitle}
+              </h1>
+            )}
+          </>
         ) : (
-          <div className="logo">
-            <img src={logo} alt="LuvBox Logo" className="header-logo" />
-            <span className="logo-text">LuvBox</span>
-          </div>
+          <h1 className="page-title">
+            {pageTitle || parentTitle}
+          </h1>
         )}
       </div>
     </header>

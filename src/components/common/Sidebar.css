@@ -1,17 +1,17 @@
 .sidebar {
   position: fixed;
-  left: 20px;
-  top: 50%; /* Position at the middle of the viewport vertically */
-  transform: translateY(-50%); /* Center the element vertically */
+  left: 0;
+  top: 0;
+  bottom: 0;
   background-color: #f0e9e2;
-  border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  z-index: 1100; /* Increased from 999 to 1100 to stay above side menu */
+  z-index: 1100;
   display: flex;
   flex-direction: column;
   overflow: visible;
   transition: all 0.3s ease;
-  max-height: 80vh; /* Limit the maximum height */
+  height: 100vh;
+  transform: none;
 }
 
 .sidebar.expanded {
@@ -62,11 +62,13 @@
 .sidebar-content {
   display: flex;
   flex-direction: column;
-  padding: 10px 5px;
+  padding: 0;
   gap: 8px;
   width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+  flex: 1;
+  height: 100%;
 }
 
 .nav-item {
@@ -147,6 +149,9 @@
   flex: 1;
   overflow-y: auto;
   padding: 8px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .sidebar-nav ul {
@@ -160,19 +165,39 @@
   padding: 8px 0;
 }
 
+.sidebar-logo {
+  padding: 15px 10px;
+  border-bottom: 1px solid #e0d9d2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-logo img {
+  height: 32px;
+  width: auto;
+}
+
+.sidebar-logo .logo-text {
+  margin-left: 10px;
+  font-weight: 600;
+  font-size: 18px;
+  color: #2d2d2d;
+  white-space: nowrap;
+}
+
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   .sidebar {
-    top: auto; /* Remove top positioning */
-    bottom: 0; /* Position at bottom */
-    left: 0; /* Start from left edge */
-    right: 0; /* Extend to right edge */
-    width: 100%; /* Full width of viewport */
-    height: auto; /* Height based on content */
-    transform: none; /* Remove vertical centering */
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: auto;
     max-height: none;
-    border-radius: 0; /* Remove border radius at bottom */
-    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1); /* Shadow from top */
+    border-radius: 0;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
   }
   
   .sidebar.expanded, 
@@ -213,6 +238,10 @@
     display: flex;
     flex-direction: row;
     gap: 15px;
+  }
+  
+  .sidebar-logo {
+    display: none; /* Hide logo on mobile */
   }
   
   /* Always show labels, never tooltips on mobile */

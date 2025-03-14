@@ -66,9 +66,13 @@ button {
 
 .content-with-sidebar {
   flex: 1;
-  margin-left: 0;
+  margin-left: 60px; /* Width of collapsed sidebar */
   padding: var(--spacing-md);
   transition: margin-left 0.3s ease;
+}
+
+.content-with-sidebar.sidebar-expanded {
+  margin-left: 180px; /* Width of expanded sidebar */
 }
 
 /* Ensuring content doesn't overlap with floating sidebar */
@@ -86,8 +90,13 @@ button {
 /* Mobile adjustments */
 @media (max-width: 768px) {
   .content-with-sidebar {
+    margin-left: 0;
     padding-left: var(--spacing-md);
     padding-bottom: 80px; /* Space for bottom sidebar on mobile */
+  }
+  
+  .content-with-sidebar.sidebar-expanded {
+    margin-left: 0; /* No margin on mobile as sidebar is at bottom */
   }
 }
 

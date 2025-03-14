@@ -1,0 +1,73 @@
+.website-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #f0e9e2;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.logo, .logo-link {
+  display: flex;
+  align-items: center;
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.header-logo {
+  height: 40px;
+  margin-right: 10px;
+  animation: medium-heartbeat 2s ease-in-out infinite;
+}
+
+.logo-text {
+  color: #2d2d2d;
+}
+
+@keyframes medium-heartbeat {
+  0% {
+    transform: scale(1);
+  }
+  15% {
+    transform: scale(1.03);
+  }
+  30% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.03);
+  }
+  60% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .website-header {
+    padding: 1rem;
+  }
+  
+  .header-logo {
+    height: 30px;
+  }
+  
+  .logo, .logo-link {
+    font-size: 1.2rem;
+  }
+}

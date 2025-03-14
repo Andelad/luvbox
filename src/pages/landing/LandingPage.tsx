@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './LandingPage.css';
-import Header from '../../components/common/Header';
-import Advertisement from '../../components/common/Advertisement';
+import { WebsiteHeader, Advertisement } from '../../components/common';
 
 // Import images
 import cube from '../../assets/images/cube.png';
@@ -12,7 +11,7 @@ import person from '../../assets/images/person.png';
 const LandingPage: React.FC = () => {
   return (
     <div className="landing-wrapper">
-      <Header />
+      <WebsiteHeader showHomeLink={false} />
       <div className="container">
         <main className="content">
           <div className="text-content">
