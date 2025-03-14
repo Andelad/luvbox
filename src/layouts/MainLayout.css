@@ -10,7 +10,7 @@
 }
 
 .content-wrapper {
-  max-width: 1280px; /* Changed from 1200px to 1280px */
+  max-width: 1200px; /* Changed from 1280px to 1200px */
   margin: 0 auto;
   display: flex;
   position: relative;
@@ -29,33 +29,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Restored box shadow */
 }
 
-.side-menu-container {
-  width: 250px;
-  min-height: calc(100vh - 12rem);
-  margin-top: 1.5rem; /* Reduced from 3rem to 1.5rem (50% reduction) */
-  margin-left: 2rem;
-  border-top: 1px solid #d5cec7; /* Changed from #e0d9d2 to #d5cec7 to match header border */
-  border-left: 1px solid #d5cec7; /* Changed from #e0d9d2 to #d5cec7 to match header border */
-  border-top-left-radius: 10px;
-}
-
-.side-menu {
-  position: sticky;
-  top: 80px; /* Account for header */
-  padding: 2.5rem 1rem;
-  height: fit-content;
-}
-
-.side-menu h3 {
-  font-family: 'EB Garamond', serif;
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: #2d2d2d;
-}
-
-.side-menu-content {
-  /* Content specific to each page will go here */
-}
+/* Removing the side-menu-container and related styles */
 
 /* Add style for reduced header title size */
 .reduced-title {
@@ -66,18 +40,6 @@
 @media (max-width: 1024px) {
   .content-wrapper {
     flex-direction: column;
-  }
-  
-  .side-menu-container {
-    width: 100%;
-    margin-left: 0;
-    margin-top: 1.5rem;
-    min-height: auto;
-  }
-  
-  .side-menu {
-    position: relative;
-    top: 0;
   }
 }
 

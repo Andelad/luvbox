@@ -92,14 +92,22 @@
   text-align: center;
   text-decoration: none; /* Remove underline from links */
   color: inherit; /* Inherit text color */
-  display: block; /* Ensure the link takes the full size */
-  width: auto; /* Remove fixed widths */
-  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 140px; /* Set fixed width for all elements */
+  height: 140px; /* Set fixed height for all elements */
   cursor: pointer; /* Add default cursor */
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+  padding: 1.5rem; /* Increased padding for larger hover area */
 }
 
 .diagram-element:hover {
+  background-color: rgba(215, 150, 123, 0.2);
   cursor: pointer;
+  text-decoration: none; /* Remove underline on hover */
 }
 
 .diagram-element:hover img {
@@ -108,11 +116,14 @@
 
 .diagram-element img {
   display: block;
-  width: 100%;
-  height: auto;
-  max-width: 100px; /* Set maximum sizes instead of fixed sizes */
+  width: auto; /* Let image size be determined by height */
+  height: 80px; /* Reduced from 100px to make book image smaller */
+  max-width: none; /* Remove max-width constraint */
   opacity: 1; /* Ensure images are fully visible */
   transition: opacity 0.3s ease;
+  object-fit: contain; /* Maintain aspect ratio */
+  margin-bottom: 8px; /* Consistent spacing below image */
+  max-height: 80px; /* Add max-height to prevent overflow */
 }
 
 .element-label {
@@ -125,50 +136,50 @@
   display: block;
 }
 
-/* Adjust specific element sizes */
-.diagram-cube img {
-  max-width: 120px;
-}
-
-.book img {
-  max-width: 100px;
-}
-
-.person img {
-  max-width: 80px;
-}
-
+/* Remove individual image size overrides */
+.diagram-cube img,
+.book img,
+.person img,
 .community img {
-  max-width: 90px;
+  max-width: none;
 }
 
-/* Diamond layout positioning */
+/* Adjust specific element sizes */
 .diagram-cube {
-  width: 100px;
-  top: 40px;
+  width: 140px;
+  top: 20px;
   left: 50%;
   transform: translateX(-50%);
   animation: float-cube 5.8s ease-in-out infinite;
+  padding: 1rem; /* Add more padding for larger element */
 }
 
 .book {
-  width: 100px;
-  top: 200px;
-  left: 20%;
+  width: 140px;
+  top: 180px;
+  left: 15%;
   animation: float-simple 6s ease-in-out infinite 1.5s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.book img {
+  height: 70px;
+  margin: 0;
 }
 
 .person {
-  width: 80px;
-  top: 200px;
-  right: 20%;
+  width: 140px;
+  top: 180px;
+  right: 15%;
   animation: float-simple 6s ease-in-out infinite 3s;
 }
 
 /* Community element positioned at the bottom of the diamond */
 .community {
-  width: 90px;
-  bottom: 40px;
+  width: 140px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   animation: float-community 6.1s ease-in-out infinite; /* More similar duration */
@@ -245,24 +256,33 @@
   
   /* Adjust diamond layout for mobile */
   .diagram-cube {
-    width: 60px;
+    width: 100px;
     top: 30px;
+    padding: 0.75rem;
   }
   
   .book {
-    width: 70px;
+    width: 100px;
     top: 160px;
-    left: 15%;
+    left: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .book img {
+    height: 50px;
+    margin: 0;
   }
   
   .person {
-    width: 60px;
+    width: 100px;
     top: 160px;
-    right: 15%;
+    right: 10%;
   }
   
   .community {
-    width: 65px;
+    width: 100px;
     bottom: 30px;
   }
   
@@ -277,13 +297,17 @@
   .map-subtitle .ps-note {
     font-size: 0.9rem;
   }
-}
 
-/* Add this new class to your existing CSS file */
+  .diagram-element {
+    width: 100px;
+    height: 100px;
+    padding: 0.75rem; /* Increased padding for larger hover area on mobile */
+  }
 
-.map-footer {
-  margin-top: 3rem;
-  text-align: center;
+  .diagram-element img {
+    height: 60px; /* Reduced from 70px to maintain proportions on mobile */
+    margin-bottom: 4px;
+  }
 }
 
 .ps-note {

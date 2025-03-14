@@ -1,12 +1,16 @@
-// ...existing code...
-return (
-  <div className="snapshot-page">
-    <div className="snapshot-content">
-      {/* Removed H1 title that was here */}
-      <div className="snapshot-grid">
-        {/* ...existing code... */}
+import React from 'react';
+
+const SnapshotPage: React.FC = () => {
+  return (
+    <div className="snapshot-page">
+      <div className="snapshot-content">
+        {/* Removed H1 title that was here */}
+        <div className="snapshot-grid">
+          {/* ...existing code... */}
+        </div>
       </div>
     </div>
-  </div>
-);
-// ...existing code...
+  );
+};
+
+export default SnapshotPage;

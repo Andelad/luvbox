@@ -64,14 +64,7 @@ const MainLayout: React.FC = () => {
           <div className="main-content">
             <Outlet />
           </div>
-          <div className="side-menu-container">
-            <div className="side-menu">
-              <h3>Page Navigation</h3>
-              <div className="side-menu-content">
-                {/* Side menu content will be populated by specific pages */}
-              </div>
-            </div>
-          </div>
+          {/* Side menu container removed */}
         </div>
       </div>
       

@@ -9,9 +9,9 @@
   display: flex;
   flex-direction: column;
   overflow: visible;
-  transition: all 0.3s ease;
-  height: 100vh;
-  transform: none;
+  transition: width 0.3s ease, padding 0.3s ease; /* Remove all transition to specify only what should animate */
+  height: 100%;
+  /* Remove transform: none; as it's not needed */
   /* Fixed to viewport */
   position: fixed;
   top: 0;
@@ -237,70 +237,79 @@
 /* Mobile styles */
 @media (max-width: 768px) {
   .sidebar {
+    position: fixed;
     top: auto;
     bottom: 0;
     left: 0;
     right: 0;
-    width: 100%;
-    height: auto;
-    max-height: none;
-    border-radius: 0;
-    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+    width: 100% !important;
+    height: 60px;
+    min-height: 60px;
+    padding: 0;
     flex-direction: row;
+    background-color: #f0e9e2;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
   }
-  
+
   .sidebar.expanded, 
   .sidebar.collapsed {
-    width: 100%;
+    width: 100% !important;
+    min-width: unset;
     padding: 0;
   }
-  
-  .sidebar-logo {
-    display: none;
+
+  .sidebar-content {
+    flex-direction: row;
+    padding: 0 12px;  /* Increased horizontal padding */
+    height: 60px;
+    overflow-x: visible;
+    overflow-y: visible;
+    justify-content: space-between;  /* Change to space-between for better distribution */
   }
-  
+
+  .sidebar-nav {
+    padding: 0;
+    margin-right: 8px;  /* Increased right margin */
+    flex-direction: row;
+    justify-content: flex-start;  /* Left align nav items */
+  }
+
+  .sidebar-nav ul {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;  /* Increased gap between items to match desktop */
+    height: 100%;
+    align-items: center;
+  }
+
+  .nav-item {
+    padding: 6px;
+    margin: 0 2px;  /* Added small horizontal margin */
+    width: 36px;
+    height: 36px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .sidebar-footer {
+    display: flex;
+    gap: 10px;  /* Match the nav items gap */
+    padding-left: 12px;  /* Increased padding */
+    margin-left: auto;  /* Push to right side */
+    height: 100%;
+    align-items: center;
+    border-top: none;
+    border-left: 1px solid #e0d9d2;
+  }
+
+  .sidebar-logo,
   .sidebar-toggle {
     display: none;
   }
   
-  .sidebar-content {
-    flex-direction: row;
-    padding: 15px 10px;
-    overflow-x: auto;
-    justify-content: center;
-  }
-  
-  .sidebar-nav {
-    padding: 0;
-    margin-right: 15px;
-  }
-  
-  .sidebar-nav ul {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-  }
-  
-  .sidebar-footer {
-    border-top: none;
-    border-left: 1px solid #e0d9d2;
-    padding: 0 0 0 15px;
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-  }
-  
-  .nav-label {
-    display: none;
-  }
-  
+  .nav-label,
   .nav-tooltip {
     display: none;
-  }
-  
-  .nav-item {
-    padding: 8px;
-    margin: 0;
   }
 }
 
