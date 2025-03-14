@@ -30,24 +30,18 @@ const TestPagesIndex: React.FC = () => {
 
   return (
     <div className="test-pages">
-      <div className="test-pages-container">
-        <h1>Test Pages</h1>
-        <p className="test-pages-description">
-          Use this area to navigate to various test pages and prototypes.
-        </p>
-
-        <div className="test-pages-content">
-          <div className="test-pages-grid">
-            {testPages.map((page) => (
-              <div className="test-page-card" key={page.id}>
-                <h2>{page.title}</h2>
-                <p>{page.description}</p>
-                <Link to={page.path} className="btn btn-primary">
-                  Open Page
-                </Link>
-              </div>
-            ))}
-          </div>
+      <div className="test-pages-content">
+        {/* Removed H1 title that was here */}
+        <div className="test-pages-grid">
+          {testPages.map((page) => (
+            <div className="test-page-card" key={page.id}>
+              <h2>{page.title}</h2>
+              <p>{page.description}</p>
+              <Link to={page.path} className="btn btn-primary">
+                Open Page
+              </Link>
+            </div>
+          ))}
         </div>
       </div>
     </div>

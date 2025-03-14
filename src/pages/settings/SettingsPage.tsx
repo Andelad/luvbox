@@ -121,92 +121,73 @@ const SettingsPage: React.FC = () => {
   };
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      display: 'flex',
-      flexDirection: 'column' as const,
-      alignItems: 'center',
-      justifyContent: 'flex-start',
-      padding: '2rem',
-      backgroundColor: '#f0e9e2',
-      textAlign: 'center' as const
-    }}>
-      <h1 style={{
-        fontFamily: "'EB Garamond', serif",
-        fontSize: '2.5rem',
-        marginBottom: '1.5rem',
-        color: '#2d2d2d'
-      }}>Settings</h1>
-      <p style={{
-        fontSize: '1.2rem',
-        lineHeight: 1.6,
-        maxWidth: '600px',
-        marginBottom: '2rem',
-        color: '#555'
-      }}>
-        Customize your LuvBox experience.
-      </p>
-      <div style={{
-        backgroundColor: 'white',
-        padding: '2rem',
-        borderRadius: '8px',
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
-        width: '100%',
-        maxWidth: '600px',
-      }}>
-        <h2 style={{
-          fontFamily: "'EB Garamond', serif",
-          fontSize: '1.8rem',
-          marginBottom: '1.5rem',
-          color: '#2d2d2d'
-        }}>My Dealbreaker Lines</h2>
-        <p style={{
-          fontSize: '1rem',
-          marginBottom: '2rem',
-          color: '#666'
-        }}>
-          Adjust your dealbreaker threshold that appears in the Cube visualization.
-          These settings determine the minimum acceptable levels for relationship qualities.
-        </p>
+    <div className="settings-page">
+      <div className="settings-content">
+        {/* Removed H1 title that was here */}
+        <div className="settings-form">
+          <div style={{
+            backgroundColor: 'white',
+            padding: '2rem',
+            borderRadius: '8px',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
+            width: '100%',
+            maxWidth: '600px',
+          }}>
+            <h2 style={{
+              fontFamily: "'EB Garamond', serif",
+              fontSize: '1.8rem',
+              marginBottom: '1.5rem',
+              color: '#2d2d2d'
+            }}>My Dealbreaker Lines</h2>
+            <p style={{
+              fontSize: '1rem',
+              marginBottom: '2rem',
+              color: '#666'
+            }}>
+              Adjust your dealbreaker threshold that appears in the Cube visualization.
+              These settings determine the minimum acceptable levels for relationship qualities.
+            </p>
 
-        {/* Dealbreaker sliders */}
-        {dealbreakersQuestions.map(question => {
-          const answer = dealbreakerValues.find(a => a.questionId === question.id);
-          const currentValue = answer ? answer.value : 5;
+            {/* Dealbreaker sliders */}
+            {dealbreakersQuestions.map(question => {
+              const answer = dealbreakerValues.find(a => a.questionId === question.id);
+              const currentValue = answer ? answer.value : 5;
 
-          return (
-            <div key={question.id} style={{ marginBottom: '1.5rem', textAlign: 'left' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                <label htmlFor={`slider-${question.id}`} style={{ fontSize: '1rem', color: '#2d2d2d', flex: 1, paddingRight: '10px' }}>
-                  {question.text}
-                </label>
-                <span style={{ fontWeight: 'bold', color: '#d7967b', minWidth: '24px', textAlign: 'right' }}>{currentValue}</span>
-              </div>
-              <div className="slider-wrapper">
-                <input
-                  type="range"
-                  id={`slider-${question.id}`}
-                  min="0"
-                  max="10"
-                  step="1"
-                  value={currentValue}
-                  onChange={handleSliderChange(question.id)}
-                  onInput={handleSliderInput(question.id)}
-                  className="dealbreaker-slider"
-                />
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: '#888' }}>
-                <span>Not important (0)</span>
-                <span>Very important (10)</span>
-              </div>
+              return (
+                <div key={question.id} style={{ marginBottom: '1.5rem', textAlign: 'left' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                    <label htmlFor={`slider-${question.id}`} style={{ fontSize: '1rem', color: '#2d2d2d', flex: 1, paddingRight: '10px' }}>
+                      {question.text}
+                    </label>
+                    <span style={{ fontWeight: 'bold', color: '#d7967b', minWidth: '24px', textAlign: 'right' }}>{currentValue}</span>
+                  </div>
+                  <div className="slider-wrapper">
+                    <input
+                      type="range"
+                      id={`slider-${question.id}`}
+                      min="0"
+                      max="10"
+                      step="1"
+                      value={currentValue}
+                      onChange={handleSliderChange(question.id)}
+                      onInput={handleSliderInput(question.id)}
+                      className="dealbreaker-slider"
+                    />
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: '#888' }}>
+                    <span>Not important (0)</span>
+                    <span>Very important (10)</span>
+                  </div>
+                </div>
+              );
+            })}
+
+            <div style={{ marginTop: '2rem', textAlign: 'center' }}>
+              <p style={{ fontSize: '0.9rem', fontStyle: 'italic', color: '#888' }}>
+                Changes are automatically saved and will be reflected in your cube visualization.
+              </p>
             </div>
-          );
-        })}
-
-        <div style={{ marginTop: '2rem', textAlign: 'center' }}>
-          <p style={{ fontSize: '0.9rem', fontStyle: 'italic', color: '#888' }}>
-            Changes are automatically saved and will be reflected in your cube visualization.
-          </p>
+          </div>
         </div>
       </div>
     </div>
