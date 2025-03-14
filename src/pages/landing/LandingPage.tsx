@@ -16,7 +16,7 @@ const LandingPage: React.FC = () => {
       <div className="container">
         <main className="content">
           <div className="text-content">
-            <h1>Your <em>diagnostic tool</em> for dating and love</h1>
+            <h1>Let's learn to <em>make love</em> again</h1>
             <p>Love is beautiful when it feels effortless. But, what about when its difficult? LuvBox is your tool for assessing what is happening and what to do about it.</p>
             <div className="button-group">
               <Link to="/form/dealbreakers" className="cta-button primary-button">Start Your Journey</Link>
