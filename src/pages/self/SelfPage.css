@@ -6,9 +6,10 @@
   justify-content: center;
   padding: 2.5rem;
   background-color: #f0e9e2;
+  width: 100%;
 }
 
-/* Base styles for the hamburger menu - always defined to avoid disappearing */
+/* Base styles for the hamburger menu - only visible on mobile */
 .hamburger-menu {
   display: none; /* Hidden by default, shown in media query */
   flex-direction: column;
@@ -265,6 +266,11 @@
   border-top: 1px solid #ddd;
 }
 
+.go-to-top a {
+  color: #d7967b;
+  text-decoration: none;
+}
+
 /* Media query for mobile devices */
 @media (max-width: 580px) {
   .self-container {
@@ -282,6 +288,8 @@
 @media (max-width: 768px) {
   .self-page {
     padding: 1rem; /* Reduce overall padding */
+    flex-direction: column;
+    position: relative;
   }
   
   .self-container {

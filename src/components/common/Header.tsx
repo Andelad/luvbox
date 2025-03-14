@@ -14,7 +14,7 @@ const Header: React.FC<HeaderProps> = ({
   showHomeLink = true, 
   pageTitle = '', 
   parentPath = '',
-  parentTitle = 'Mapping Love',
+  parentTitle = '',  // Default to empty string instead of 'Mapping Love'
   className = ''
 }) => {
   return (
@@ -22,16 +22,12 @@ const Header: React.FC<HeaderProps> = ({
       <div className="page-title-container">
         {showHomeLink ? (
           <>
-            {parentTitle && pageTitle && (
-              <h1 className="page-breadcrumb">
-                <Link to={parentPath || '/map'} className="parent-link">
-                  {parentTitle}
-                </Link>
-                <span className="breadcrumb-separator">/</span>
-                <span className="current-page">{pageTitle}</span>
-              </h1>
+            {pageTitle && (
+              <div className="page-title">
+                <h1 className="title-text">{pageTitle}</h1>
+              </div>
             )}
-            {!pageTitle && (
+            {!pageTitle && parentTitle && (
               <h1 className="page-title">
                 {parentTitle}
               </h1>

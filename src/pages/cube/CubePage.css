@@ -1,0 +1,31 @@
+.cube-page {
+  min-height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-background);
+  overflow: visible;
+  width: 100%;
+  padding: 2rem;
+}
+
+.cube-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.cube-view {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .cube-page {
+    padding: 1rem;
+  }
+}

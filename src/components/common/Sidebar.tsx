@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import './Sidebar.css';
 import logo from '../../assets/images/logo.png';
 
 const Sidebar: React.FC<SidebarProps> = ({ expanded, onToggle }) => {
+  // Reference to measure the sidebar content width
+  const sidebarContentRef = useRef<HTMLDivElement>(null);
+
   // Material icons (using simple inline SVGs)
   const icons = {
     map: (
@@ -76,8 +79,8 @@ const Sidebar: React.FC<SidebarProps> = ({ expanded, onToggle }) => {
   };
   
   const navItems = [
-    { to: '/cube', label: 'The Cube', icon: icons.cube },
-    { to: '/map', label: 'The Map', icon: icons.map },
+    { to: '/cube', label: 'My Observations', icon: icons.cube },
+    { to: '/map', label: 'Mapping Love', icon: icons.map },
     // Hiding these items temporarily:
     // { to: '/cube-test', label: 'Cube Tests', icon: icons.cubeTest },
     // { to: '/scripts', label: 'My Scripts', icon: icons.scripts },
@@ -86,69 +89,65 @@ const Sidebar: React.FC<SidebarProps> = ({ expanded, onToggle }) => {
     { to: '/snapshots', label: 'My Snapshots', icon: icons.snapshots },
   ];
 
+  // Make sure sidebar expands enough to fit content when expanded
+  // and properly collapses when toggled
+  useEffect(() => {
+    if (sidebarContentRef.current) {
+      const parentElement = sidebarContentRef.current.parentElement;
+      if (parentElement) {
+        if (expanded) {
+          // Set minimum width to fit the content plus padding
+          const contentWidth = sidebarContentRef.current.scrollWidth;
+          parentElement.style.width = `${contentWidth + 30}px`; // Add padding
+        } else {
+          // Reset to CSS-defined width when collapsed
+          parentElement.style.width = ''; // Remove the inline width
+        }
+      }
+    }
+  }, [expanded]);
+
   return (
     <div className={`sidebar ${expanded ? 'expanded' : 'collapsed'}`}>
-      <div className="sidebar-toggle" onClick={onToggle}>
+      <Link to="/" className="sidebar-logo">
+        <img src={logo} alt="LuvBox Logo" />
+        <span className="logo-text">LuvBox 1.0</span>
+      </Link>
+      
+      <button className="sidebar-toggle" onClick={onToggle}>
         {expanded ? icons.collapse : icons.expand}
-      </div>
-
-      <div className="sidebar-content">
-        <div className="sidebar-logo">
-          <Link to="/">
-            <img src={logo} alt="LuvBox Logo" />
-            {expanded && <span className="logo-text">LuvBox 1.0</span>}
-          </Link>
-        </div>
-
+      </button>
+      
+      <div className="sidebar-content" ref={sidebarContentRef}>
         <nav className="sidebar-nav">
           <ul>
-            {navItems.map((item) => (
-              <li key={item.to}>
-                <NavLink 
-                  to={item.to} 
-                  className={({ isActive }) => 
-                    isActive ? 'nav-item active' : 'nav-item'
-                  }
+            {navItems.map((item, index) => (
+              <li key={index}>
+                <NavLink
+                  to={item.to}
+                  className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
                 >
-                  <span className="nav-icon">{item.icon}</span>
-                  {expanded ? (
-                    <span className="nav-label">{item.label}</span>
-                  ) : (
-                    <span className="nav-tooltip">{item.label}</span>
-                  )}
+                  <div className="nav-icon">{item.icon}</div>
+                  <div className="nav-label">{item.label}</div>
+                  <div className="nav-tooltip">{item.label}</div>
                 </NavLink>
               </li>
             ))}
           </ul>
         </nav>
-
+        
         <div className="sidebar-footer">
-          <NavLink 
-            to="/settings" 
-            className={({ isActive }) => 
-              isActive ? 'nav-item active' : 'nav-item'
-            }
-          >
-            <span className="nav-icon">{icons.settings}</span>
-            {expanded ? (
-              <span className="nav-label">Settings</span>
-            ) : (
-              <span className="nav-tooltip">Settings</span>
-            )}
+          <NavLink to="/settings" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
+            <div className="nav-icon">{icons.settings}</div>
+            <div className="nav-label">Settings</div>
+            <div className="nav-tooltip">Settings</div>
           </NavLink>
           
-          <NavLink 
-            to="/test" 
-            className={({ isActive }) => 
-              isActive ? 'nav-item active' : 'nav-item'
-            }
-          >
-            <span className="nav-icon">{icons.testPages}</span>
-            {expanded ? (
-              <span className="nav-label">Test Pages</span>
-            ) : (
-              <span className="nav-tooltip">Test Pages</span>
-            )}
+          {/* Added Test Pages link back to the footer */}
+          <NavLink to="/test" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
+            <div className="nav-icon">{icons.testPages}</div>
+            <div className="nav-label">Test Pages</div>
+            <div className="nav-tooltip">Test Pages</div>
           </NavLink>
         </div>
       </div>

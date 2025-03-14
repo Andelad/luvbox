@@ -247,14 +247,6 @@ const CubeComponent: React.FC = () => {
   return (
     <div className="cube-wrapper">
       <div className="cube-layout">
-        {/* Title column on the left */}
-        <div className="cube-title-column">
-          <h1 className="cube-title">LuvBox</h1>
-          <p className="cube-subtitle">
-            The luvbox allows you to take a snapshot of your relationship, and consider that snapshot as part of a journey of love. Rotate the cube to explore more angles.
-          </p>
-        </div>
-        
         {/* Main cube container */}
         <div className="cube-content">
           <div className="cube-container">

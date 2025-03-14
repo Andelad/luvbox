@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { Sidebar, Header, Footer, ActionPanel, ProductPanel } from '../components/common';
+import './MainLayout.css';
 
 // Define route titles and hierarchies
 const routeTitles: {[key: string]: {title: string, parent?: string}} = {
-  '/map': { title: 'The Map' },
-  '/cube': { title: 'The Cube' },
+  '/map': { title: 'Mapping Love' },
+  '/cube': { title: 'My Observations' },
   '/scripts': { title: 'My Scripts', parent: '/map' },
   '/self': { title: 'Myself', parent: '/map' },
   '/community': { title: 'Community' },
@@ -36,7 +37,7 @@ const MainLayout: React.FC = () => {
     setSidebarExpanded(!sidebarExpanded);
   };
   
-  // Determine current page title and parent based on path
+  // Determine current page title based on path
   const currentPath = location.pathname;
   const currentRoute = Object.keys(routeTitles).find(path => 
     currentPath === path || 
@@ -44,8 +45,8 @@ const MainLayout: React.FC = () => {
   ) || currentPath;
   
   const pageInfo = routeTitles[currentRoute] || { title: '' };
+  // We'll keep parentPath for navigation purposes but won't display parentTitle
   const parentPath = pageInfo.parent || '';
-  const parentInfo = parentPath ? routeTitles[parentPath] || { title: 'Mapping Love' } : { title: 'Mapping Love' };
   
   return (
     <div className="main-layout">
@@ -53,14 +54,25 @@ const MainLayout: React.FC = () => {
         showHomeLink={true} 
         pageTitle={pageInfo.title}
         parentPath={parentPath}
-        parentTitle={parentInfo.title}
-        className={sidebarExpanded ? 'sidebar-expanded' : 'sidebar-collapsed'}
+        className={`${sidebarExpanded ? 'sidebar-expanded' : 'sidebar-collapsed'} reduced-title`}
       />
       
       <Sidebar expanded={sidebarExpanded} onToggle={toggleSidebar} />
       
       <div className={`content-with-sidebar ${sidebarExpanded ? 'sidebar-expanded' : ''}`}>
-        <Outlet />
+        <div className="content-wrapper">
+          <div className="main-content">
+            <Outlet />
+          </div>
+          <div className="side-menu-container">
+            <div className="side-menu">
+              <h3>Page Navigation</h3>
+              <div className="side-menu-content">
+                {/* Side menu content will be populated by specific pages */}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       
       <Footer />

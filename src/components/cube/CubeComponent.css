@@ -29,34 +29,14 @@
   min-height: 800px; /* Add minimum height to ensure content fits */
 }
 
-.cube-title-column {
-  position: absolute;
-  left: calc(50% - 500px); /* Moved further to the left to avoid overlap with scores */
-  top: 50px; /* Align with the top of the cube */
-  width: 200px;
-  text-align: left;
-  z-index: 1;
-}
+/* Remove cube-title-column completely */
 
 .cube-content {
   width: 700px; /* Fixed width to keep the cube square */
   margin: 0 auto;
 }
 
-.cube-title {
-  font-size: 2.5rem;
-  margin: 0 0 1rem 0;
-  color: var(--color-primary-darker);
-  text-align: left;
-}
-
-.cube-subtitle {
-  font-size: 0.9rem;
-  line-height: 1.4;
-  margin: 0;
-  color: var(--color-text-light);
-  text-align: left;
-}
+/* Remove cube-title and cube-subtitle styles */
 
 .cube-container {
   display: flex;
@@ -483,12 +463,10 @@
 
 /* Responsive styles */
 @media (max-width: 1200px) {
-  .cube-title-column {
-    left: 50px; /* Increased spacing for medium screens */
-  }
+  /* Remove title column adjustments */
   
   .cube-content {
-    margin-left: 250px; /* Add margin to prevent cube from overlapping with title */
+    margin-left: auto; /* Remove specific margin */
     margin-right: auto;
   }
 }
@@ -506,20 +484,13 @@
     min-height: 900px; /* Ensure enough space for vertical layout */
   }
   
-  .cube-title-column {
-    position: relative;
-    left: auto;
-    top: auto;
+  /* Remove title column responsive adjustments */
+  
+  .cube-content {
     width: 90%;
     max-width: 600px;
     margin-bottom: 20px;
     padding: 1rem 0;
-  }
-  
-  .cube-content {
-    width: 100%;
-    max-width: 700px;
-    margin-left: auto; /* Reset the margin */
   }
   
   .graph-plane {
