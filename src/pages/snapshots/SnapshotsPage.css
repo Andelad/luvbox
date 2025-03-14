@@ -2,7 +2,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #f0e9e2;
+  background-color: transparent; /* Changed from #f0e9e2 */
 }
 
 .snapshots-container {

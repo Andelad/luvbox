@@ -58,15 +58,16 @@ const TopFace: React.FC = () => {
           {/* Intimacy text - rotated vertically */}
           <text 
             x="16.66" 
-            y="65" 
+            y="50" 
             fill="#555"
-            fontFamily="'Source Sans Pro', sans-serif"
+            fontFamily="'EB Garamond', serif"
             fontSize="4.5"
             fontWeight="600"
+            fontStyle="italic"
             textAnchor="middle"
             transform="rotate(-90, 16.66, 50)"
           >
-            INTIMACY
+            Intimacy
           </text>
           
           {/* Text and line for larger space (Fruit) */}
@@ -90,12 +91,13 @@ const TopFace: React.FC = () => {
             x="67" 
             y="55" 
             fill="#555"
-            fontFamily="'Source Sans Pro', sans-serif"
-            fontSize="6"
+            fontFamily="'EB Garamond', serif"
+            fontSize="4.5"
             fontWeight="600"
+            fontStyle="italic"
             textAnchor="middle"
           >
-            FRUIT
+            Fruit
           </text>
         </svg>
       </div>

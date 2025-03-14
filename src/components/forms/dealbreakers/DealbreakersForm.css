@@ -1,6 +1,6 @@
 .dealbreakers-container {
     min-height: 100vh;
-    background-color: #f0e9e2;
+    background-color: transparent; /* Changed from #f0e9e2 */
     display: flex;
     flex-direction: column;
   }

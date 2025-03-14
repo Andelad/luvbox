@@ -11,7 +11,7 @@
   justify-content: space-between;
   padding: 1.5rem;
   box-sizing: border-box;
-  background-color: white;
+  background: linear-gradient(315deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.25) 100%);
   font-family: 'Source Sans Pro', sans-serif;
   border-radius: 3px;
   /* Removed box-shadow: 0 0 10px rgba(0, 0, 0, 0.05) inset; */
@@ -168,6 +168,24 @@ p {
 .radar-container {
   width: 90%;
   height: 60%;
+}
+
+/* Add category label styles */
+.category-label {
+  font-family: 'EB Garamond', serif;
+  font-weight: 600;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: #2d2d2d;
+  text-align: center;
+  width: 100%;
+  position: absolute;
+}
+
+/* Fix horizontal centering for intimacy label */
+.label-intimacy {
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 /* Adjust label row position */

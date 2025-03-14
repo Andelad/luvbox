@@ -144,6 +144,7 @@ const ThreeFaceCubeTest: React.FC = () => {
           width: '100%',
           height: '100%',
           backgroundColor: 'rgba(255, 255, 255, 0.95)',
+          background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 248, 248, 0.92) 100%)',
           border: '1px solid #ddd',
           transform: 'translateZ(200px)',
           backfaceVisibility: 'hidden',
@@ -164,6 +165,7 @@ const ThreeFaceCubeTest: React.FC = () => {
           width: '100%',
           height: '100%',
           backgroundColor: 'rgba(255, 255, 255, 0.95)',
+          background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 248, 248, 0.92) 100%)',
           border: '1px solid #ddd',
           transform: 'rotateX(90deg) translateZ(200px)',
           backfaceVisibility: 'hidden',
@@ -181,11 +183,9 @@ const ThreeFaceCubeTest: React.FC = () => {
           width: '100%',
           height: '100%',
           backgroundColor: 'rgba(255, 255, 255, 0.95)',
+          background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 248, 248, 0.92) 100%)',
           border: '1px solid #ddd',
           transform: 'rotateY(90deg) translateZ(200px)',
-          backfaceVisibility: 'hidden',
-          overflow: 'hidden',
-          boxShadow: '0 0 20px rgba(0, 0, 0, 0.1) inset',
           opacity: isTransitioning || currentFace !== 'time' ? 0.7 : 1,
           transition: 'opacity 0.5s ease'
         }}>

@@ -79,7 +79,7 @@ const Sidebar: React.FC<SidebarProps> = ({ expanded, onToggle }) => {
   };
   
   const navItems = [
-    { to: '/cube', label: 'My Observations', icon: icons.cube },
+    { to: '/cube', label: 'The LuvBox', icon: icons.cube },
     { to: '/map', label: 'Mapping Love', icon: icons.map },
     // Hiding these items temporarily:
     // { to: '/cube-test', label: 'Cube Tests', icon: icons.cubeTest },

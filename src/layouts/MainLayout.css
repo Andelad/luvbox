@@ -14,6 +14,8 @@
   margin: 0 auto;
   display: flex;
   position: relative;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.12) 100%);
+  min-height: calc(100vh - 60px - 60px); /* Add min-height to ensure gradient fills viewport */
 }
 
 .main-content {

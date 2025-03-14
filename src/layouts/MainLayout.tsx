@@ -6,7 +6,7 @@ import './MainLayout.css';
 // Define route titles and hierarchies
 const routeTitles: {[key: string]: {title: string, parent?: string}} = {
   '/map': { title: 'Mapping Love' },
-  '/cube': { title: 'My Observations' },
+  '/cube': { title: 'The LuvBox' },
   '/scripts': { title: 'My Scripts', parent: '/map' },
   '/self': { title: 'Myself', parent: '/map' },
   '/community': { title: 'Community' },

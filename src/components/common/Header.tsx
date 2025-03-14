@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
+import logo from '../../assets/images/logo.png'; // Correct path to logo image
 
 interface HeaderProps {
   showHomeLink?: boolean;
@@ -14,12 +15,18 @@ const Header: React.FC<HeaderProps> = ({
   showHomeLink = true, 
   pageTitle = '', 
   parentPath = '',
-  parentTitle = '',  // Default to empty string instead of 'Mapping Love'
+  parentTitle = '',
   className = ''
 }) => {
   return (
     <header className={`app-header ${className}`}>
       <div className="page-title-container">
+        <div className="header-logo-section">
+          <Link to="/" className="logo-link">
+            <img src={logo} alt="Logo" className="header-logo" />
+          </Link>
+          <div className="logo-divider"></div>
+        </div>
         {showHomeLink ? (
           <>
             {pageTitle && (

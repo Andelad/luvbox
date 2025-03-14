@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: #f0e9e2;
+  background: linear-gradient(315deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.12) 100%), #f0e9e2;
   transition: padding-left 0.3s ease;
   border-bottom: 1px solid #d5cec7;
   /* Remove the fixed height to restore original size */
@@ -41,9 +41,9 @@
 }
 
 .header-logo {
-  height: 40px;
-  margin-right: 10px;
-  animation: medium-heartbeat 2s ease-in-out infinite;
+  height: 32px; /* Match sidebar logo size */
+  width: auto;
+  animation: medium-heartbeat 2s ease-in-out infinite; /* Add the animation to match sidebar */
 }
 
 .page-title-container {
@@ -133,9 +133,33 @@
   top: 3px; /* Adjust this value to fine-tune vertical alignment */
 }
 
+.header-logo-section {
+  display: flex; /* Show by default for mobile */
+  align-items: center;
+}
+
+.logo-divider {
+  height: 24px;
+  width: 1px;
+  background-color: #ccc;
+  margin: 0 15px;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+}
+
+@media (min-width: 769px) {
+  .header-logo-section {
+    display: none; /* Hide on desktop (above 768px) */
+  }
+}
+
 @media (max-width: 768px) {
   .app-header {
     padding: 1rem;
+    background: linear-gradient(315deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.12) 100%), #f0e9e2;
   }
   
   /* Remove left padding adjustment on mobile since sidebar is at bottom */
@@ -145,7 +169,13 @@
   }
   
   .header-logo {
-    height: 30px;
+    height: 32px; /* Match sidebar logo size */
+    width: auto;
+    animation: medium-heartbeat 2s ease-in-out infinite; /* Add the animation to match sidebar */
+  }
+  
+  .header-logo-section {
+    display: flex; /* Explicitly show on mobile */
   }
   
   .logo, .logo-link {
@@ -154,5 +184,10 @@
   
   .page-title, .page-breadcrumb {
     font-size: 1.4rem;
+  }
+  
+  .page-title-container {
+    display: flex;
+    align-items: center;
   }
 }

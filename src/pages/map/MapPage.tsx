@@ -27,7 +27,7 @@ const MapPage: React.FC = () => {
     <div className="map-page">
       <div className="map-container">
         <div className="map-subtitle">
-          <p>Our experience of love is shaped by the information we observe, the narratives we believe, our unique preferences, and the community that surrounds us.</p>
+          <p>The LuvBox is a map. But, how we read that map is shaped by our unique preferences, our scripts, and our community. Choose below to find out more.</p>
         </div>
         <div className="map-content">
           <div className="visual-content">
@@ -73,9 +73,6 @@ const MapPage: React.FC = () => {
                 />
               </Link>
             </div>
-          </div>
-          <div className="map-footer">
-            <p className="ps-note">P.S. While love always involves other people, LuvBox focuses on helping you understand and navigate your own experience of love.</p>
           </div>
         </div>
       </div>
