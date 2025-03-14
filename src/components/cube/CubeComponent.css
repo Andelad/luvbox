@@ -13,33 +13,71 @@
 
 /* Layout containers */
 .cube-wrapper {
-  height: calc(100vh - 60px);
+  min-height: calc(100vh - 60px);
   display: flex;
   flex-direction: column;
   background-color: var(--color-background);
-  overflow-y: auto;
+  overflow: visible; /* Changed from overflow-y: auto to prevent double scrollbars */
+}
+
+/* Updated cube layout styling */
+.cube-layout {
+  display: flex;
+  width: 100%;
+  position: relative;
+  justify-content: center;
+  min-height: 800px; /* Add minimum height to ensure content fits */
+}
+
+.cube-title-column {
+  position: absolute;
+  left: calc(50% - 500px); /* Moved further to the left to avoid overlap with scores */
+  top: 50px; /* Align with the top of the cube */
+  width: 200px;
+  text-align: left;
+  z-index: 1;
+}
+
+.cube-content {
+  width: 700px; /* Fixed width to keep the cube square */
+  margin: 0 auto;
+}
+
+.cube-title {
+  font-size: 2.5rem;
+  margin: 0 0 1rem 0;
+  color: var(--color-primary-darker);
+  text-align: left;
+}
+
+.cube-subtitle {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 0;
+  color: var(--color-text-light);
+  text-align: left;
 }
 
 .cube-container {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* Changed from center to improve spacing */
   padding: var(--spacing-md);
   position: relative;
   min-height: 400px;
+  width: 100%;
+  max-width: 700px; /* Ensure a maximum width */
 }
 
 /* Graph Plane and Scene */
 .graph-plane {
   position: relative;
-  width: min(90%, 600px);
-  height: min(80vw, 600px);
-  aspect-ratio: 1/1;
+  width: 600px; /* Fixed width */
+  height: 600px; /* Fixed height to ensure it's square */
   margin: 0 auto;
   box-sizing: border-box;
-  margin-bottom: 80px; /* Space for labels and category lines */
+  margin-bottom: 100px; /* Increased space for labels and category lines */
 }
 
 .scene {
@@ -351,7 +389,7 @@
 /* Interface controls */
 .cube-interface {
   width: min(90%, 600px);
-  margin: 20px auto 0;
+  margin: 20px auto 30px; /* Added bottom margin */
   padding: 0 0 2rem;
 }
 
@@ -444,9 +482,51 @@
 }
 
 /* Responsive styles */
+@media (max-width: 1200px) {
+  .cube-title-column {
+    left: 50px; /* Increased spacing for medium screens */
+  }
+  
+  .cube-content {
+    margin-left: 250px; /* Add margin to prevent cube from overlapping with title */
+    margin-right: auto;
+  }
+}
+
 @media (max-width: 1024px) {
   .graph-plane {
     width: 90%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .cube-layout {
+    flex-direction: column;
+    align-items: center;
+    min-height: 900px; /* Ensure enough space for vertical layout */
+  }
+  
+  .cube-title-column {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 90%;
+    max-width: 600px;
+    margin-bottom: 20px;
+    padding: 1rem 0;
+  }
+  
+  .cube-content {
+    width: 100%;
+    max-width: 700px;
+    margin-left: auto; /* Reset the margin */
+  }
+  
+  .graph-plane {
+    width: 90%;
+    height: auto;
+    aspect-ratio: 1/1; /* Maintain square aspect ratio */
+    max-width: 600px;
   }
 }
 
@@ -485,7 +565,7 @@
   }
   
   .graph-plane {
-    margin-bottom: 100px;
+    margin-bottom: 120px; /* Increased bottom margin on mobile */
   }
   
   /* Stack controls vertically on mobile */
@@ -498,5 +578,13 @@
   .name-input,
   .snapshot-button {
     width: 100%;
+  }
+  
+  .cube-title {
+    text-align: center;
+  }
+  
+  .cube-subtitle {
+    text-align: center;
   }
 }

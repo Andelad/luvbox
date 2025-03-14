@@ -246,139 +246,152 @@ const CubeComponent: React.FC = () => {
 
   return (
     <div className="cube-wrapper">
-      <div className="cube-container">
-        {/* Cube Icons for Navigation */}
-        <div className="cube-icons-navigation">
-          <CubeIcon 
-            faceColor="front" 
-            onClick={() => navigateTo('qualities')} 
-            isActive={currentFace === 'qualities'}
-            label="Qualities"
-          />
-          <CubeIcon 
-            faceColor="top" 
-            onClick={() => navigateTo('purpose')} 
-            isActive={currentFace === 'purpose'}
-            label="Purpose"
-          />
-          <CubeIcon 
-            faceColor="right" 
-            onClick={() => navigateTo('time')} 
-            isActive={currentFace === 'time'}
-            label="Time"
-          />
+      <div className="cube-layout">
+        {/* Title column on the left */}
+        <div className="cube-title-column">
+          <h1 className="cube-title">LuvBox</h1>
+          <p className="cube-subtitle">
+            The luvbox allows you to take a snapshot of your relationship, and consider that snapshot as part of a journey of love. Rotate the cube to explore more angles.
+          </p>
         </div>
         
-        <div className="graph-plane">
-          {/* Y Axis */}
-          <div className={`y-axis ${isTransitioning ? 'transitioning' : ''}`}>
-            <div className={`axis-title ${isTransitioning ? 'transitioning' : ''}`}>{axisLabels.yAxisTitle}</div>
-            <div className={`axis-labels ${isTransitioning ? 'transitioning' : ''}`}>
-              {/* Render labels in reverse order for flex column layout (bottom to top) */}
-              {[...axisLabels.yLabels].reverse().map((label, index) => (
+        {/* Main cube container */}
+        <div className="cube-content">
+          <div className="cube-container">
+            {/* Cube Icons for Navigation */}
+            <div className="cube-icons-navigation">
+              <CubeIcon 
+                faceColor="front" 
+                onClick={() => navigateTo('qualities')} 
+                isActive={currentFace === 'qualities'}
+                label="Qualities"
+              />
+              <CubeIcon 
+                faceColor="top" 
+                onClick={() => navigateTo('purpose')} 
+                isActive={currentFace === 'purpose'}
+                label="Purpose"
+              />
+              <CubeIcon 
+                faceColor="right" 
+                onClick={() => navigateTo('time')} 
+                isActive={currentFace === 'time'}
+                label="Time"
+              />
+            </div>
+            
+            <div className="graph-plane">
+              {/* Y Axis */}
+              <div className={`y-axis ${isTransitioning ? 'transitioning' : ''}`}>
+                <div className={`axis-title ${isTransitioning ? 'transitioning' : ''}`}>{axisLabels.yAxisTitle}</div>
+                <div className={`axis-labels ${isTransitioning ? 'transitioning' : ''}`}>
+                  {/* Render labels in reverse order for flex column layout (bottom to top) */}
+                  {[...axisLabels.yLabels].reverse().map((label, index) => (
+                    <div 
+                      key={`y-${index}`} 
+                      className="axis-label"
+                    >
+                      {label}
+                    </div>
+                  ))}
+                </div>
+                <div className="axis-line"></div>
+              </div>
+              
+              {/* 3D Cube */}
+              <div className="scene">
                 <div 
-                  key={`y-${index}`} 
-                  className="axis-label"
+                  className="cube" 
+                  style={{
+                    transform: `translateZ(-230px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`
+                  }}
                 >
-                  {label}
+                  <div className={`cube-face front ${currentFace !== 'qualities' ? 'inactive' : ''}`}>
+                    <EqualizerFace 
+                      values={sliderValues} 
+                      onValuesChange={handleValuesChange} 
+                    />
+                  </div>
+                  <div className={`cube-face right ${currentFace !== 'time' ? 'inactive' : ''}`}>
+                    <IsometricFace />
+                  </div>
+                  <div className={`cube-face back ${currentFace !== 'back' ? 'inactive' : ''}`}>
+                    <GraphFace />
+                  </div>
+                  <div className={`cube-face left ${currentFace !== 'left' ? 'inactive' : ''}`}>
+                    <div className="placeholder-face">Future Face</div>
+                  </div>
+                  <div className={`cube-face top ${currentFace !== 'purpose' ? 'inactive' : ''}`}>
+                    <TopFace />
+                  </div>
+                  <div className={`cube-face bottom ${currentFace !== 'bottom' ? 'inactive' : ''}`}>
+                    <div className="placeholder-face">Future Face</div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* X-axis labels for all faces */}
+              <XAxisLabels 
+                labels={axisLabels.xLabels} 
+                isTransitioning={isTransitioning} 
+              />
+              
+              {/* Category sections for qualities and purpose faces */}
+              {shouldShowCategories() && (
+                <CategoryLines isTransitioning={isTransitioning} />
+              )}
+            </div>
+          </div>
+          
+          {/* Clean interface below the cube */}
+          <div className="cube-interface">
+            {/* Row of input values */}
+            <div className="value-row">
+              {sliderValues.map((value, index) => (
+                <div key={index} className="value-column">
+                  <input
+                    type="text" 
+                    inputMode="decimal"
+                    pattern="[0-9]+(\.[0-9]{1})?"
+                    value={value.toFixed(1)}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      // Allow only numbers with optional decimal point and 1 digit after
+                      if (/^[0-9]+(\.[0-9]{0,1})?$/.test(val) || val === '') {
+                        const numValue = val === '' ? 0 : parseFloat(val);
+                        if (!isNaN(numValue) && numValue >= 0 && numValue <= 10) {
+                          const newValues = [...sliderValues];
+                          newValues[index] = numValue;
+                          handleValuesChange(newValues);
+                        }
+                      }
+                    }}
+                    className="value-input"
+                    aria-label={`Value for ${axisLabels.xLabels[index]}`}
+                  />
                 </div>
               ))}
             </div>
-            <div className="axis-line"></div>
-          </div>
-          
-          {/* 3D Cube */}
-          <div className="scene">
-            <div 
-              className="cube" 
-              style={{
-                transform: `translateZ(-230px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`
-              }}
-            >
-              <div className={`cube-face front ${currentFace !== 'qualities' ? 'inactive' : ''}`}>
-                <EqualizerFace 
-                  values={sliderValues} 
-                  onValuesChange={handleValuesChange} 
+            
+            {/* Name input and snapshot button */}
+            <div className="controls-row">
+              <div className="name-input-container">
+                <label htmlFor="snapshot-name" className="name-label">Name:</label>
+                <input 
+                  type="text" 
+                  id="snapshot-name" 
+                  className="name-input" 
+                  placeholder="My snapshot"
+                  value={snapshotName}
+                  onChange={(e) => setSnapshotName(e.target.value)}
                 />
               </div>
-              <div className={`cube-face right ${currentFace !== 'time' ? 'inactive' : ''}`}>
-                <IsometricFace />
-              </div>
-              <div className={`cube-face back ${currentFace !== 'back' ? 'inactive' : ''}`}>
-                <GraphFace />
-              </div>
-              <div className={`cube-face left ${currentFace !== 'left' ? 'inactive' : ''}`}>
-                <div className="placeholder-face">Future Face</div>
-              </div>
-              <div className={`cube-face top ${currentFace !== 'purpose' ? 'inactive' : ''}`}>
-                <TopFace />
-              </div>
-              <div className={`cube-face bottom ${currentFace !== 'bottom' ? 'inactive' : ''}`}>
-                <div className="placeholder-face">Future Face</div>
-              </div>
+              
+              <button className="snapshot-button" onClick={handleTakeSnapshot}>
+                Take Snapshot
+              </button>
             </div>
           </div>
-          
-          {/* X-axis labels for all faces */}
-          <XAxisLabels 
-            labels={axisLabels.xLabels} 
-            isTransitioning={isTransitioning} 
-          />
-          
-          {/* Category sections for qualities and purpose faces */}
-          {shouldShowCategories() && (
-            <CategoryLines isTransitioning={isTransitioning} />
-          )}
-        </div>
-      </div>
-      
-      {/* Clean interface below the cube */}
-      <div className="cube-interface">
-        {/* Row of input values */}
-        <div className="value-row">
-          {sliderValues.map((value, index) => (
-            <div key={index} className="value-column">
-              <input
-                type="text" 
-                inputMode="decimal"
-                pattern="[0-9]+(\.[0-9]{1})?"
-                value={value.toFixed(1)}
-                onChange={(e) => {
-                  const val = e.target.value;
-                  // Allow only numbers with optional decimal point and 1 digit after
-                  if (/^[0-9]+(\.[0-9]{0,1})?$/.test(val) || val === '') {
-                    const numValue = val === '' ? 0 : parseFloat(val);
-                    if (!isNaN(numValue) && numValue >= 0 && numValue <= 10) {
-                      const newValues = [...sliderValues];
-                      newValues[index] = numValue;
-                      handleValuesChange(newValues);
-                    }
-                  }
-                }}
-                className="value-input"
-                aria-label={`Value for ${axisLabels.xLabels[index]}`}
-              />
-            </div>
-          ))}
-        </div>
-        
-        {/* Name input and snapshot button */}
-        <div className="controls-row">
-          <div className="name-input-container">
-            <label htmlFor="snapshot-name" className="name-label">Name:</label>
-            <input 
-              type="text" 
-              id="snapshot-name" 
-              className="name-input" 
-              placeholder="My snapshot"
-              value={snapshotName}
-              onChange={(e) => setSnapshotName(e.target.value)}
-            />
-          </div>
-          
-          <button className="snapshot-button" onClick={handleTakeSnapshot}>
-            Take Snapshot
-          </button>
         </div>
       </div>
     </div>
