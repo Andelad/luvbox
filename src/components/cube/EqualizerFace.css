@@ -6,8 +6,17 @@
   position: relative;
   overflow: visible !important; /* Critical for allowing dots to be visible beyond edges */
   background-color: #f0e9e2; /* Match page background */
-  border: 1px solid #666; /* Softer outline */
-  border-radius: 6px; /* Slight border radius */
+  border: none !important; /* Remove default border - we'll use the SVG overlay instead */
+  border-radius: 6px; /* Keep border radius */
+  /* Create stacking context with a transform */
+  transform: translateZ(0);
+}
+
+/* Border overlay to ensure consistent styling */
+.border-overlay {
+  pointer-events: none;
+  overflow: visible;
+  z-index: 1 !important; /* Ensure border stays below content */
 }
 
 /* Style for active dot when being dragged - more subtle size increase */
@@ -24,16 +33,73 @@
   width: 100%;
   padding: 8px; /* Add some padding inside the border */
   overflow: visible !important; /* Critical for allowing dots to be visible beyond edges */
+  z-index: 5 !important; /* Ensure higher than border */
 }
 
 /* Make sure SVG doesn't clip overflow */
 .equalizer-svg {
   overflow: visible !important; /* Critical for allowing dots to be visible beyond edges */
+  isolation: isolate; /* Create a new stacking context for children */
+  position: relative;
+  display: block; /* Remove potential whitespace */
+  z-index: 10 !important;
+}
+
+/* Ensure user line is always above border */
+.user-line {
+  z-index: 25 !important;
+  position: relative; /* Help establish stacking context */
+  stroke: #a25a3c !important; /* Rust color */
+  stroke-width: 0.96 !important; /* Reduced by 20% (was 1.2) */
+}
+
+/* Ensure dots are always above border and line */
+.user-dot {
+  z-index: 30 !important;
+  position: relative; /* Help establish stacking context */
+  transition: r 0.15s ease, stroke-width 0.15s ease, filter 0.15s ease;
+  pointer-events: all; /* Ensure dots always capture mouse events */
+  fill: #a25a3c !important; /* Rust color */
+  stroke: #fff !important; /* Keep white stroke for contrast */
+  r: 1.65 !important; /* Reduced size by 25% (was 2.2) */
+  stroke-width: 0.6 !important; /* Reduced stroke width by 25% (was 0.8) */
+}
+
+/* Add hover effect to dots for better interaction cues */
+.user-dot:hover {
+  r: 1.95 !important; /* Match the size increase for active dots */
+  stroke-width: 0.9 !important; /* Match the stroke width for active dots */
+  filter: drop-shadow(0px 2px 3px rgba(0,0,0,0.4)) !important; /* Add shadow for hover */
+}
+
+/* Special styles for active dots */
+.user-dot[data-active="true"] {
+  r: 1.95 !important; /* Increased size */
+  stroke-width: 0.9 !important; /* Increased stroke width */
+  filter: drop-shadow(0px 2px 3px rgba(0,0,0,0.4)) !important;
+  z-index: 35 !important; /* Ensure active dots are above others */
+}
+
+/* Special styles for active dots */
+.user-dot[data-active="true"] {
+  filter: drop-shadow(0px 2px 3px rgba(0,0,0,0.4)) !important;
+  r: 1.95 !important; /* Reduced size by 25% (was 2.6) */
+  stroke-width: 0.9 !important; /* Reduced stroke width by 25% (was 1.2) */
+  z-index: 35 !important; /* Even higher when active */
+}
+
+/* Make sure dots at the bottom have the correct z-index */
+.user-dot[cy="100"], .user-dot[cy="99"], .user-dot[cy="98"] {
+  z-index: 40 !important;
+  stroke: #f0e9e2 !important; /* Match background for bottom dots */
 }
 
 /* Add hover effect to dots for better interaction cues - more subtle */
 circle[class*="user-"] {
   transition: r 0.15s ease, stroke-width 0.15s ease, filter 0.15s ease;
+  pointer-events: all; /* Ensure dots always capture mouse events */
+  z-index: 20 !important; /* Ensure dots stay above border */
+  position: relative;
 }
 
 circle[class*="user-"]:hover {
@@ -42,10 +108,23 @@ circle[class*="user-"]:hover {
   filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.3));
 }
 
+/* Make sure dots at the bottom appear above the border */
+circle[cy="100"], circle[cy="99"], circle[cy="98"] {
+  z-index: 20 !important;
+}
+
+/* Style for dots at the bottom */
+circle[cy="100"] {
+  stroke: #f0e9e2 !important; /* Match background for bottom dots */
+}
+
 /* SVG Tooltip animation and styling */
 .svg-tooltip {
   transition: opacity 0.2s ease;
   pointer-events: none; /* Ensure tooltip doesn't interfere with mouse events */
+  opacity: 1; /* Make sure tooltip is always fully visible */
+  z-index: 50 !important; /* Highest of all elements */
+  transform: translateY(-2.5px); /* Reduced to -2.5px (75% of the way from 0 to -7px) */
 }
 
 .svg-tooltip text {
@@ -57,6 +136,17 @@ circle[class*="user-"]:hover {
   dominant-baseline: hanging;  /* Ensure consistent alignment with parent text */
 }
 
+/* Style for warning icon in tooltip */
+.warning-icon {
+  fill: #fff;
+  font-size: 3.5px !important;
+  vertical-align: middle;
+  display: inline-block;
+  margin-left: 0.5px;
+  /* These settings will ensure the icon renders correctly */
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
 /* SVG Tooltip text styling */
 .tooltip-text {
   /* Inherits font family from parent elements for consistency */
@@ -66,4 +156,39 @@ circle[class*="user-"]:hover {
 
 .svg-tooltip tspan {
   dominant-baseline: hanging;
+}
+
+/* Give priority to dots at the bottom of the chart */
+circle[cy="100"] {
+  vector-effect: non-scaling-stroke;
+  stroke-width: 1;
+  pointer-events: all;
+}
+
+/* Enhance bottom dots visibility */
+circle[cy="100"], circle[cy="99"], circle[cy="98"], circle[cy="97"] {
+  vector-effect: non-scaling-stroke;
+  stroke-width: 1px !important;
+  stroke: #f0e9e2 !important; /* Match background color */
+  pointer-events: all;
+  z-index: 25 !important; /* Even higher z-index for bottom dots */
+}
+
+/* Override any border styling from parent components that might create the white line */
+.cube-face .equalizer-face {
+  border-bottom: none !important;
+}
+
+/* Override any border styling from parent components */
+.cube-face .equalizer-face {
+  border: none !important;
+}
+
+/* Handle dot visibility at the edges */
+.equalizer-svg circle[class*="user-"][cy="100"],
+.equalizer-svg circle[class*="user-"][cy="99"],
+.equalizer-svg circle[class*="user-"][cy="98"] {
+  stroke-width: 0.8px !important; /* Consistent with other dots */
+  filter: drop-shadow(0px 0px 1px rgba(162, 90, 60, 0.7)) !important; /* Subtle glow to enhance visibility */
+  z-index: 25 !important; /* Higher than regular dots */
 }

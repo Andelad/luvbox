@@ -43,7 +43,32 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
   const [tooltipContent, setTooltipContent] = useState({ title: '', value: 0, isAboveDealbreaker: false, isInCautionZone: false });
   const dotRefs = useRef<(SVGCircleElement | null)[]>([]);
   
-  // Remove the Google Material Symbols link useEffect - we'll use SVG directly
+  // Add Material Symbols import for warning icon - properly inside the component
+  useEffect(() => {
+    // Load Material Icons font for warning symbol
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=warning';
+    document.head.appendChild(link);
+    
+    // Add style element for font variation settings
+    const style = document.createElement('style');
+    style.textContent = `
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    `;
+    document.head.appendChild(style);
+    
+    return () => {
+      document.head.removeChild(link);
+      document.head.removeChild(style);
+    };
+  }, []);
   
   // Initialize user line values on first mount only
   useEffect(() => {
@@ -159,18 +184,19 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
     }
   };
   
-  // Handle dot dragging
+  // Handle dot dragging - modified to keep tooltip visible
   const handleDotMouseDown = (index: number) => (e: React.MouseEvent) => {
     e.preventDefault();
+    e.stopPropagation(); // Prevent event bubbling
     setActiveDot(index);
     
     // Check if dot is below dealbreaker line or in caution zone
     const isAboveDealbreaker = values[index] >= dealbreakerValues[index];
-    const isInCautionZone = values[index] > 9 || values[index] < 2;
+    const isInCautionZone = values[index] > 9 || values[index] < 2; // Fixed typo: replaced `value` with `values[index]`
     
     setTooltipContent({
       title: getColumnTitle(index),
-      value: values[index],
+      value: values[index], // Fixed typo: replaced `value` with `values[index]`
       isAboveDealbreaker,
       isInCautionZone
     });
@@ -179,6 +205,7 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
     setTooltipVisible(true);
     
     const handleMouseMove = (moveEvent: MouseEvent) => {
+      moveEvent.preventDefault(); // Prevent default behaviors
       if (!containerRef.current) return;
       
       const rect = containerRef.current.getBoundingClientRect();
@@ -207,17 +234,26 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
         isAboveDealbreaker,
         isInCautionZone
       });
+      
+      // Ensure tooltip remains visible during dragging
+      setTooltipVisible(true);
     };
     
-    const handleMouseUp = () => {
+    const handleMouseUp = (upEvent: MouseEvent) => {
+      upEvent.preventDefault();
+      upEvent.stopPropagation();
+      
       setActiveDot(null);
+      
       // Keep tooltip visible briefly after release
       setTimeout(() => {
-        if (activeDot === null) {
+        // Only hide tooltip if we're not still hovering over a dot
+        if (activeDot === null && !document.querySelector('.active-dot')) {
           setTooltipVisible(false);
           setTooltipDotIndex(null);
         }
       }, 1000);
+      
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
     };
@@ -306,89 +342,119 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
     return segments;
   };
 
-  // Function to render the SVG tooltip directly within the SVG
-  const renderTooltip = () => {
-    if (!tooltipVisible || tooltipDotIndex === null) return null;
-    
-    const index = tooltipDotIndex;
-    const dotX = index * (100/6);
-    const dotY = 100 - (values[index] * 10);
-    
-    // Compact tooltip dimensions
-    const tooltipWidth = 28;
-    const tooltipHeight = 11;
-    const padding = 1.5;
-    
-    const tooltipX = dotX - (tooltipWidth / 2);
-    const tooltipY = dotY - tooltipHeight - 3;
-    
-    // Determine color based on relationship to dealbreaker
-    const isAboveDealbreaker = tooltipContent.isAboveDealbreaker;
-    const tooltipColor = isAboveDealbreaker ? "rgba(169, 183, 146, 1)" : "rgba(230, 140, 140, 1)";
-    
-    // Warning triangle symbol to use inline with text
-    const warningSymbol = tooltipContent.isInCautionZone ? " ⚠" : "";
-    
-    return (
-      <g className="svg-tooltip">
-        {/* Background rectangle */}
-        <rect
-          x={tooltipX}
-          y={tooltipY}
-          width={tooltipWidth}
-          height={tooltipHeight}
-          rx="1"
-          ry="1"
-          fill={tooltipColor}
-          filter="drop-shadow(0px 1px 2px rgba(0,0,0,0.2))"
-        />
-        
-        {/* Arrow */}
-        <path
-          d={`M${dotX-2.5},${tooltipY+tooltipHeight} L${dotX},${dotY-1} L${dotX+2.5},${tooltipY+tooltipHeight} Z`}
-          fill={tooltipColor}
-        />
-        
-        {/* Title text */}
-        <text
-          x={tooltipX + padding}
-          y={tooltipY + padding}
-          textAnchor="start"
-          fill="white"
-          fontSize="3"
-          fontWeight="bold"
-          dominantBaseline="hanging"
-          className="tooltip-text"
-        >
-          {tooltipContent.title}
-        </text>
-        
-        {/* Score text with inline warning symbol */}
-        <text
-          x={tooltipX + padding}
-          y={tooltipY + tooltipHeight - padding - 4}
-          textAnchor="start"
-          fill="white"
-          fontSize="3"
-          dominantBaseline="hanging"
-          className="tooltip-text"
-        >
-          {tooltipContent.value.toFixed(1)}{warningSymbol}
-        </text>
-      </g>
-    );
+// Function to render the SVG tooltip directly within the SVG
+const renderTooltip = () => {
+  if (!tooltipVisible || tooltipDotIndex === null) return null;
+  
+  const index = tooltipDotIndex;
+  const dotX = index * (100/6);
+  const dotY = 100 - (values[index] * 10);
+  
+  // Compact tooltip dimensions
+  const tooltipWidth = 28;
+  const tooltipHeight = 11;
+  const padding = 1.5;
+  
+  // Position tooltip only slightly higher above the dot (further reduced)
+  const tooltipY = dotY - tooltipHeight - 4; // Reduced to 4 (75% of the way from 3 to 7)
+  const tooltipX = dotX - (tooltipWidth / 2);
+  
+  // Calculate the distance from the dealbreaker line
+  const distance = values[index] - dealbreakerValues[index];
+  
+  // Create a smooth gradient between colors based on distance
+  // Full red when below dealbreaker by 0.5 or more, full green when above dealbreaker by 0.5 or more
+  let colorRatio = Math.min(1, Math.max(0, (distance + 0.5) / 1.0));
+  
+  // Interpolate between red and green colors
+  const redColor = { r: 230, g: 140, b: 140 }; // rgba(230, 140, 140, 1)
+  const greenColor = { r: 169, g: 183, b: 146 }; // rgba(169, 183, 146, 1)
+  
+  const interpolatedColor = {
+    r: Math.round(redColor.r * (1 - colorRatio) + greenColor.r * colorRatio),
+    g: Math.round(redColor.g * (1 - colorRatio) + greenColor.g * colorRatio),
+    b: Math.round(redColor.b * (1 - colorRatio) + greenColor.b * colorRatio)
   };
   
+  const tooltipColor = `rgba(${interpolatedColor.r}, ${interpolatedColor.g}, ${interpolatedColor.b}, 1)`;
+  
+  // Create warning icon instead of text symbol
+  const showWarning = tooltipContent.isInCautionZone;
+  
+  return (
+    <g className="svg-tooltip">
+      {/* Background rectangle */}
+      <rect
+        x={tooltipX}
+        y={tooltipY}
+        width={tooltipWidth}
+        height={tooltipHeight}
+        rx="1"
+        ry="1"
+        fill={tooltipColor}
+        filter="drop-shadow(0px 1px 2px rgba(0,0,0,0.2))"
+      />
+      
+      {/* Arrow - adjusted to connect from the updated position */}
+      <path
+        d={`M${dotX-2.5},${tooltipY+tooltipHeight} L${dotX},${dotY-1.5} L${dotX+2.5},${tooltipY+tooltipHeight} Z`}
+        fill={tooltipColor}
+      />
+      
+      {/* Title text */}
+      <text
+        x={tooltipX + padding}
+        y={tooltipY + padding}
+        textAnchor="start"
+        fill="white"
+        fontSize="3"
+        fontWeight="bold"
+        dominantBaseline="hanging"
+        className="tooltip-text"
+      >
+        {tooltipContent.title}
+      </text>
+      
+      {/* Score text with Material Symbols warning icon */}
+      <text
+        x={tooltipX + padding}
+        y={tooltipY + tooltipHeight - padding - 4}
+        textAnchor="start"
+        fill="white"
+        fontSize="3"
+        dominantBaseline="hanging"
+        className="tooltip-text"
+      >
+        {tooltipContent.value.toFixed(1)}
+        {/* Space after score */}
+        <tspan dx="1"></tspan>
+        {/* Warning icon moved to the right of the score */}
+        {showWarning && (
+          <tspan 
+            className="material-symbols-outlined warning-icon" 
+            fontSize="3.5"
+            dy="0"
+            style={{ fontFamily: "'Material Symbols Outlined'", verticalAlign: "middle" }}
+          >
+            warning
+          </tspan>
+        )}
+      </text>
+    </g>
+  );
+};
+
   return (
     <div className="equalizer-face" style={{ 
       width: '100%', 
       height: '100%', 
       padding: 0,
       backgroundColor: '#f0e9e2', // Set background to match page background
-      border: '1px solid #666', // Softer outline
+      border: 'none', // Remove border - we'll use the SVG overlay instead
       borderRadius: '6px', // Add slight border radius for softer appearance
       position: 'relative',
-      overflow: 'visible' // Let content overflow
+      overflow: 'visible', // Let content overflow
+      boxSizing: 'border-box' // Ensure border is included in width/height
     }}>
       <div 
         ref={containerRef}
@@ -398,7 +464,8 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
           height: '100%', 
           width: '100%', 
           padding: 0, 
-          overflow: 'visible' // Let content overflow
+          overflow: 'visible', // Let content overflow
+          zIndex: 5  // Higher z-index than the border
         }}
       >
         <svg 
@@ -406,7 +473,11 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
           height="100%" 
           viewBox="0 0 100 100" 
           preserveAspectRatio="none" 
-          style={{ overflow: 'visible' }} // Let SVG content overflow
+          style={{ 
+            overflow: 'visible',
+            position: 'relative',
+            zIndex: 10  // Higher z-index to ensure content appears above border
+          }} 
           className="equalizer-svg"
         >
           {/* Define patterns */}
@@ -419,6 +490,9 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
                     style={{ stroke: '#a25a3c', strokeWidth: 0.5, opacity: 0.25 }} />
             </pattern>
           </defs>
+          
+          {/* Background elements */}
+          <rect x="0" y="0" width="100" height="100" fill="transparent" />
           
           {/* Upper caution zone (9-10) */}
           <rect x="0" y="0" width="100" height="10" fill="url(#diagonalHatch)" />
@@ -453,13 +527,15 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
             opacity="0.5"
           />
           
-          {/* Draw the user's curved line (front) - reverted color */}
+          {/* Update the user's curved line color */}
           <path
             d={createPath(values)}
-            stroke="#a25a3c" /* Reverted back to original color */
-            strokeWidth="1.2"
+            stroke="#a25a3c" /* Rust color */
+            strokeWidth="0.96" /* Reduced by 20% (was 1.2) */
             fill="none"
             filter="drop-shadow(0px 1px 1px rgba(0,0,0,0.1))"
+            style={{ zIndex: 25 }}
+            className="user-line"
           />
           
           {/* Draw the dealbreaker dots - refined style */}
@@ -474,30 +550,58 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
             />
           ))}
           
-          {/* Draw the draggable user dots - refined style with improved visibility */}
+          {/* Update the draggable user dots color */}
           {values.map((val, index) => (
             <circle
               key={`user-${index}`}
               ref={el => dotRefs.current[index] = el}
               cx={index * (100/6)}
               cy={100 - (val * 10)}
-              r="2.2" // Slightly larger than before (was 2)
-              fill="#a25a3c"
+              r="1.65" /* Reduced size by 25% (was 2.2) */
+              fill="#a25a3c" /* Rust color */
               stroke="#fff"
-              strokeWidth="0.8"
-              filter="drop-shadow(0px 1px 1px rgba(0,0,0,0.3))" 
-              style={{ cursor: 'pointer' }}
+              strokeWidth="0.6" /* Reduced stroke width by 25% (was 0.8) */
+              filter="drop-shadow(0px 1px 1px rgba(0,0,0,0.1))" 
+              style={{ cursor: 'pointer', zIndex: 30 }}
+              className="user-dot"
               onMouseDown={handleDotMouseDown(index)}
               onMouseEnter={() => handleDotMouseEnter(index)}
               onMouseLeave={handleDotMouseLeave}
-              className={activeDot === index ? 'active-dot' : ''}
+              data-active={activeDot === index ? 'true' : 'false'}
             />
           ))}
           
-          {/* SVG Tooltip - rendered directly in SVG */}
+          {/* SVG Tooltip - highest z-index */}
           {renderTooltip()}
         </svg>
       </div>
+      
+      {/* Single border overlay with lower z-index than content */}
+      <svg 
+        className="border-overlay" 
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          pointerEvents: 'none',
+          zIndex: 1,  // Lower z-index so it appears below content
+          overflow: 'visible'
+        }}
+      >
+        <rect 
+          x="0" 
+          y="0" 
+          width="100%" 
+          height="100%" 
+          fill="none" 
+          stroke="#666" 
+          strokeWidth="1" 
+          rx="6" 
+          ry="6"
+        />
+      </svg>
     </div>
   );
 };
