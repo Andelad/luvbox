@@ -18,12 +18,33 @@ interface UserSelection {
   values: number[];
 }
 
+// Add mapping for column titles
+const getColumnTitle = (index: number): string => {
+  const titles = [
+    'Personality',
+    'Physical Attraction',
+    'Family Values',
+    'Values',
+    'Behaviour',
+    'Goals',
+    'Viability'
+  ];
+  return titles[index] || '';
+};
+
 const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange }) => {
   // Load dealbreaker values from localStorage
   const [dealbreakerValues, setDealbreakerValues] = useState<number[]>([0, 0, 0, 0, 0, 0, 0]);
   const [activeDot, setActiveDot] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const hasInitializedRef = useRef<boolean>(false);
+  const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+  const [tooltipVisible, setTooltipVisible] = useState(false);
+  const [tooltipContent, setTooltipContent] = useState({ title: '', value: 0, isAboveDealbreaker: false, isInCautionZone: false });
+  const dotRefs = useRef<(SVGCircleElement | null)[]>([]);
+  const tooltipRef = useRef<HTMLDivElement>(null);
+  
+  // Remove the Google Material Symbols link useEffect - we'll use SVG directly
   
   // Initialize user line values on first mount only
   useEffect(() => {
@@ -91,6 +112,11 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
     };
   }, []);
   
+  // Initialize the refs array
+  useEffect(() => {
+    dotRefs.current = dotRefs.current.slice(0, values.length);
+  }, [values.length]);
+  
   // Creates SVG path data from values
   const createPath = (vals: number[]) => {
     // Generate points
@@ -115,6 +141,22 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
     e.preventDefault();
     setActiveDot(index);
     
+    // Calculate the correct tooltip position
+    updateTooltipPosition(index);
+    
+    // Check if dot is below dealbreaker line or in caution zone
+    const isAboveDealbreaker = values[index] >= dealbreakerValues[index];
+    const isInCautionZone = values[index] > 9 || values[index] < 2;
+    
+    setTooltipContent({
+      title: getColumnTitle(index),
+      value: values[index],
+      isAboveDealbreaker,
+      isInCautionZone
+    });
+    
+    setTooltipVisible(true);
+    
     const handleMouseMove = (moveEvent: MouseEvent) => {
       if (!containerRef.current) return;
       
@@ -129,6 +171,21 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
       const valuePercent = Math.max(0, Math.min(1, 1 - (svgY / svgHeight)));
       const value = Math.max(0, Math.min(10, valuePercent * 10));
       
+      // Update tooltip position
+      updateTooltipPosition(index);
+      
+      // Check if current value is below dealbreaker line or in caution zone
+      const isAboveDealbreaker = value >= dealbreakerValues[index];
+      const isInCautionZone = value > 9 || value < 2;
+      
+      // Update tooltip content
+      setTooltipContent({
+        title: getColumnTitle(index),
+        value: value,
+        isAboveDealbreaker,
+        isInCautionZone
+      });
+      
       // Update the values and notify parent
       const newValues = [...values];
       newValues[index] = value;
@@ -137,12 +194,70 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
     
     const handleMouseUp = () => {
       setActiveDot(null);
+      // Keep tooltip visible briefly after release
+      setTimeout(() => {
+        if (activeDot === null) {
+          setTooltipVisible(false);
+        }
+      }, 1000);
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
     };
     
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
+  };
+
+  // Helper function to calculate tooltip position
+  const updateTooltipPosition = (index: number) => {
+    const handleElement = dotRefs.current[index];
+    if (!handleElement || !tooltipRef.current) return;
+
+    // Get the handle's position in the viewport
+    const handleRect = handleElement.getBoundingClientRect();
+
+    // Position tooltip directly above the handle
+    setTooltipPosition({
+      x: handleRect.left + handleRect.width / 2, // Center horizontally
+      y: handleRect.top - 10, // Position above with a small gap
+    });
+
+    // Ensure the tooltip doesn't go off-screen
+    const tooltipRect = tooltipRef.current.getBoundingClientRect();
+    if (tooltipRect.top < 0) {
+      setTooltipPosition((prev) => ({
+        ...prev,
+        y: handleRect.bottom + 10, // Position below instead of above
+      }));
+      tooltipRef.current.classList.add('arrow-bottom');
+    } else {
+      tooltipRef.current.classList.remove('arrow-bottom');
+    }
+  };
+
+  // Handle dot mouse hover
+  const handleDotMouseEnter = (index: number) => {
+    // Update tooltip position using helper function
+    updateTooltipPosition(index);
+    
+    // Check if dot is below dealbreaker line or in caution zone
+    const isAboveDealbreaker = values[index] >= dealbreakerValues[index];
+    const isInCautionZone = values[index] > 9 || values[index] < 2;
+    
+    setTooltipContent({
+      title: getColumnTitle(index),
+      value: values[index],
+      isAboveDealbreaker,
+      isInCautionZone
+    });
+    
+    setTooltipVisible(true);
+  };
+  
+  const handleDotMouseLeave = () => {
+    if (activeDot === null) {
+      setTooltipVisible(false);
+    }
   };
   
   // Function to render segments with proper coloring
@@ -299,11 +414,11 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
             opacity="0.5"
           />
           
-          {/* Draw the user's curved line (front) - refined style - reduced width to about 2/3 */}
+          {/* Draw the user's curved line (front) - reverted color */}
           <path
             d={createPath(values)}
-            stroke="#a25a3c"
-            strokeWidth="1.2" // Reduced from 1.8 to 1.2 (2/3 of original)
+            stroke="#a25a3c" /* Reverted back to original color */
+            strokeWidth="1.2"
             fill="none"
             filter="drop-shadow(0px 1px 1px rgba(0,0,0,0.1))"
           />
@@ -324,6 +439,7 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
           {values.map((val, index) => (
             <circle
               key={`user-${index}`}
+              ref={el => dotRefs.current[index] = el}
               cx={index * (100/6)}
               cy={100 - (val * 10)}
               r="2.2" // Slightly larger than before (was 2)
@@ -333,10 +449,49 @@ const EqualizerFace: React.FC<EqualizerFaceProps> = ({ values, onValuesChange })
               filter="drop-shadow(0px 1px 1px rgba(0,0,0,0.3))" 
               style={{ cursor: 'pointer' }}
               onMouseDown={handleDotMouseDown(index)}
+              onMouseEnter={() => handleDotMouseEnter(index)}
+              onMouseLeave={handleDotMouseLeave}
               className={activeDot === index ? 'active-dot' : ''}
             />
           ))}
         </svg>
+        
+        {/* Tooltip */}
+        {tooltipVisible && (
+          <div 
+            ref={tooltipRef}
+            className={`equalizer-tooltip ${tooltipContent.isAboveDealbreaker ? 'above-dealbreaker' : 'below-dealbreaker'}`}
+            style={{
+              position: 'fixed',
+              left: `${tooltipPosition.x}px`,
+              top: `${tooltipPosition.y}px`,
+              transform: 'translate(-50%, -100%)',
+              pointerEvents: 'none'
+            }}
+          >
+            <div className="tooltip-title">
+              {tooltipContent.title}
+            </div>
+            <div className="tooltip-value">
+              Score: {tooltipContent.value.toFixed(1)}
+              {tooltipContent.isInCautionZone && (
+                <svg 
+                  className="warning-icon" 
+                  width="16" 
+                  height="16" 
+                  viewBox="0 0 24 24" 
+                  style={{ marginLeft: '5px', verticalAlign: 'middle' }}
+                >
+                  {/* Triangular warning icon */}
+                  <path 
+                    d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"
+                    fill="currentColor"
+                  />
+                </svg>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

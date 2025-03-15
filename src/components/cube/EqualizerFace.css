@@ -42,6 +42,80 @@ circle[class*="user-"]:hover {
   filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.3));
 }
 
+/* Tooltip styles */
+.equalizer-tooltip {
+  position: fixed;
+  background-color: #2d2d2d;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  pointer-events: none;
+  z-index: 1000;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+  font-family: 'Source Sans Pro', sans-serif;
+  will-change: transform;
+}
+
+/* Color-coded tooltips based on relationship to dealbreaker line */
+.equalizer-tooltip.above-dealbreaker {
+  background-color: rgba(169, 183, 146, 1); /* Solid green based on graph color */
+}
+
+.equalizer-tooltip.below-dealbreaker {
+  background-color: rgba(230, 140, 140, 1); /* Solid red based on graph color */
+}
+
+/* Arrow pointing down (default) */
+.equalizer-tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid currentColor; /* Use currentColor to match the tooltip background */
+}
+
+/* Support for arrow pointing up (when tooltip is below the handle) */
+.equalizer-tooltip.arrow-bottom::after {
+  bottom: auto;
+  top: -5px;
+  border-top: none;
+  border-bottom: 5px solid currentColor;
+}
+
+/* Fix the arrow colors to match the tooltip backgrounds */
+.above-dealbreaker::after {
+  border-top-color: rgba(169, 183, 146, 1); /* Match green tooltip background */
+  border-bottom-color: rgba(169, 183, 146, 1); /* For arrow-bottom */
+}
+
+.below-dealbreaker::after {
+  border-top-color: rgba(230, 140, 140, 1); /* Match red tooltip background */
+  border-bottom-color: rgba(230, 140, 140, 1); /* For arrow-bottom */
+}
+
+.tooltip-title {
+  font-weight: 600;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tooltip-value {
+  font-size: 13px;
+  opacity: 0.9;
+  display: flex;
+  align-items: center;
+}
+
 /* Remove the unused selector */
 /* [class*="user-handle-"]:hover {
   transform: translate(-50%, -50%) scale(1.2) !important;
